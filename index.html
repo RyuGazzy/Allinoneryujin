@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RyuGazzy · PvP Filter Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+  :root{
+    --bg:#0c0c0e; --panel:#151518; --panel-2:#1c1c21; --line:#2a2a31;
+    --crimson:#a01c1c; --crimson-2:#7a1414; --crimson-hi:#c73434;
+    --teal:#15e0b4; --teal-dim:#0e9e80;
+    --txt:#f1f1f3; --muted:#8b8b93; --muted-2:#5f5f67;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--bg); color:var(--txt);
+    font-family:'Inter',system-ui,sans-serif; font-size:15px; line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:120px;
+  }
+  a{color:var(--teal);text-decoration:none}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px}
+
+  /* Header */
+  header{
+    background:linear-gradient(180deg,var(--crimson),var(--crimson-2));
+    border-bottom:1px solid #000;
+    padding:18px 0 16px; position:sticky; top:0; z-index:40;
+    box-shadow:0 6px 20px rgba(0,0,0,.45);
+  }
+  .brand{display:flex;align-items:center;gap:12px}
+  .glove{font-size:26px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.5))}
+  .brand h1{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;
+    font-size:20px;letter-spacing:-.01em;margin:0;line-height:1.1;
+  }
+  .brand p{margin:2px 0 0;font-size:12px;color:#f3d3d3;font-weight:500}
+  .status{margin-left:auto;text-align:right;font-size:11px;font-weight:600}
+  .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#e8b23a;margin-right:5px;vertical-align:middle}
+  .dot.ok{background:var(--teal);box-shadow:0 0 8px var(--teal)}
+  .dot.err{background:var(--crimson-hi)}
+
+  section{margin-top:20px}
+  .label{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);font-weight:600;margin:0 0 9px}
+
+  /* Search */
+  .searchbox{position:relative}
+  .searchbox input{
+    width:100%;padding:14px 15px;font-size:16px;font-family:inherit;color:var(--txt);
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);outline:none;
+    transition:border-color .15s;
+  }
+  .searchbox input:focus{border-color:var(--teal-dim)}
+  .searchbox input::placeholder{color:var(--muted-2)}
+  .ac{
+    position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:30;
+    background:var(--panel-2);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+    max-height:300px;overflow-y:auto;display:none;box-shadow:0 12px 30px rgba(0,0,0,.5);
+  }
+  .ac.show{display:block}
+  .ac-item{padding:11px 15px;display:flex;align-items:center;gap:10px;cursor:pointer;border-bottom:1px solid #232329}
+  .ac-item:last-child{border-bottom:none}
+  .ac-item:hover,.ac-item.active{background:#26262d}
+  .ac-item .dex{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);min-width:40px}
+  .ac-item .nm{font-weight:500}
+  .ac-item .fam{margin-left:auto;font-size:11px;color:var(--muted-2)}
+
+  /* League toggles */
+  .leagues{display:flex;gap:8px}
+  .lg{
+    flex:1;padding:12px 8px;text-align:center;cursor:pointer;user-select:none;
+    background:var(--panel);border:1px solid var(--line);border-radius:12px;transition:.15s;
+  }
+  .lg .lgn{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px}
+  .lg .lgc{font-size:11px;color:var(--muted);margin-top:1px;font-family:'JetBrains Mono',monospace}
+  .lg.on{border-color:var(--teal);background:linear-gradient(180deg,rgba(21,224,180,.10),rgba(21,224,180,.03))}
+  .lg.on .lgn{color:var(--teal)}
+
+  /* Queue */
+  .qhead{display:flex;align-items:center;justify-content:space-between}
+  .qcount{font-size:11px;color:var(--muted-2);font-family:'JetBrains Mono',monospace}
+  .empty{
+    border:1px dashed var(--line);border-radius:var(--radius);padding:30px 20px;text-align:center;color:var(--muted-2);
+  }
+  .empty strong{display:block;color:var(--muted);font-weight:600;margin-bottom:4px}
+
+  .card{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    margin-bottom:12px;overflow:hidden;
+  }
+  .card-top{display:flex;align-items:center;gap:11px;padding:13px 15px}
+  .sprite{width:40px;height:40px;flex:none;image-rendering:pixelated;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+  .card-title{min-width:0}
+  .card-title h3{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin:0;letter-spacing:-.01em}
+  .card-title .file{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal-dim);margin-top:2px}
+  .rtag{font-family:'Inter',sans-serif;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#f3d3d3;background:var(--crimson-2);padding:2px 6px;border-radius:6px;vertical-align:middle;margin-left:4px}
+  .flag{color:var(--crimson-hi);font-weight:700}
+  .card-actions{margin-left:auto;display:flex;gap:6px}
+  .icon-btn{
+    background:var(--panel-2);border:1px solid var(--line);color:var(--muted);
+    width:34px;height:34px;border-radius:9px;cursor:pointer;display:grid;place-items:center;transition:.15s;padding:0;
+  }
+  .icon-btn:hover{color:var(--txt);border-color:var(--muted-2)}
+  .icon-btn.danger:hover{color:#fff;background:var(--crimson);border-color:var(--crimson)}
+  .icon-btn svg{width:16px;height:16px}
+
+  .rows{border-top:1px solid var(--line);padding:6px 15px 12px}
+  .lgblock{margin-top:8px}
+  .lgblock .lgtag{
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;letter-spacing:.05em;
+    color:var(--muted);margin-bottom:5px;display:inline-block;
+  }
+  .row{display:flex;align-items:center;gap:8px;padding:5px 0;flex-wrap:wrap}
+  .row .rn{font-size:13.5px;min-width:96px;color:#d7d7db}
+  .iv{
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12.5px;
+    background:#101014;border:1px solid var(--line);border-radius:7px;padding:3px 8px;color:var(--teal);
+  }
+  .lvl{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted)}
+  .badge{
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;
+    padding:2px 7px;border-radius:20px;margin-left:auto;
+    background:#26262d;color:var(--muted);border:1px solid var(--line);
+  }
+  .badge.dup{background:rgba(199,52,52,.16);color:#f19a9a;border-color:rgba(199,52,52,.4)}
+  .badge .x{opacity:.6;font-weight:500}
+
+  /* Sticky action bar */
+  .actionbar{
+    position:fixed;left:0;right:0;bottom:0;z-index:35;
+    background:linear-gradient(180deg,rgba(12,12,14,0),var(--bg) 26%);
+    padding:26px 16px 16px;
+  }
+  .actionbar .inner{max-width:760px;margin:0 auto;display:flex;gap:9px}
+  .btn{
+    flex:1;padding:14px 12px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14.5px;
+    border-radius:12px;border:1px solid transparent;cursor:pointer;transition:.15s;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+  }
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+  .btn svg{width:17px;height:17px}
+  .btn-primary{background:var(--teal);color:#04211a}
+  .btn-primary:not(:disabled):hover{background:#22f0c2}
+  .btn-ghost{background:var(--panel);color:var(--txt);border-color:var(--line)}
+  .btn-ghost:not(:disabled):hover{border-color:var(--muted-2)}
+  .btn-crimson{background:var(--crimson);color:#fff}
+  .btn-crimson:not(:disabled):hover{background:var(--crimson-hi)}
+
+  /* misc */
+  .toolsrow{display:flex;gap:9px;margin-top:10px}
+  .toolsrow .btn{flex:1;padding:11px}
+  .hint{font-size:12px;color:var(--muted-2);margin-top:8px;line-height:1.45}
+  .hint code{font-family:'JetBrains Mono',monospace;font-size:11px;background:#101014;border:1px solid var(--line);border-radius:4px;padding:1px 4px;color:var(--teal-dim)}
+  details.adv{margin-top:14px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0 14px}
+  details.adv summary{cursor:pointer;padding:12px 0;font-size:13px;font-weight:600;color:var(--muted);list-style:none}
+  details.adv summary::-webkit-details-marker{display:none}
+  details.adv summary::before{content:'▸ ';color:var(--teal-dim)}
+  details.adv[open] summary::before{content:'▾ '}
+  .adv-body{padding:0 0 14px}
+  .field{display:flex;align-items:center;gap:10px;margin:8px 0}
+  .field label{font-size:13px;color:#cfcfd4;flex:1}
+  .field input{
+    width:88px;padding:8px 10px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--txt);
+    background:#101014;border:1px solid var(--line);border-radius:8px;text-align:center;outline:none;
+  }
+  .field input:focus{border-color:var(--teal-dim)}
+  .toast{
+    position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:#26262d;color:var(--txt);border:1px solid var(--line);
+    padding:11px 18px;border-radius:10px;font-size:13.5px;font-weight:500;
+    opacity:0;pointer-events:none;transition:.25s;z-index:50;box-shadow:0 10px 30px rgba(0,0,0,.5);
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .spin{width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;display:inline-block;animation:sp .7s linear infinite;vertical-align:middle}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap brand">
+    <span class="glove">🥊</span>
+    <div>
+      <h1>PvP Filter Generator</h1>
+      <p>RyuGazzy · PolygonX Encounter Filters</p>
+    </div>
+    <div class="status"><span id="dot" class="dot"></span><span id="statusText">Loading GameData…</span></div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section>
+    <p class="label">Add a Pokémon</p>
+    <div class="searchbox">
+      <input id="search" type="text" placeholder="Search any Pokémon — targets the base form" autocomplete="off" disabled>
+      <div id="ac" class="ac"></div>
+    </div>
+    <p class="hint">Every filter targets the <b>base catchable form</b> of the line and always includes Miraidon Ultimate Mode. Rank&nbsp;1 IVs are computed for each evolution in each league.</p>
+  </section>
+
+  <section>
+    <p class="label">Leagues</p>
+    <div class="leagues" id="leagues">
+      <div class="lg on" data-lg="LC"><div class="lgn">LC</div><div class="lgc">500</div></div>
+      <div class="lg on" data-lg="GL"><div class="lgn">GL</div><div class="lgc">1500</div></div>
+      <div class="lg on" data-lg="UL"><div class="lgn">UL</div><div class="lgc">2500</div></div>
+    </div>
+    <div class="toolsrow">
+      <button class="btn btn-crimson" id="genAll" disabled>⚡ Generate every line</button>
+      <button class="btn btn-ghost" id="importBtn" disabled>Import filters</button>
+      <input type="file" id="importInput" accept=".json,application/json" multiple hidden>
+    </div>
+    <p class="hint">“Generate every line” builds a file for every catchable family in Pokémon&nbsp;GO, including regional forms (Alola / Galar / Hisui / Paldea). A regional line marked <b style="color:var(--crimson-hi)">form ID needed</b> won’t ship a guessed number — drop your existing PolygonX <code>PVP*.json</code> exports into <b>Import filters</b> and the correct form IDs fill in automatically, or type the number under the card.</p>
+  </section>
+
+  <section>
+    <div class="qhead">
+      <p class="label" style="margin:0">Queue</p>
+      <span class="qcount" id="qcount"></span>
+    </div>
+    <div id="queue" style="margin-top:10px"></div>
+  </section>
+
+</div>
+
+<div class="actionbar">
+  <div class="inner">
+    <button class="btn btn-ghost" id="clearBtn" disabled>Clear</button>
+    <button class="btn btn-primary" id="dlBtn" disabled>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+      Download (.zip)
+    </button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- constants ---------- */
+const GM_URLS = [
+  "https://raw.githubusercontent.com/pvpoke/pvpoke/master/src/data/gamemaster.json",
+  "https://pvpoke.com/data/gamemaster.json"
+];
+const SPRITE = dex => `https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon/pokemon_icon_${String(dex).padStart(3,'0')}_00.png`;
+const CAPS = { LC:500, GL:1500, UL:2500 };
+const MAX_LEVEL = 50;
+const MIRAIDON = { costume:0, form:2997, gender:0, pokedexId:1008 };
+
+/* Regional form IDs are LEARNED from the user's own PolygonX exports (never guessed).
+   Key = "<dex>:<region>" -> {form, costume}. Seeded with the one verified value. */
+let LEARNED = { "19:alolan":{form:46, costume:0} };
+const REGION_SUFFIX = { alolan:"_alolan", galarian:"_galarian", hisuian:"_hisuian", paldean:"_paldea" };
+function regionOf(speciesId){
+  if(/_alolan$/.test(speciesId)) return "alolan";
+  if(/_galarian$/.test(speciesId)) return "galarian";
+  if(/_hisuian$/.test(speciesId)) return "hisuian";
+  if(/_paldea(n)?$/.test(speciesId)) return "paldean";
+  return "";
+}
+function regionFromName(name){
+  const n=name.toLowerCase();
+  if(n.includes("(alola")) return "alolan";
+  if(n.includes("(galar")) return "galarian";
+  if(n.includes("(hisui")) return "hisuian";
+  if(n.includes("(paldea")) return "paldean";
+  return "";
+}
+const REGION_LABEL = { alolan:"Alola", galarian:"Galar", hisuian:"Hisui", paldean:"Paldea" };
+
+const CPM = {1:0.094,1.5:0.135137432,2:0.16639787,2.5:0.192650919,3:0.21573247,3.5:0.236572661,4:0.25572005,4.5:0.273530381,5:0.29024988,5.5:0.306057377,6:0.3210876,6.5:0.335445036,7:0.34921268,7.5:0.362457751,8:0.37523559,8.5:0.387592406,9:0.39956728,9.5:0.411193551,10:0.42250001,10.5:0.432926419,11:0.44310755,11.5:0.453059958,12:0.46279839,12.5:0.472336083,13:0.48168495,13.5:0.490855807,14:0.49985844,14.5:0.508701765,15:0.51739395,15.5:0.525942511,16:0.53435433,16.5:0.542635767,17:0.55079269,17.5:0.558830576,18:0.56675452,18.5:0.574569153,19:0.58227891,19.5:0.589887917,20:0.59740001,20.5:0.604818814,21:0.61215729,21.5:0.619399365,22:0.62656713,22.5:0.633644533,23:0.64065295,23.5:0.647576426,24:0.65443563,24.5:0.661214806,25:0.667934,25.5:0.674577537,26:0.68116492,26.5:0.687680648,27:0.69414365,27.5:0.700538673,28:0.70688421,28.5:0.713164996,29:0.71939909,29.5:0.725571552,30:0.7317,30.5:0.734741009,31:0.73776948,31.5:0.740785574,32:0.74378943,32.5:0.746781211,33:0.74976104,33.5:0.752729087,34:0.75568551,34.5:0.758630378,35:0.76156384,35.5:0.764486065,36:0.76739717,36.5:0.770297266,37:0.7731865,37.5:0.776064962,38:0.77893275,38.5:0.781790055,39:0.78463697,39.5:0.787473578,40:0.79030001,40.5:0.792803968,41:0.79530001,41.5:0.797800015,42:0.80030001,42.5:0.802799995,43:0.80530001,43.5:0.807799995,44:0.81030001,44.5:0.81279999,45:0.81530001,45.5:0.817799985,46:0.82030001,46.5:0.82279998,47:0.82530001,47.5:0.827799975,48:0.83030001,48.5:0.83279997,49:0.83530001,49.5:0.837799965,50:0.84029999};
+const LEVELS = Object.keys(CPM).map(Number).sort((a,b)=>a-b);
+
+/* ---------- rank-1 engine ---------- */
+function calcCP(base, iv, cpm){
+  const a=base.atk+iv.a, d=base.def+iv.d, s=base.sta+iv.s;
+  return Math.max(10, Math.floor(a*Math.sqrt(d)*Math.sqrt(s)*cpm*cpm/10));
+}
+function rank1(base, cap){
+  let best=null;
+  for(let a=0;a<=15;a++)for(let d=0;d<=15;d++)for(let s=0;s<=15;s++){
+    let lvl=null;
+    for(const L of LEVELS){ if(L>MAX_LEVEL) break; if(calcCP(base,{a,d,s},CPM[L])<=cap) lvl=L; }
+    if(lvl===null) continue;
+    const cpm=CPM[lvl];
+    const sp=(base.atk+a)*cpm*(base.def+d)*cpm*Math.floor((base.sta+s)*cpm);
+    if(!best || sp>best.sp || (Math.abs(sp-best.sp)<1e-9 && a<best.a)){
+      best={a,d,s,level:Math.floor(lvl),sp};
+    }
+  }
+  return best ? {ivAtk:best.a,ivDef:best.d,ivSta:best.s,levelMax:best.level} : null;
+}
+
+/* ---------- data ---------- */
+let BYID = {};            // speciesId -> entry
+let ROOTS = [];           // array of root speciesIds (base catchable)
+const REGION = s => s.replace(/Alolan/g,'Alola').replace(/Galarian/g,'Galar').replace(/Hisuian/g,'Hisui').replace(/Paldean/g,'Paldea');
+
+function isExcluded(p){
+  const id=p.speciesId||"";
+  if(id.includes("_mega")||id.includes("_shadow")) return true;
+  if(p.tags && (p.tags.includes("mega")||p.tags.includes("shadow"))) return true;
+  if(p.released===false) return true;
+  return false;
+}
+function rootOf(id){
+  let cur=BYID[id], guard=0;
+  while(cur && cur.family && cur.family.parent && BYID[cur.family.parent] && guard++<10) cur=BYID[cur.family.parent];
+  return cur ? cur.speciesId : id;
+}
+function lineOf(rootId){         // root + all descendants, in evolution order
+  const out=[], seen=new Set();
+  (function walk(id){
+    const p=BYID[id]; if(!p||seen.has(id)) return; seen.add(id); out.push(p);
+    const evos=(p.family&&p.family.evolutions)||[];
+    evos.forEach(walk);
+  })(rootId);
+  return out;
+}
+function resolveForm(root){
+  const region=regionOf(root.speciesId);
+  if(!region) return { form:0, region:"", known:true };          // standard form = 0 (verified)
+  const key=root.dex+":"+region;
+  if(LEARNED[key]) return { form:LEARNED[key].form, costume:LEARNED[key].costume||0, region, known:true };
+  return { form:0, region, known:false };                         // regional, form unknown -> flag, don't guess
+}
+function fileBase(name){ return "PVP"+REGION(name).replace(/[^A-Za-z0-9]/g,""); }
+
+async function loadGM(){
+  let data=null, err=null;
+  for(const url of GM_URLS){
+    try{ const r=await fetch(url); if(r.ok){ data=await r.json(); break; } }
+    catch(e){ err=e; }
+  }
+  if(!data) throw err||new Error("no data");
+  const list=data.pokemon||data;
+  BYID={}; 
+  list.forEach(p=>{ if(p&&p.speciesId&&!isExcluded(p)) BYID[p.speciesId]=p; });
+  // roots = catchable bases (no parent inside our set)
+  const set=new Set();
+  Object.values(BYID).forEach(p=>{
+    const r=rootOf(p.speciesId);
+    if(BYID[r]) set.add(r);
+  });
+  ROOTS=[...set];
+}
+
+/* ---------- filter building ---------- */
+function buildFamily(rootId, leagues, opts={}){
+  const root=BYID[rootId];
+  if(!root) return null;
+  const members=lineOf(rootId);
+  const rf=resolveForm(root);
+  const form = opts.form!=null ? opts.form : rf.form;
+  const costume = opts.costume!=null ? opts.costume : (rf.costume||0);
+  const formKnown = opts.form!=null ? true : rf.known;
+  const target={ costume, form, gender:0, pokedexId:root.dex };
+
+  // 1) compute every entry
+  let entries=[];
+  for(const lg of leagues){
+    for(const m of members){
+      const base={atk:m.baseStats.atk, def:m.baseStats.def, sta:m.baseStats.hp};
+      // skip forms that can't reach this league's cap (undersized = pointless filter)
+      if(calcCP(base,{a:15,d:15,s:15},CPM[MAX_LEVEL]) < CAPS[lg]) continue;
+      const r=rank1(base, CAPS[lg]);
+      if(!r) continue;
+      entries.push({ league:lg, name:REGION(m.speciesName), iv:r });
+    }
+  }
+  // 2) threshold = count of identical IV spreads across the whole family
+  const key=iv=>iv.ivAtk+"/"+iv.ivDef+"/"+iv.ivSta;
+  const counts={};
+  entries.forEach(e=>{ const k=key(e.iv); counts[k]=(counts[k]||0)+1; });
+  entries.forEach(e=>{ e.threshold=counts[key(e.iv)]; });
+  if(!entries.length) return null;
+
+  return {
+    rootId, dex:root.dex, name:REGION(root.speciesName),
+    fileName:fileBase(root.speciesName)+".json",
+    target, form, costume, region:rf.region, formKnown,
+    userForm:!!opts.userForm, userCostume:!!opts.userCostume,
+    leagues:[...leagues], entries
+  };
+}
+
+function toJSON(fam){
+  const map={};
+  fam.entries.forEach(e=>{
+    const id=crypto.randomUUID();
+    map[id]={
+      catchOptionsBerries:[], catchOptionsPokeballs:[], cpMax:0, cpMin:0, enabled:true,
+      encounterFilterId:id,
+      encounterFilterName:`🥊 ${e.league} ${e.name}`,
+      filterCp:false, filterGreatLeagueTopRank:false, filterIvSum:false, filterLevel:true,
+      filterOnlyCatch:false, filterPokemonId:true, filterShowcaseScore:false, filterSize:false,
+      filterSpecificIv:true, filterTicketed:false, filterType:false, filterUltraLeagueTopRank:false,
+      ivSets:[{ivAtk:e.iv.ivAtk, ivDef:e.iv.ivDef, ivSta:e.iv.ivSta}],
+      ivSumMax:45, ivSumMin:0, levelMax:e.iv.levelMax, levelMin:1, minShowcaseScore:0,
+      onlyApplyPurificationBonus:false, onlyBackground:false, onlyShiny:false,
+      pokemonDetailsCatchOriginDmax:false,
+      pokemonId:[ {...fam.target}, {...MIRAIDON} ],
+      removePokemonIdFromListThreshold:e.threshold,
+      removePokemonIdFromListWhenCaught:true,
+      sizeXl:false, sizeXs:false, sizeXxl:false, sizeXxs:false,
+      targetTypes:[], ticketedValue:false
+    };
+  });
+  return JSON.stringify({encounterFilters:map}, null, 2);
+}
+
+/* ---------- state + persistence ---------- */
+let QUEUE=[];   // array of family objects (built)
+let LEAGUES=new Set(["LC","GL","UL"]);
+const store={
+  get(){ try{ return JSON.parse(localStorage.getItem("ryu_pvp")||"null"); }catch(e){ return null; } },
+  set(v){ try{ localStorage.setItem("ryu_pvp",JSON.stringify(v)); }catch(e){} }
+};
+function persist(){ store.set({ leagues:[...LEAGUES], roots:QUEUE.map(f=>({rootId:f.rootId,form:f.form,costume:f.costume,userForm:f.userForm,userCostume:f.userCostume})) }); }
+function rebuildQueue(){ QUEUE=QUEUE.map(f=>buildFamily(f.rootId,[...LEAGUES],{
+  form:f.userForm?f.form:undefined, costume:f.userCostume?f.costume:undefined,
+  userForm:f.userForm, userCostume:f.userCostume
+})).filter(Boolean); }
+
+/* ---------- UI ---------- */
+const $=id=>document.getElementById(id);
+function toast(msg){ const t=$("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),1900); }
+
+function renderQueue(){
+  const q=$("queue");
+  $("qcount").textContent = QUEUE.length ? `${QUEUE.length} line${QUEUE.length>1?"s":""} · ${QUEUE.reduce((n,f)=>n+f.entries.length,0)} filters` : "";
+  const has=QUEUE.length>0;
+  $("dlBtn").disabled=!has; $("clearBtn").disabled=!has;
+  $("dlBtn").innerHTML = QUEUE.length===1
+    ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg> Download .json`
+    : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg> Download (.zip)`;
+
+  if(!has){ q.innerHTML=`<div class="empty"><strong>Queue is empty</strong>Search a Pokémon above, or generate every line.</div>`; return; }
+
+  q.innerHTML = QUEUE.map((f,i)=>{
+    const byLeague = f.leagues.map(lg=>{
+      const rows=f.entries.filter(e=>e.league===lg).map(e=>{
+        const dup=e.threshold>1;
+        return `<div class="row">
+          <span class="rn">${e.name}</span>
+          <span class="iv">${e.iv.ivAtk}/${e.iv.ivDef}/${e.iv.ivSta}</span>
+          <span class="lvl">Lv ≤ ${e.iv.levelMax}</span>
+          <span class="badge ${dup?'dup':''}">${e.threshold}<span class="x"> ×</span></span>
+        </div>`;
+      }).join("");
+      return `<div class="lgblock"><span class="lgtag">${lg} · ${CAPS[lg]}</span>${rows}</div>`;
+    }).join("");
+
+    const adv = `<details class="adv"><summary>Form / costume ID</summary><div class="adv-body">
+        <div class="field"><label>Base form ID</label><input type="number" value="${f.form}" data-adv="form" data-i="${i}"></div>
+        <div class="field"><label>Costume ID</label><input type="number" value="${f.costume}" data-adv="costume" data-i="${i}"></div>
+        <p class="hint" style="margin:2px 0 0">Standard forms use 0. Set the PolygonX form number for regional variants, or a costume ID for costumed catches. IVs are unaffected.</p>
+      </div></details>`;
+
+    return `<div class="card">
+      <div class="card-top">
+        <img class="sprite" src="${SPRITE(f.dex)}" alt="" onerror="this.style.visibility='hidden'">
+        <div class="card-title">
+          <h3>${f.name}${f.region?` <span class="rtag">${REGION_LABEL[f.region]}</span>`:""}</h3>
+          <div class="file">${f.fileName}${!f.formKnown?` <span class="flag">form ID needed</span>`:""}</div>
+        </div>
+        <div class="card-actions">
+          <button class="icon-btn" title="Download this file" data-dl="${i}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+          </button>
+          <button class="icon-btn danger" title="Remove" data-rm="${i}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m-1 0v14H9V6M10 10v6M14 10v6"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="rows">${byLeague}${adv}</div>
+    </div>`;
+  }).join("");
+
+  q.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>{ QUEUE.splice(+b.dataset.rm,1); persist(); renderQueue(); });
+  q.querySelectorAll("[data-dl]").forEach(b=>b.onclick=()=>{ const f=QUEUE[+b.dataset.dl]; downloadText(f.fileName, toJSON(f)); });
+  q.querySelectorAll("[data-adv]").forEach(inp=>inp.onchange=()=>{
+    const i=+inp.dataset.i, val=parseInt(inp.value||"0",10)||0, cur=QUEUE[i];
+    const editForm=inp.dataset.adv==="form", editCost=inp.dataset.adv==="costume";
+    QUEUE[i]=buildFamily(cur.rootId,[...LEAGUES],{
+      form: editForm?val:(cur.userForm?cur.form:undefined),
+      costume: editCost?val:(cur.userCostume?cur.costume:undefined),
+      userForm: cur.userForm||editForm,
+      userCostume: cur.userCostume||editCost
+    });
+    persist(); renderQueue();
+  });
+}
+
+function addRoot(rootId){
+  if(!BYID[rootId]) return;
+  if(QUEUE.some(f=>f.rootId===rootId)){ toast("Already in queue"); return; }
+  if(!LEAGUES.size){ toast("Enable at least one league"); return; }
+  const fam=buildFamily(rootId,[...LEAGUES]);
+  if(!fam){ toast("Could not build that line"); return; }
+  QUEUE.unshift(fam); persist(); renderQueue();
+  toast(`Added ${fam.name}`);
+}
+
+/* ---------- search ---------- */
+let acItems=[], acIdx=-1;
+function runSearch(term){
+  term=term.trim().toLowerCase();
+  const ac=$("ac");
+  if(term.length<2){ ac.classList.remove("show"); return; }
+  const seen=new Set(), res=[];
+  for(const p of Object.values(BYID)){
+    if(REGION(p.speciesName).toLowerCase().includes(term)){
+      const root=rootOf(p.speciesId);
+      if(seen.has(root)||!BYID[root]) continue;
+      seen.add(root);
+      const r=BYID[root];
+      res.push({rootId:root, dex:r.dex, name:REGION(r.speciesName),
+        line:lineOf(root).map(x=>REGION(x.speciesName)).join(" → ")});
+    }
+    if(res.length>=40) break;
+  }
+  res.sort((a,b)=>a.dex-b.dex);
+  acItems=res.slice(0,25); acIdx=-1;
+  if(!acItems.length){ ac.innerHTML=`<div class="ac-item" style="color:var(--muted-2)">No match</div>`; ac.classList.add("show"); return; }
+  ac.innerHTML=acItems.map((it,i)=>`<div class="ac-item" data-i="${i}">
+      <span class="dex">#${String(it.dex).padStart(3,"0")}</span>
+      <span class="nm">${it.name}</span>
+      <span class="fam">${it.line!==it.name?it.line:"single"}</span>
+    </div>`).join("");
+  ac.classList.add("show");
+  ac.querySelectorAll(".ac-item[data-i]").forEach(el=>el.onclick=()=>choose(+el.dataset.i));
+}
+function choose(i){ const it=acItems[i]; if(!it) return; addRoot(it.rootId); $("search").value=""; $("ac").classList.remove("show"); }
+
+/* ---------- downloads ---------- */
+function downloadText(name, text){
+  const blob=new Blob([text],{type:"application/json"});
+  const url=URL.createObjectURL(blob), a=document.createElement("a");
+  a.href=url; a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+async function downloadAll(){
+  if(QUEUE.length===1){ const f=QUEUE[0]; downloadText(f.fileName,toJSON(f)); return; }
+  const zip=new JSZip();
+  const used={};
+  QUEUE.forEach(f=>{ let n=f.fileName; if(used[n]){ n=n.replace(/\.json$/,`_${used[n]}.json`);} used[f.fileName]=(used[f.fileName]||0)+1; zip.file(n,toJSON(f)); });
+  const blob=await zip.generateAsync({type:"blob"});
+  const url=URL.createObjectURL(blob), a=document.createElement("a");
+  a.href=url; a.download=`RyuGazzy_PvP_Filters_${QUEUE.length}.zip`; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+/* ---------- generate all ---------- */
+function generateAll(){
+  if(!LEAGUES.size){ toast("Enable at least one league"); return; }
+  // standard forms + regional forms (Alola/Galar/Hisui/Paldea)
+  const wanted=ROOTS.filter(id=>{ const r=regionOf(id); return !id.includes("_") || r!==""; });
+  const btn=$("genAll"); btn.disabled=true; const old=btn.innerHTML; btn.innerHTML=`<span class="spin"></span> Building ${wanted.length}…`;
+  setTimeout(()=>{
+    QUEUE = wanted.map(id=>buildFamily(id,[...LEAGUES])).filter(Boolean)
+             .sort((a,b)=> a.dex-b.dex || a.name.localeCompare(b.name));
+    persist(); renderQueue();
+    btn.disabled=false; btn.innerHTML=old;
+    const unknown=QUEUE.filter(f=>!f.formKnown).length;
+    toast(unknown ? `Built ${QUEUE.length} lines · ${unknown} need a form ID` : `Built ${QUEUE.length} lines`);
+    window.scrollTo({top:document.querySelector('#queue').offsetTop-70,behavior:'smooth'});
+  },30);
+}
+
+/* ---------- learn verified form/costume IDs from the user's own exports ---------- */
+function learnFromFilters(obj){
+  let learned=0;
+  const filters = obj && obj.encounterFilters ? Object.values(obj.encounterFilters) : [];
+  for(const f of filters){
+    const ids=(f.pokemonId||[]).filter(p=>p && p.pokedexId!==1008); // ignore Miraidon
+    if(!ids.length) continue;
+    const t=ids[0];
+    const region = regionFromName(f.encounterFilterName||"");
+    if(!region) continue;                        // only learn regional/variant forms
+    const key=t.pokedexId+":"+region;
+    const prev=LEARNED[key];
+    if(!prev || prev.form!==t.form || (prev.costume||0)!==(t.costume||0)){
+      LEARNED[key]={ form:t.form||0, costume:t.costume||0 };
+      learned++;
+    }
+  }
+  return learned;
+}
+function importFiles(fileList){
+  const files=[...fileList]; if(!files.length) return;
+  let done=0, learned=0, bad=0;
+  files.forEach(file=>{
+    const rd=new FileReader();
+    rd.onload=()=>{
+      try{ learned+=learnFromFilters(JSON.parse(rd.result)); }catch(e){ bad++; }
+      if(++done===files.length){
+        try{ localStorage.setItem("ryu_learned",JSON.stringify(LEARNED)); }catch(e){}
+        rebuildQueue(); persist(); renderQueue();
+        toast(learned ? `Learned ${learned} form ID${learned>1?"s":""}` : (bad?"No valid filters found":"No new form IDs"));
+      }
+    };
+    rd.readAsText(file);
+  });
+}
+
+/* ---------- wire up ---------- */
+$("leagues").querySelectorAll(".lg").forEach(el=>el.onclick=()=>{
+  const lg=el.dataset.lg;
+  if(LEAGUES.has(lg)){ LEAGUES.delete(lg); el.classList.remove("on"); }
+  else { LEAGUES.add(lg); el.classList.add("on"); }
+  rebuildQueue(); persist(); renderQueue();
+});
+$("search").addEventListener("input",e=>runSearch(e.target.value));
+$("search").addEventListener("keydown",e=>{
+  const ac=$("ac"); if(!ac.classList.contains("show")) return;
+  const items=ac.querySelectorAll(".ac-item[data-i]");
+  if(e.key==="ArrowDown"){ e.preventDefault(); acIdx=Math.min(acIdx+1,items.length-1); }
+  else if(e.key==="ArrowUp"){ e.preventDefault(); acIdx=Math.max(acIdx-1,0); }
+  else if(e.key==="Enter"){ e.preventDefault(); if(acIdx>=0) choose(acIdx); else if(acItems.length) choose(0); return; }
+  else return;
+  items.forEach((el,i)=>el.classList.toggle("active",i===acIdx));
+});
+document.addEventListener("click",e=>{ if(!e.target.closest(".searchbox")) $("ac").classList.remove("show"); });
+$("genAll").onclick=generateAll;
+$("importBtn").onclick=()=>$("importInput").click();
+$("importInput").onchange=e=>{ importFiles(e.target.files); e.target.value=""; };
+$("dlBtn").onclick=downloadAll;
+$("clearBtn").onclick=()=>{ QUEUE=[]; persist(); renderQueue(); };
+
+/* ---------- boot ---------- */
+(async function(){
+  try{
+    await loadGM();
+    $("dot").className="dot ok";
+    $("statusText").textContent=`${Object.keys(BYID).length} Pokémon ready`;
+    $("search").disabled=false; $("genAll").disabled=false; $("importBtn").disabled=false;
+    // restore learned form IDs
+    try{ const L=JSON.parse(localStorage.getItem("ryu_learned")||"null"); if(L) LEARNED={...LEARNED,...L}; }catch(e){}
+    // restore
+    const saved=store.get();
+    if(saved){
+      LEAGUES=new Set(saved.leagues&&saved.leagues.length?saved.leagues:["LC","GL","UL"]);
+      $("leagues").querySelectorAll(".lg").forEach(el=>el.classList.toggle("on",LEAGUES.has(el.dataset.lg)));
+      if(saved.roots) QUEUE=saved.roots.map(r=>buildFamily(r.rootId,[...LEAGUES],{
+        form:r.userForm?r.form:undefined, costume:r.userCostume?r.costume:undefined,
+        userForm:r.userForm, userCostume:r.userCostume
+      })).filter(Boolean);
+    }
+    renderQueue();
+  }catch(e){
+    $("dot").className="dot err";
+    $("statusText").textContent="GameData failed — check network settings";
+    renderQueue();
+  }
+})();
+</script>
+</body>
+</html>
