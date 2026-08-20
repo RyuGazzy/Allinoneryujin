@@ -170,6 +170,8 @@
     background:#101014;border:1px solid var(--line);border-radius:8px;text-align:center;outline:none;
   }
   .field input:focus{border-color:var(--teal-dim)}
+  .field label small{display:block;margin-top:2px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;color:var(--teal-dim);overflow-wrap:anywhere}
+  .proto-pill{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--teal-dim);border:1px solid var(--line);background:#101014;border-radius:999px;padding:2px 7px}
   .toast{
     position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);
     background:#26262d;color:var(--txt);border:1px solid var(--line);
@@ -180,6 +182,128 @@
   .spin{width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;display:inline-block;animation:sp .7s linear infinite;vertical-align:middle}
   @keyframes sp{to{transform:rotate(360deg)}}
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  /* Main tool tabs */
+  .main-tabs{
+    display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 4px;padding:5px;
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  }
+  .main-tab{
+    flex:1 1 calc(50% - 8px);border:0;background:transparent;color:var(--muted);
+    padding:11px 10px;border-radius:10px;cursor:pointer;
+    font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;
+    transition:.15s;
+  }
+  .main-tab:hover{color:var(--txt);background:#1c1c21}
+  .main-tab.active{background:var(--teal);color:#04211a}
+  .tool-pane{display:none}
+  .tool-pane.active{display:block}
+  .pane-actionbar{display:none}
+  .pane-actionbar.active{display:block}
+
+  /* PvP Config Maker */
+  .preset-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .preset{
+    text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:12px;
+    padding:12px;cursor:pointer;color:var(--txt);transition:.15s;
+  }
+  .preset:hover{border-color:var(--muted-2)}
+  .preset.on{border-color:var(--teal);background:linear-gradient(180deg,rgba(21,224,180,.10),rgba(21,224,180,.03))}
+  .preset strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:14px}
+  .preset span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+  .config-panel{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:14px 15px;margin-top:10px;
+  }
+  .switchrow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #232329}
+  .switchrow:last-child{border-bottom:0}
+  .switchrow .copy{flex:1}
+  .switchrow strong{display:block;font-size:13px}
+  .switchrow small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+  .toggle{
+    width:42px;height:24px;border-radius:20px;background:#2a2a31;border:1px solid #3a3a43;
+    position:relative;cursor:pointer;flex:none;transition:.15s;
+  }
+  .toggle::after{
+    content:'';position:absolute;width:18px;height:18px;border-radius:50%;
+    left:2px;top:2px;background:#8b8b93;transition:.15s;
+  }
+  .toggle.on{background:rgba(21,224,180,.18);border-color:var(--teal-dim)}
+  .toggle.on::after{left:20px;background:var(--teal)}
+  .cfg-input{
+    width:100%;padding:11px 12px;background:#101014;border:1px solid var(--line);
+    border-radius:9px;color:var(--txt);font-family:'JetBrains Mono',monospace;font-size:12px;outline:none;
+  }
+  .cfg-input:focus{border-color:var(--teal-dim)}
+  .summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+  .stat{
+    background:#101014;border:1px solid var(--line);border-radius:10px;padding:10px 11px;
+  }
+  .stat b{display:block;font-family:'JetBrains Mono',monospace;font-size:17px;color:var(--teal)}
+  .stat span{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+  .config-preview{
+    margin-top:10px;background:#101014;border:1px solid var(--line);border-radius:10px;
+    padding:11px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);
+    max-height:190px;overflow:auto;white-space:pre-wrap;word-break:break-word;
+  }
+  .identity-note{
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal-dim);
+    background:#101014;border:1px solid var(--line);padding:8px 10px;border-radius:8px;margin-top:9px
+  }
+  @media (min-width:620px){
+    .preset-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .summary-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  }
+
+  /* Event + News tools */
+  .form-grid{display:grid;grid-template-columns:1fr;gap:10px}
+  .field-block{display:flex;flex-direction:column;gap:6px}
+  .field-block label{font-size:12px;color:var(--muted);font-weight:600}
+  .text-input,.text-area,.select-input{
+    width:100%;background:#101014;border:1px solid var(--line);color:var(--txt);
+    border-radius:10px;padding:11px 12px;font:13px/1.45 'Inter',sans-serif;outline:none
+  }
+  .text-area{min-height:108px;resize:vertical;font-family:'JetBrains Mono',monospace;font-size:12px}
+  .text-input:focus,.text-area:focus,.select-input:focus{border-color:var(--teal-dim)}
+  .event-targets{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .target-chip{font-family:'JetBrains Mono',monospace;font-size:11px;border:1px solid var(--line);background:#101014;border-radius:999px;padding:5px 8px;color:#d8d8de}
+  .previewbox{white-space:pre-wrap;background:#101014;border:1px solid var(--line);border-radius:12px;padding:13px;font-family:'JetBrains Mono',monospace;font-size:11.5px;max-height:420px;overflow:auto;color:#d9d9df}
+  .stadium-link{font-size:10px;font-weight:700;color:#ffb35a;text-decoration:none;border:1px solid rgba(255,179,90,.35);border-radius:999px;padding:2px 6px;margin-left:auto;white-space:nowrap}
+  .stadium-link:hover{border-color:#ffb35a;color:#ffd3a0}
+  .source-card{background:rgba(21,224,180,.05);border:1px solid rgba(21,224,180,.2);border-radius:12px;padding:11px 12px;color:var(--muted);font-size:12px}
+  .source-card b{color:var(--teal)}
+  .mini-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
+  .mini-actions .btn{flex:0 1 auto;padding:10px 12px}
+  .news-columns{display:grid;grid-template-columns:1fr;gap:10px}
+  .official-news-row{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px}
+  .official-news-status{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.45}
+  .official-news-status.ok{color:var(--teal-dim)}
+  .official-news-status.err{color:#f19a9a}
+  .target-chip.warn{border-color:rgba(232,178,58,.45);color:#e8b23a;background:rgba(232,178,58,.06)}
+  .source-pill{display:inline-flex;align-items:center;gap:5px;padding:2px 7px;border-radius:999px;border:1px solid rgba(21,224,180,.25);color:var(--teal-dim);font-family:'JetBrains Mono',monospace;font-size:10px;margin-left:6px}
+  @media (min-width:620px){.form-grid.two,.news-columns{grid-template-columns:1fr 1fr}.official-news-row{grid-template-columns:minmax(0,1fr) auto}}
+
+
+  /* Custom news templates + IV Parser */
+  .template-help{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+  .token-pill{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--teal-dim);background:#101014;border:1px solid var(--line);border-radius:999px;padding:4px 7px}
+  .template-editor{min-height:260px}
+  .parser-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .parser-grid .field-block{min-width:0}
+  .parser-output{min-height:150px}
+  .parser-results{display:flex;flex-direction:column;gap:9px;margin-top:10px}
+  .parser-row{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 12px}
+  .parser-row.bad{border-color:rgba(199,52,52,.55);background:rgba(199,52,52,.06)}
+  .parser-row-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .parser-row-head strong{font-family:'Space Grotesk',sans-serif;font-size:13px}
+  .parser-line{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);overflow-wrap:anywhere;margin-top:5px}
+  .parser-meta{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.55}
+  .parser-error{font-size:11px;color:#f19a9a;margin-top:5px}
+  .parser-legend{display:grid;grid-template-columns:1fr;gap:6px;margin-top:10px}
+  .parser-legend div{font-size:11px;color:var(--muted);background:#101014;border:1px solid var(--line);border-radius:8px;padding:7px 9px}
+  .parser-legend b{color:var(--txt);font-family:'JetBrains Mono',monospace}
+  @media (min-width:620px){.parser-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.parser-legend{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 </style>
 </head>
 <body>
@@ -187,50 +311,275 @@
   <div class="wrap brand">
     <span class="glove">🥊</span>
     <div>
-      <h1>PvP Filter Generator</h1>
-      <p>RyuGazzy · PolygonX Encounter Filters</p>
+      <h1>PolygonX PvP Toolkit</h1>
+      <p>RyuGazzy · PvP + Events + News + IV Parser</p>
     </div>
     <div class="status"><span id="dot" class="dot"></span><span id="statusText">Loading GameData…</span></div>
   </div>
 </header>
 
 <div class="wrap">
+  <nav class="main-tabs" aria-label="PvP tools">
+    <button class="main-tab active" data-tab="filters">PvP Filters</button>
+    <button class="main-tab" data-tab="config">PvP Config Maker</button>
+    <button class="main-tab" data-tab="event">Event Config</button>
+    <button class="main-tab" data-tab="news">News Posts</button>
+    <button class="main-tab" data-tab="parser">IV Parser</button>
+  </nav>
 
-  <section>
-    <p class="label">Add a Pokémon</p>
-    <div class="searchbox">
-      <input id="search" type="text" placeholder="Search any Pokémon — targets the base form" autocomplete="off" disabled>
-      <div id="ac" class="ac"></div>
-    </div>
-    <p class="hint">Every filter targets the <b>base catchable form</b> of the line and always includes Miraidon Ultimate Mode. Rank&nbsp;1 IVs are computed for each evolution in each league.</p>
-  </section>
+  <main id="pane-filters" class="tool-pane active">
+    <section>
+      <p class="label">Add a Pokémon</p>
+      <div class="searchbox">
+        <input id="search" type="text" placeholder="Search any Pokémon or supported form" autocomplete="off" disabled>
+        <div id="ac" class="ac"></div>
+      </div>
+      <p class="hint">Every filter targets the catchable root of that line and always includes Miraidon Ultimate Mode. Supported alternate-form IDs are resolved from the embedded proto enum. Rank&nbsp;1 IVs are computed locally using the same stat-product method used by Stadium Gaming, with direct Stadium rank-checker links for every result.</p>
+    </section>
 
-  <section>
-    <p class="label">Leagues</p>
-    <div class="leagues" id="leagues">
-      <div class="lg on" data-lg="LC"><div class="lgn">LC</div><div class="lgc">500</div></div>
-      <div class="lg on" data-lg="GL"><div class="lgn">GL</div><div class="lgc">1500</div></div>
-      <div class="lg on" data-lg="UL"><div class="lgn">UL</div><div class="lgc">2500</div></div>
-    </div>
-    <div class="toolsrow">
-      <button class="btn btn-crimson" id="genAll" disabled>⚡ Generate every line</button>
-      <button class="btn btn-ghost" id="importBtn" disabled>Import filters</button>
-      <input type="file" id="importInput" accept=".json,application/json" multiple hidden>
-    </div>
-    <p class="hint">“Generate every line” builds a file for every catchable family in Pokémon&nbsp;GO, including regional forms (Alola / Galar / Hisui / Paldea). A regional line marked <b style="color:var(--crimson-hi)">form ID needed</b> won’t ship a guessed number — drop your existing PolygonX <code>PVP*.json</code> exports into <b>Import filters</b> and the correct form IDs fill in automatically, or type the number under the card.</p>
-  </section>
+    <section>
+      <p class="label">Leagues</p>
+      <div class="leagues" id="leagues">
+        <div class="lg on" data-lg="LC"><div class="lgn">LC</div><div class="lgc">500</div></div>
+        <div class="lg on" data-lg="GL"><div class="lgn">GL</div><div class="lgc">1500</div></div>
+        <div class="lg on" data-lg="UL"><div class="lgn">UL</div><div class="lgc">2500</div></div>
+      </div>
+      <div class="toolsrow">
+        <button class="btn btn-crimson" id="genAll" disabled>⚡ Generate every line</button>
+        <button class="btn btn-ghost" id="importBtn" disabled>Import filters</button>
+        <input type="file" id="importInput" accept=".json,application/json" multiple hidden>
+      </div>
+      <p class="hint">“Generate every line” builds standard and supported alternate-form families. This build embeds the supplied Pokémon GO proto enums (<b>1,488 form IDs</b> and <b>89 costume IDs</b>). Known form IDs are resolved automatically; PolygonX imports and manual overrides remain available as fallbacks. Costume IDs can be selected by official proto name under each card.</p>
+    </section>
 
-  <section>
-    <div class="qhead">
-      <p class="label" style="margin:0">Queue</p>
-      <span class="qcount" id="qcount"></span>
-    </div>
-    <div id="queue" style="margin-top:10px"></div>
-  </section>
+    <section>
+      <div class="qhead">
+        <p class="label" style="margin:0">Queue</p>
+        <span class="qcount" id="qcount"></span>
+      </div>
+      <div id="queue" style="margin-top:10px"></div>
+    </section>
+  </main>
 
+  <main id="pane-config" class="tool-pane">
+    <section>
+      <p class="label">PvP config preset</p>
+      <div class="preset-grid" id="cfgPresets">
+        <button class="preset" data-preset="LC"><strong>Little Cup</strong><span>LC · CP 500</span></button>
+        <button class="preset" data-preset="GL"><strong>Great League</strong><span>GL · CP 1500</span></button>
+        <button class="preset" data-preset="UL"><strong>Ultra League</strong><span>UL · CP 2500</span></button>
+        <button class="preset on" data-preset="ALL"><strong>All Leagues</strong><span>LC + GL + UL</span></button>
+      </div>
+      <p class="hint">Presets create one combined PolygonX <code>encounterFilters</code> config instead of one file per evolution line.</p>
+    </section>
+
+    <section>
+      <p class="label">Leagues in this config</p>
+      <div class="leagues" id="cfgLeagues">
+        <div class="lg on" data-lg="LC"><div class="lgn">LC</div><div class="lgc">500</div></div>
+        <div class="lg on" data-lg="GL"><div class="lgn">GL</div><div class="lgc">1500</div></div>
+        <div class="lg on" data-lg="UL"><div class="lgn">UL</div><div class="lgc">2500</div></div>
+      </div>
+      <p class="identity-note">Polygon identity: DexID:FormID:CostumeID:Gender</p>
+    </section>
+
+    <section>
+      <p class="label">Config options</p>
+      <div class="config-panel">
+        <div class="switchrow">
+          <div class="copy">
+            <strong>Include supported alternate forms</strong>
+            <small>Uses verified proto/Polygon Form IDs; unresolved variants are skipped.</small>
+          </div>
+          <div class="toggle on" id="cfgForms" role="switch" aria-checked="true" tabindex="0"></div>
+        </div>
+        <div class="switchrow">
+          <div class="copy">
+            <strong>Remove when caught</strong>
+            <small>Enabled with duplicate-aware thresholds across the same evolution line and selected leagues.</small>
+          </div>
+          <div class="toggle on" id="cfgRemove" role="switch" aria-checked="true" tabindex="0"></div>
+        </div>
+        <div class="switchrow">
+          <div class="copy">
+            <strong>Config filename</strong>
+            <small>Downloaded as one PolygonX JSON file.</small>
+          </div>
+        </div>
+        <input id="cfgFilename" class="cfg-input" value="PolygonX_PvP_All_Leagues.json" spellcheck="false">
+      </div>
+      <div class="toolsrow">
+        <button class="btn btn-crimson" id="cfgBuild" disabled>⚡ Build PvP config</button>
+        <button class="btn btn-ghost" id="cfgReset">Reset</button>
+      </div>
+    </section>
+
+    <section>
+      <div class="qhead">
+        <p class="label" style="margin:0">Config summary</p>
+        <span class="qcount" id="cfgStatus">Not built</span>
+      </div>
+      <div id="cfgEmpty" class="empty" style="margin-top:10px">
+        <strong>No config built yet</strong>
+        Choose a preset or custom league combination, then build the config.
+      </div>
+      <div id="cfgResult" style="display:none">
+        <div class="summary-grid">
+          <div class="stat"><b id="cfgFamiliesCount">0</b><span>Families</span></div>
+          <div class="stat"><b id="cfgFiltersCount">0</b><span>Filters</span></div>
+          <div class="stat"><b id="cfgDuplicateCount">0</b><span>Duplicate IV refs</span></div>
+          <div class="stat"><b id="cfgSkippedCount">0</b><span>Skipped forms</span></div>
+        </div>
+        <div class="config-preview" id="cfgPreview"></div>
+      </div>
+    </section>
+  </main>
+
+  <main id="pane-event" class="tool-pane">
+    <section>
+      <p class="label">Official Pokémon GO News source</p>
+      <div class="source-card"><b>Source:</b> Pokémon GO News only. The toolkit first requests <code>pokemongo.com/news</code> directly; if the browser blocks cross-origin reading, it uses a read-only text transport while keeping Pokémon GO as the content source.</div>
+      <div class="official-news-row">
+        <select id="officialNewsSelect" class="select-input"><option value="">Refresh to load recent Pokémon GO news…</option></select>
+        <div class="mini-actions" style="margin-top:0"><button class="btn btn-crimson" id="officialNewsRefresh">↻ Refresh News</button><button class="btn btn-primary" id="officialNewsLoad" disabled>Load Event</button></div>
+      </div>
+      <div id="officialNewsStatus" class="official-news-status">Not loaded yet.</div>
+      <div class="form-grid two" style="margin-top:12px">
+        <div class="field-block"><label>Event name</label><input id="eventTitle" class="text-input" placeholder="Ultra Unlock: Water Festival"></div>
+        <div class="field-block"><label>Official Pokémon GO News URL</label><input id="eventUrl" class="text-input" placeholder="https://pokemongo.com/news/"><div class="mini-actions"><button class="btn btn-ghost" id="officialUrlLoad">Load this URL</button></div></div>
+      </div>
+      <div class="field-block" style="margin-top:10px"><label>Official article text / manual fallback</label><textarea id="eventRaw" class="text-area" placeholder="Loading an official Pokémon GO article fills this automatically. You can still paste your own ID list such as (54:286) Psyduck."></textarea></div>
+      <div class="mini-actions">
+        <button class="btn btn-crimson" id="eventParse">Parse Pokémon</button>
+        <button class="btn btn-ghost" id="eventClear">Clear</button>
+      </div>
+      <p class="hint">Official articles are mapped through the loaded Pokémon data + embedded proto forms. Manual lines still recognise <code>(Dex)</code>, <code>(Dex:Form)</code>, <code>(Dex:Form:Costume)</code> and <code>(Dex:Form:Costume:Gender)</code>.</p>
+    </section>
+    <section>
+      <div class="qhead"><p class="label" style="margin:0">Parsed event targets</p><span class="qcount" id="eventCount">0 Pokémon</span></div>
+      <div id="eventTargets" class="event-targets"></div>
+      <div id="eventNoTargets" class="empty" style="margin-top:10px"><strong>No event Pokémon yet</strong>Refresh Pokémon GO News, load an article, or paste a manual ID list.</div>
+    </section>
+    <section>
+      <p class="label">Polygon event config</p>
+      <div class="source-card"><b>Config model:</b> one Polygon encounter filter per unique event identity. PvP IV filters remain separate; this tab catches the event targets by Dex:Form:Costume:Gender.</div>
+      <div class="form-grid two" style="margin-top:10px">
+        <div class="field-block"><label>Filename</label><input id="eventFilename" class="text-input" value="PolygonX_Event_Config.json"></div>
+        <div class="field-block"><label>Filter prefix</label><input id="eventPrefix" class="text-input" value="🎪 Event"></div>
+      </div>
+      <div class="mini-actions"><button class="btn btn-crimson" id="eventBuild">⚡ Build event config</button></div>
+      <div id="eventPreview" class="previewbox" style="margin-top:10px;display:none"></div>
+    </section>
+  </main>
+
+  <main id="pane-news" class="tool-pane">
+    <section>
+      <p class="label">News post template</p>
+      <div class="form-grid two">
+        <div class="field-block"><label>Template</label><select id="newsTemplate" class="select-input"><option value="community">Community Day</option><option value="event" selected>General event</option><option value="hatch">Hatch Day</option><option value="custom">Custom / mixed</option></select></div>
+        <div class="field-block"><label>Title line</label><input id="newsTitle" class="text-input" placeholder="<:Water_type:...> **__Ultra Unlock: Water Festival__** <:Water_type:...>"></div>
+      </div>
+      <div class="form-grid two" style="margin-top:10px">
+        <div class="field-block"><label>Date / time lines</label><textarea id="newsDate" class="text-area" style="min-height:76px" placeholder="Tuesday, August 18, 2026 at 10:00am to\nMonday, August 24, 2026 at 8:00pm local time"></textarea></div>
+        <div class="field-block"><label>Official link</label><input id="newsUrl" class="text-input" placeholder="https://pokemongo.com/news/..."><div class="mini-actions"><button class="btn btn-ghost" id="newsLoadEvent">Use Event tab</button><button class="btn btn-ghost" id="newsLoadOfficial">Load Pokémon GO article</button></div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="qhead"><p class="label" style="margin:0">Custom Discord template</p><span class="qcount" id="newsCustomState">Built-in layout</span></div>
+      <div class="source-card" style="margin-top:10px"><b>Paste your own template:</b> formatting, custom Discord emoji IDs, headings and section order stay exactly as you write them. Put data placeholders where the event content belongs. Wrap optional sections in <code>{{#WILD}}...{{/WILD}}</code> style blocks so empty sections disappear automatically.</div>
+      <div class="form-grid two" style="margin-top:10px">
+        <div class="field-block"><label>Template name</label><input id="newsCustomName" class="text-input" placeholder="Stephany Event Template"></div>
+        <div class="field-block"><label>Saved templates</label><select id="newsCustomSelect" class="select-input"><option value="">No saved template selected</option></select></div>
+      </div>
+      <div class="field-block" style="margin-top:10px"><label>Template text</label><textarea id="newsCustomTemplate" class="text-area template-editor" spellcheck="false" placeholder="Paste a Discord post template here. Use {{TITLE}}, {{DATE}}, {{OFFICIAL_LINK}}, {{WILD}}, {{PVP}}, {{RESEARCH}}, {{EGGS}}, {{TIER1}}, {{TIER3}}, {{BONUSES}}, {{PASS}}, {{EXTRA}}, {{FOOTER}}."></textarea></div>
+      <div class="template-help">
+        <span class="token-pill">{{TITLE}}</span><span class="token-pill">{{TITLE_TEXT}}</span><span class="token-pill">{{DATE}}</span><span class="token-pill">{{URL}}</span><span class="token-pill">{{OFFICIAL_LINK}}</span><span class="token-pill">{{WILD}}</span><span class="token-pill">{{PVP}}</span><span class="token-pill">{{LURE}}</span><span class="token-pill">{{RESEARCH}}</span><span class="token-pill">{{EGGS}}</span><span class="token-pill">{{TIER1}}</span><span class="token-pill">{{TIER3}}</span><span class="token-pill">{{GBL}}</span><span class="token-pill">{{BONUSES}}</span><span class="token-pill">{{PASS}}</span><span class="token-pill">{{EXTRA}}</span><span class="token-pill">{{FOOTER}}</span>
+      </div>
+      <div class="mini-actions">
+        <button class="btn btn-crimson" id="newsCustomEnable">Use custom template</button>
+        <button class="btn btn-ghost" id="newsCustomSkeleton">Insert starter template</button>
+        <button class="btn btn-ghost" id="newsCustomSave">Save</button>
+        <button class="btn btn-ghost" id="newsCustomLoad">Load selected</button>
+        <button class="btn btn-ghost" id="newsCustomDelete">Delete selected</button>
+      </div>
+      <p class="hint">Example conditional block: <code>{{#WILD}}&lt;:WildGrass:...&gt; **__Wild__** &lt;:WildGrass:...&gt;\n{{WILD}}{{/WILD}}</code>. If Wild is empty, that complete block is removed.</p>
+    </section>
+
+    <section>
+      <p class="label">Post sections</p>
+      <div class="news-columns">
+        <div class="field-block"><label>Wild</label><textarea id="newsWild" class="text-area" placeholder="<:ShinySymbol:...> (827) Nickit <:NEW:...>"></textarea></div>
+        <div class="field-block"><label>PvP lines</label><textarea id="newsPvp" class="text-area" placeholder="Generated from parsed event targets"></textarea><button class="btn btn-ghost" id="newsPvpBuild">Build PvP from event</button></div>
+        <div class="field-block"><label>Rainy Lure / special lure</label><textarea id="newsLure" class="text-area"></textarea></div>
+        <div class="field-block"><label>Research</label><textarea id="newsResearch" class="text-area"></textarea></div>
+        <div class="field-block"><label>Eggs</label><textarea id="newsEggs" class="text-area"></textarea></div>
+        <div class="field-block"><label>Tier 1 Raids</label><textarea id="newsT1" class="text-area"></textarea></div>
+        <div class="field-block"><label>Tier 3 Raids</label><textarea id="newsT3" class="text-area"></textarea></div>
+        <div class="field-block"><label>GO Battle League</label><textarea id="newsGBL" class="text-area"></textarea></div>
+        <div class="field-block"><label>Bonuses</label><textarea id="newsBonuses" class="text-area"></textarea></div>
+        <div class="field-block"><label>GO Pass</label><textarea id="newsPass" class="text-area"></textarea></div>
+        <div class="field-block"><label>Extra custom block</label><textarea id="newsExtra" class="text-area" placeholder="Paste any extra fully-formatted section here"></textarea></div>
+        <div class="field-block"><label>Footer</label><textarea id="newsFooter" class="text-area" style="min-height:72px" placeholder="Optional signature / support link"></textarea></div>
+      </div>
+      <div class="mini-actions"><button class="btn btn-crimson" id="newsBuild">Generate post</button><button class="btn btn-ghost" id="newsCopy">Copy post</button></div>
+    </section>
+    <section>
+      <div class="qhead"><p class="label" style="margin:0">Discord preview</p><span class="qcount" id="newsStatus">Not generated</span></div>
+      <div id="newsPreview" class="previewbox" style="margin-top:10px">Your generated post will appear here.</div>
+    </section>
+  </main>
+
+  <main id="pane-parser" class="tool-pane">
+    <section>
+      <p class="label">Standalone IV paste parser</p>
+      <div class="source-card"><b>Format:</b> <code>Dex,Atk,Def,Sta,LevelMin,LevelMax,Form,Costume,Gender,Size,MaxCatch</code>. This parser is independent from Polygon and follows the 11-field format from your IV parser guide. Paste raw lines from Discord, including <code>-#</code> prefixes; the parser strips that formatting automatically.</div>
+      <div class="parser-legend">
+        <div><b>IVs</b> · -1 = any, otherwise 0–15</div>
+        <div><b>Levels</b> · 1–35</div>
+        <div><b>Form / Costume</b> · -1 = any, otherwise numeric ID</div>
+        <div><b>Gender</b> · 1 Male · 2 Female · 3 Genderless · -1 Any</div>
+        <div><b>Size</b> · 1 XXS · 2 XS · 3 M · 4 XL · 5 XXL · -1 Any</div>
+        <div><b>Max Catch</b> · positive number of catches</div>
+      </div>
+      <div class="field-block" style="margin-top:10px"><label>Paste IV lines</label><textarea id="parserInput" class="text-area" style="min-height:190px" spellcheck="false" placeholder="-# 588,15,15,15,1,35,-1,-1,1,-1,3\n-# 588,0,14,15,1,16,-1,-1,-1,-1,3"></textarea></div>
+      <div class="mini-actions"><button class="btn btn-crimson" id="parserParse">Parse & validate</button><button class="btn btn-ghost" id="parserNormalize">Normalize pasted lines</button><button class="btn btn-ghost" id="parserClearTop">Clear</button></div>
+    </section>
+
+    <section>
+      <p class="label">Add one line manually</p>
+      <div class="parser-grid">
+        <div class="field-block"><label>Dex ID</label><input id="pDex" class="text-input" type="number" min="1" placeholder="588"></div>
+        <div class="field-block"><label>Attack</label><input id="pAtk" class="text-input" type="number" min="-1" max="15" value="-1"></div>
+        <div class="field-block"><label>Defense</label><input id="pDef" class="text-input" type="number" min="-1" max="15" value="-1"></div>
+        <div class="field-block"><label>Stamina</label><input id="pSta" class="text-input" type="number" min="-1" max="15" value="-1"></div>
+        <div class="field-block"><label>Level Min</label><input id="pLevelMin" class="text-input" type="number" min="1" max="35" value="1"></div>
+        <div class="field-block"><label>Level Max</label><input id="pLevelMax" class="text-input" type="number" min="1" max="35" value="35"></div>
+        <div class="field-block"><label>Form ID</label><input id="pForm" class="text-input" type="number" list="protoFormIds" value="-1"></div>
+        <div class="field-block"><label>Costume ID</label><input id="pCostume" class="text-input" type="number" list="protoCostumeIds" value="-1"></div>
+        <div class="field-block"><label>Gender</label><select id="pGender" class="select-input"><option value="-1">Any (-1)</option><option value="1">Male (1)</option><option value="2">Female (2)</option><option value="3">Genderless (3)</option></select></div>
+        <div class="field-block"><label>Size</label><select id="pSize" class="select-input"><option value="-1">Any (-1)</option><option value="1">XXS (1)</option><option value="2">XS (2)</option><option value="3">M (3)</option><option value="4">XL (4)</option><option value="5">XXL (5)</option></select></div>
+        <div class="field-block"><label>Max Catch</label><input id="pMaxCatch" class="text-input" type="number" min="1" value="1"></div>
+      </div>
+      <div class="mini-actions"><button class="btn btn-primary" id="parserAdd">Add line</button></div>
+      <p class="hint">The proto data is used only to show readable Form and Costume names. It does not change this parser into a Polygon config generator.</p>
+    </section>
+
+    <section>
+      <div class="qhead"><p class="label" style="margin:0">Parsed lines</p><span class="qcount" id="parserStatus">0 lines</span></div>
+      <div id="parserResults" class="parser-results"></div>
+      <div id="parserEmpty" class="empty" style="margin-top:10px"><strong>No IV lines parsed yet</strong>Paste one or more lines above and press Parse & validate.</div>
+    </section>
+
+    <section>
+      <p class="label">Normalized copy/paste output</p>
+      <textarea id="parserOutput" class="text-area parser-output" spellcheck="false" readonly placeholder="Valid normalized lines appear here."></textarea>
+      <div class="mini-actions"><button class="btn btn-primary" id="parserCopy">Copy valid lines</button><button class="btn btn-ghost" id="parserDiscordCopy">Copy with -# prefix</button></div>
+    </section>
+  </main>
 </div>
 
-<div class="actionbar">
+<div class="actionbar pane-actionbar active" id="filtersBar">
   <div class="inner">
     <button class="btn btn-ghost" id="clearBtn" disabled>Clear</button>
     <button class="btn btn-primary" id="dlBtn" disabled>
@@ -240,21 +589,55 @@
   </div>
 </div>
 
+<div class="actionbar pane-actionbar" id="configBar">
+  <div class="inner">
+    <button class="btn btn-ghost" id="cfgClear" disabled>Clear config</button>
+    <button class="btn btn-primary" id="cfgDownload" disabled>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+      Download config
+    </button>
+  </div>
+</div>
+
+<div class="actionbar pane-actionbar" id="eventBar">
+  <div class="inner"><button class="btn btn-ghost" id="eventCopyIds">Copy IDs</button><button class="btn btn-primary" id="eventDownload" disabled>Download event config</button></div>
+</div>
+<div class="actionbar pane-actionbar" id="newsBar">
+  <div class="inner"><button class="btn btn-ghost" id="newsClear">Clear post</button><button class="btn btn-primary" id="newsCopyBottom">Copy post</button></div>
+</div>
+<div class="actionbar pane-actionbar" id="parserBar">
+  <div class="inner"><button class="btn btn-ghost" id="parserClearBottom">Clear parser</button><button class="btn btn-primary" id="parserCopyBottom">Copy valid lines</button></div>
+</div>
+
+<datalist id="protoFormIds"></datalist>
+<datalist id="protoCostumeIds"></datalist>
 <div class="toast" id="toast"></div>
 
 <script>
 /* ---------- constants ---------- */
-const GM_URLS = [
-  "https://raw.githubusercontent.com/pvpoke/pvpoke/master/src/data/gamemaster.json",
-  "https://pvpoke.com/data/gamemaster.json"
-];
+const POGO_DATA_URLS = {
+  stats:"https://pogoapi.net/api/v1/pokemon_stats.json",
+  evolutions:"https://pogoapi.net/api/v1/pokemon_evolutions.json"
+};
+const STADIUM_BASE = "https://www.stadiumgaming.gg/rank-checker?pokemon=";
+const POGO_NEWS_INDEX = "https://pokemongo.com/news?hl=en";
+const JINA_READER = "https://r.jina.ai/";
 const SPRITE = dex => `https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon/pokemon_icon_${String(dex).padStart(3,'0')}_00.png`;
 const CAPS = { LC:500, GL:1500, UL:2500 };
 const MAX_LEVEL = 50;
-const MIRAIDON = { costume:0, form:2997, gender:0, pokedexId:1008 };
+const MIRAIDON = { pokedexId:1008, form:2997, costume:0, gender:0 };
 
-/* Regional form IDs are LEARNED from the user's own PolygonX exports (never guessed).
-   Key = "<dex>:<region>" -> {form, costume}. Seeded with the one verified value. */
+/* Official PokemonDisplayProto enums extracted from the supplied pogoprotos-doc.html.
+   Source enums: PokemonDisplayProto.Form + PokemonDisplayProto.Costume. */
+const PROTO_FORM_ENTRIES = [["FORM_UNSET",0],["UNOWN_A",1],["UNOWN_B",2],["UNOWN_C",3],["UNOWN_D",4],["UNOWN_E",5],["UNOWN_F",6],["UNOWN_G",7],["UNOWN_H",8],["UNOWN_I",9],["UNOWN_J",10],["UNOWN_K",11],["UNOWN_L",12],["UNOWN_M",13],["UNOWN_N",14],["UNOWN_O",15],["UNOWN_P",16],["UNOWN_Q",17],["UNOWN_R",18],["UNOWN_S",19],["UNOWN_T",20],["UNOWN_U",21],["UNOWN_V",22],["UNOWN_W",23],["UNOWN_X",24],["UNOWN_Y",25],["UNOWN_Z",26],["UNOWN_EXCLAMATION_POINT",27],["UNOWN_QUESTION_MARK",28],["CASTFORM_NORMAL",29],["CASTFORM_SUNNY",30],["CASTFORM_RAINY",31],["CASTFORM_SNOWY",32],["DEOXYS_NORMAL",33],["DEOXYS_ATTACK",34],["DEOXYS_DEFENSE",35],["DEOXYS_SPEED",36],["SPINDA_00",37],["SPINDA_01",38],["SPINDA_02",39],["SPINDA_03",40],["SPINDA_04",41],["SPINDA_05",42],["SPINDA_06",43],["SPINDA_07",44],["RATTATA_NORMAL",45],["RATTATA_ALOLA",46],["RATICATE_NORMAL",47],["RATICATE_ALOLA",48],["RAICHU_NORMAL",49],["RAICHU_ALOLA",50],["SANDSHREW_NORMAL",51],["SANDSHREW_ALOLA",52],["SANDSLASH_NORMAL",53],["SANDSLASH_ALOLA",54],["VULPIX_NORMAL",55],["VULPIX_ALOLA",56],["NINETALES_NORMAL",57],["NINETALES_ALOLA",58],["DIGLETT_NORMAL",59],["DIGLETT_ALOLA",60],["DUGTRIO_NORMAL",61],["DUGTRIO_ALOLA",62],["MEOWTH_NORMAL",63],["MEOWTH_ALOLA",64],["PERSIAN_NORMAL",65],["PERSIAN_ALOLA",66],["GEODUDE_NORMAL",67],["GEODUDE_ALOLA",68],["GRAVELER_NORMAL",69],["GRAVELER_ALOLA",70],["GOLEM_NORMAL",71],["GOLEM_ALOLA",72],["GRIMER_NORMAL",73],["GRIMER_ALOLA",74],["MUK_NORMAL",75],["MUK_ALOLA",76],["EXEGGUTOR_NORMAL",77],["EXEGGUTOR_ALOLA",78],["MAROWAK_NORMAL",79],["MAROWAK_ALOLA",80],["ROTOM_NORMAL",81],["ROTOM_FROST",82],["ROTOM_FAN",83],["ROTOM_MOW",84],["ROTOM_WASH",85],["ROTOM_HEAT",86],["WORMADAM_PLANT",87],["WORMADAM_SANDY",88],["WORMADAM_TRASH",89],["GIRATINA_ALTERED",90],["GIRATINA_ORIGIN",91],["SHAYMIN_SKY",92],["SHAYMIN_LAND",93],["CHERRIM_OVERCAST",94],["CHERRIM_SUNNY",95],["SHELLOS_WEST_SEA",96],["SHELLOS_EAST_SEA",97],["GASTRODON_WEST_SEA",98],["GASTRODON_EAST_SEA",99],["ARCEUS_NORMAL",100],["ARCEUS_FIGHTING",101],["ARCEUS_FLYING",102],["ARCEUS_POISON",103],["ARCEUS_GROUND",104],["ARCEUS_ROCK",105],["ARCEUS_BUG",106],["ARCEUS_GHOST",107],["ARCEUS_STEEL",108],["ARCEUS_FIRE",109],["ARCEUS_WATER",110],["ARCEUS_GRASS",111],["ARCEUS_ELECTRIC",112],["ARCEUS_PSYCHIC",113],["ARCEUS_ICE",114],["ARCEUS_DRAGON",115],["ARCEUS_DARK",116],["ARCEUS_FAIRY",117],["BURMY_PLANT",118],["BURMY_SANDY",119],["BURMY_TRASH",120],["SPINDA_08",121],["SPINDA_09",122],["SPINDA_10",123],["SPINDA_11",124],["SPINDA_12",125],["SPINDA_13",126],["SPINDA_14",127],["SPINDA_15",128],["SPINDA_16",129],["SPINDA_17",130],["SPINDA_18",131],["SPINDA_19",132],["MEWTWO_A",133],["MEWTWO_NORMAL",135],["BASCULIN_RED_STRIPED",136],["BASCULIN_BLUE_STRIPED",137],["DARMANITAN_STANDARD",138],["DARMANITAN_ZEN",139],["TORNADUS_INCARNATE",140],["TORNADUS_THERIAN",141],["THUNDURUS_INCARNATE",142],["THUNDURUS_THERIAN",143],["LANDORUS_INCARNATE",144],["LANDORUS_THERIAN",145],["KYUREM_NORMAL",146],["KYUREM_BLACK",147],["KYUREM_WHITE",148],["KELDEO_ORDINARY",149],["KELDEO_RESOLUTE",150],["MELOETTA_ARIA",151],["MELOETTA_PIROUETTE",152],["ZUBAT_NORMAL",157],["GOLBAT_NORMAL",160],["BULBASAUR_NORMAL",163],["IVYSAUR_NORMAL",166],["VENUSAUR_NORMAL",169],["CHARMANDER_NORMAL",172],["CHARMELEON_NORMAL",175],["CHARIZARD_NORMAL",178],["SQUIRTLE_NORMAL",181],["WARTORTLE_NORMAL",184],["BLASTOISE_NORMAL",187],["DRATINI_NORMAL",190],["DRAGONAIR_NORMAL",193],["DRAGONITE_NORMAL",196],["SNORLAX_NORMAL",199],["CROBAT_NORMAL",202],["MUDKIP_NORMAL",205],["MARSHTOMP_NORMAL",208],["SWAMPERT_NORMAL",211],["DROWZEE_NORMAL",214],["HYPNO_NORMAL",217],["CUBONE_NORMAL",224],["HOUNDOUR_NORMAL",229],["HOUNDOOM_NORMAL",232],["POLIWAG_NORMAL",235],["POLIWHIRL_NORMAL",238],["POLIWRATH_NORMAL",241],["POLITOED_NORMAL",244],["SCYTHER_NORMAL",247],["SCIZOR_NORMAL",250],["MAGIKARP_NORMAL",253],["GYARADOS_NORMAL",256],["VENONAT_NORMAL",259],["VENOMOTH_NORMAL",262],["ODDISH_NORMAL",265],["GLOOM_NORMAL",268],["VILEPLUME_NORMAL",271],["BELLOSSOM_NORMAL",274],["HITMONCHAN_NORMAL",277],["GROWLITHE_NORMAL",280],["ARCANINE_NORMAL",283],["PSYDUCK_NORMAL",286],["GOLDUCK_NORMAL",289],["RALTS_NORMAL",292],["KIRLIA_NORMAL",295],["GARDEVOIR_NORMAL",298],["GALLADE_NORMAL",301],["ABRA_NORMAL",304],["KADABRA_NORMAL",307],["ALAKAZAM_NORMAL",310],["LARVITAR_NORMAL",313],["PUPITAR_NORMAL",316],["TYRANITAR_NORMAL",319],["LAPRAS_NORMAL",322],["DEERLING_SPRING",585],["DEERLING_SUMMER",586],["DEERLING_AUTUMN",587],["DEERLING_WINTER",588],["SAWSBUCK_SPRING",589],["SAWSBUCK_SUMMER",590],["SAWSBUCK_AUTUMN",591],["SAWSBUCK_WINTER",592],["GENESECT_NORMAL",593],["GENESECT_SHOCK",594],["GENESECT_BURN",595],["GENESECT_CHILL",596],["GENESECT_DOUSE",597],["PIKACHU_NORMAL",598],["WURMPLE_NORMAL",600],["WOBBUFFET_NORMAL",602],["CACNEA_NORMAL",610],["CACTURNE_NORMAL",613],["WEEDLE_NORMAL",616],["KAKUNA_NORMAL",619],["BEEDRILL_NORMAL",622],["SEEDOT_NORMAL",625],["NUZLEAF_NORMAL",628],["SHIFTRY_NORMAL",631],["MAGMAR_NORMAL",634],["MAGMORTAR_NORMAL",637],["ELECTABUZZ_NORMAL",640],["ELECTIVIRE_NORMAL",643],["MAREEP_NORMAL",646],["FLAAFFY_NORMAL",649],["AMPHAROS_NORMAL",652],["MAGNEMITE_NORMAL",655],["MAGNETON_NORMAL",658],["MAGNEZONE_NORMAL",661],["BELLSPROUT_NORMAL",664],["WEEPINBELL_NORMAL",667],["VICTREEBEL_NORMAL",670],["PORYGON_NORMAL",677],["PORYGON2_NORMAL",680],["PORYGON_Z_NORMAL",683],["TURTWIG_NORMAL",688],["GROTLE_NORMAL",691],["TORTERRA_NORMAL",694],["EKANS_NORMAL",697],["ARBOK_NORMAL",700],["KOFFING_NORMAL",703],["WEEZING_NORMAL",706],["HITMONLEE_NORMAL",713],["ARTICUNO_NORMAL",716],["MISDREAVUS_NORMAL",719],["MISMAGIUS_NORMAL",722],["EXEGGCUTE_NORMAL",729],["CARVANHA_NORMAL",734],["SHARPEDO_NORMAL",737],["OMANYTE_NORMAL",740],["OMASTAR_NORMAL",743],["TRAPINCH_NORMAL",746],["VIBRAVA_NORMAL",749],["FLYGON_NORMAL",752],["BAGON_NORMAL",755],["SHELGON_NORMAL",758],["SALAMENCE_NORMAL",761],["BELDUM_NORMAL",764],["METANG_NORMAL",767],["METAGROSS_NORMAL",770],["ZAPDOS_NORMAL",773],["NIDORAN_NORMAL",776],["NIDORINA_NORMAL",779],["NIDOQUEEN_NORMAL",782],["NIDORINO_NORMAL",785],["NIDOKING_NORMAL",788],["STUNKY_NORMAL",791],["SKUNTANK_NORMAL",794],["SNEASEL_NORMAL",797],["WEAVILE_NORMAL",800],["GLIGAR_NORMAL",803],["GLISCOR_NORMAL",806],["MACHOP_NORMAL",809],["MACHOKE_NORMAL",812],["MACHAMP_NORMAL",815],["CHIMCHAR_NORMAL",818],["MONFERNO_NORMAL",821],["INFERNAPE_NORMAL",824],["SHUCKLE_NORMAL",827],["ABSOL_NORMAL",830],["MAWILE_NORMAL",833],["MOLTRES_NORMAL",836],["KANGASKHAN_NORMAL",839],["RHYHORN_NORMAL",846],["RHYDON_NORMAL",849],["RHYPERIOR_NORMAL",852],["MURKROW_NORMAL",855],["HONCHKROW_NORMAL",858],["GIBLE_NORMAL",861],["GABITE_NORMAL",864],["GARCHOMP_NORMAL",867],["KRABBY_NORMAL",870],["KINGLER_NORMAL",873],["SHELLDER_NORMAL",876],["CLOYSTER_NORMAL",879],["HIPPOPOTAS_NORMAL",888],["HIPPOWDON_NORMAL",891],["PIKACHU_FALL_2019",894],["SQUIRTLE_FALL_2019",895],["CHARMANDER_FALL_2019",896],["BULBASAUR_FALL_2019",897],["PINSIR_NORMAL",898],["PIKACHU_VS_2019",901],["ONIX_NORMAL",902],["STEELIX_NORMAL",905],["SHUPPET_NORMAL",908],["BANETTE_NORMAL",911],["DUSKULL_NORMAL",914],["DUSCLOPS_NORMAL",917],["DUSKNOIR_NORMAL",920],["SABLEYE_NORMAL",923],["SNORUNT_NORMAL",926],["GLALIE_NORMAL",929],["SNOVER_NORMAL",932],["ABOMASNOW_NORMAL",935],["DELIBIRD_NORMAL",938],["STANTLER_NORMAL",941],["WEEZING_GALARIAN",944],["ZIGZAGOON_NORMAL",945],["ZIGZAGOON_GALARIAN",946],["LINOONE_NORMAL",947],["LINOONE_GALARIAN",948],["PIKACHU_COPY_2019",949],["VENUSAUR_COPY_2019",950],["CHARIZARD_COPY_2019",951],["BLASTOISE_COPY_2019",952],["CATERPIE_NORMAL",953],["METAPOD_NORMAL",956],["BUTTERFREE_NORMAL",959],["PIDGEY_NORMAL",962],["PIDGEOTTO_NORMAL",965],["PIDGEOT_NORMAL",968],["SPEAROW_NORMAL",971],["FEAROW_NORMAL",974],["CLEFAIRY_NORMAL",981],["CLEFABLE_NORMAL",984],["JIGGLYPUFF_NORMAL",987],["WIGGLYTUFF_NORMAL",990],["PARAS_NORMAL",993],["PARASECT_NORMAL",996],["MANKEY_NORMAL",999],["PRIMEAPE_NORMAL",1002],["TENTACOOL_NORMAL",1005],["TENTACRUEL_NORMAL",1008],["PONYTA_NORMAL",1011],["RAPIDASH_NORMAL",1014],["SLOWPOKE_NORMAL",1017],["SLOWBRO_NORMAL",1020],["FARFETCHD_NORMAL",1023],["DODUO_NORMAL",1026],["DODRIO_NORMAL",1029],["SEEL_NORMAL",1032],["DEWGONG_NORMAL",1035],["GASTLY_NORMAL",1038],["HAUNTER_NORMAL",1041],["GENGAR_NORMAL",1044],["VOLTORB_NORMAL",1047],["ELECTRODE_NORMAL",1050],["LICKITUNG_NORMAL",1053],["CHANSEY_NORMAL",1056],["TANGELA_NORMAL",1059],["HORSEA_NORMAL",1062],["SEADRA_NORMAL",1065],["GOLDEEN_NORMAL",1068],["SEAKING_NORMAL",1071],["STARYU_NORMAL",1074],["STARMIE_NORMAL",1077],["MR_MIME_NORMAL",1080],["JYNX_NORMAL",1083],["TAUROS_NORMAL",1086],["DITTO_NORMAL",1089],["EEVEE_NORMAL",1092],["VAPOREON_NORMAL",1095],["JOLTEON_NORMAL",1098],["FLAREON_NORMAL",1101],["KABUTO_NORMAL",1104],["KABUTOPS_NORMAL",1107],["AERODACTYL_NORMAL",1110],["MEW_NORMAL",1115],["CHIKORITA_NORMAL",1118],["BAYLEEF_NORMAL",1121],["MEGANIUM_NORMAL",1124],["CYNDAQUIL_NORMAL",1127],["QUILAVA_NORMAL",1130],["TYPHLOSION_NORMAL",1133],["TOTODILE_NORMAL",1136],["CROCONAW_NORMAL",1139],["FERALIGATR_NORMAL",1142],["SENTRET_NORMAL",1145],["FURRET_NORMAL",1148],["HOOTHOOT_NORMAL",1151],["NOCTOWL_NORMAL",1154],["LEDYBA_NORMAL",1157],["LEDIAN_NORMAL",1160],["SPINARAK_NORMAL",1163],["ARIADOS_NORMAL",1166],["CHINCHOU_NORMAL",1169],["LANTURN_NORMAL",1172],["PICHU_NORMAL",1175],["CLEFFA_NORMAL",1178],["IGGLYBUFF_NORMAL",1181],["TOGEPI_NORMAL",1184],["TOGETIC_NORMAL",1187],["NATU_NORMAL",1190],["XATU_NORMAL",1193],["MARILL_NORMAL",1196],["AZUMARILL_NORMAL",1199],["SUDOWOODO_NORMAL",1202],["HOPPIP_NORMAL",1205],["SKIPLOOM_NORMAL",1208],["JUMPLUFF_NORMAL",1211],["AIPOM_NORMAL",1214],["SUNKERN_NORMAL",1217],["SUNFLORA_NORMAL",1220],["YANMA_NORMAL",1223],["WOOPER_NORMAL",1226],["QUAGSIRE_NORMAL",1229],["ESPEON_NORMAL",1232],["UMBREON_NORMAL",1235],["SLOWKING_NORMAL",1238],["GIRAFARIG_NORMAL",1241],["PINECO_NORMAL",1244],["FORRETRESS_NORMAL",1247],["DUNSPARCE_NORMAL",1250],["SNUBBULL_NORMAL",1253],["GRANBULL_NORMAL",1256],["QWILFISH_NORMAL",1259],["HERACROSS_NORMAL",1262],["TEDDIURSA_NORMAL",1265],["URSARING_NORMAL",1268],["SLUGMA_NORMAL",1271],["MAGCARGO_NORMAL",1274],["SWINUB_NORMAL",1277],["PILOSWINE_NORMAL",1280],["CORSOLA_NORMAL",1283],["REMORAID_NORMAL",1286],["OCTILLERY_NORMAL",1289],["MANTINE_NORMAL",1292],["SKARMORY_NORMAL",1295],["KINGDRA_NORMAL",1298],["PHANPY_NORMAL",1301],["DONPHAN_NORMAL",1304],["SMEARGLE_NORMAL",1307],["TYROGUE_NORMAL",1310],["HITMONTOP_NORMAL",1313],["SMOOCHUM_NORMAL",1316],["ELEKID_NORMAL",1319],["MAGBY_NORMAL",1322],["MILTANK_NORMAL",1325],["BLISSEY_NORMAL",1328],["RAIKOU_NORMAL",1331],["ENTEI_NORMAL",1334],["SUICUNE_NORMAL",1337],["LUGIA_NORMAL",1340],["HO_OH_NORMAL",1343],["CELEBI_NORMAL",1346],["TREECKO_NORMAL",1349],["GROVYLE_NORMAL",1352],["SCEPTILE_NORMAL",1355],["TORCHIC_NORMAL",1358],["COMBUSKEN_NORMAL",1361],["BLAZIKEN_NORMAL",1364],["POOCHYENA_NORMAL",1367],["MIGHTYENA_NORMAL",1370],["SILCOON_NORMAL",1379],["BEAUTIFLY_NORMAL",1382],["CASCOON_NORMAL",1385],["DUSTOX_NORMAL",1388],["LOTAD_NORMAL",1391],["LOMBRE_NORMAL",1394],["LUDICOLO_NORMAL",1397],["TAILLOW_NORMAL",1400],["SWELLOW_NORMAL",1403],["WINGULL_NORMAL",1406],["PELIPPER_NORMAL",1409],["SURSKIT_NORMAL",1412],["MASQUERAIN_NORMAL",1415],["SHROOMISH_NORMAL",1418],["BRELOOM_NORMAL",1421],["SLAKOTH_NORMAL",1424],["VIGOROTH_NORMAL",1427],["SLAKING_NORMAL",1430],["NINCADA_NORMAL",1433],["NINJASK_NORMAL",1436],["SHEDINJA_NORMAL",1439],["WHISMUR_NORMAL",1442],["LOUDRED_NORMAL",1445],["EXPLOUD_NORMAL",1448],["MAKUHITA_NORMAL",1451],["HARIYAMA_NORMAL",1454],["AZURILL_NORMAL",1457],["NOSEPASS_NORMAL",1460],["SKITTY_NORMAL",1463],["DELCATTY_NORMAL",1466],["ARON_NORMAL",1469],["LAIRON_NORMAL",1472],["AGGRON_NORMAL",1475],["MEDITITE_NORMAL",1478],["MEDICHAM_NORMAL",1481],["ELECTRIKE_NORMAL",1484],["MANECTRIC_NORMAL",1487],["PLUSLE_NORMAL",1490],["MINUN_NORMAL",1493],["VOLBEAT_NORMAL",1496],["ILLUMISE_NORMAL",1499],["ROSELIA_NORMAL",1502],["GULPIN_NORMAL",1505],["SWALOT_NORMAL",1508],["WAILMER_NORMAL",1511],["WAILORD_NORMAL",1514],["NUMEL_NORMAL",1517],["CAMERUPT_NORMAL",1520],["TORKOAL_NORMAL",1523],["SPOINK_NORMAL",1526],["GRUMPIG_NORMAL",1529],["SWABLU_NORMAL",1532],["ALTARIA_NORMAL",1535],["ZANGOOSE_NORMAL",1538],["SEVIPER_NORMAL",1541],["LUNATONE_NORMAL",1544],["SOLROCK_NORMAL",1547],["BARBOACH_NORMAL",1550],["WHISCASH_NORMAL",1553],["CORPHISH_NORMAL",1556],["CRAWDAUNT_NORMAL",1559],["BALTOY_NORMAL",1562],["CLAYDOL_NORMAL",1565],["LILEEP_NORMAL",1568],["CRADILY_NORMAL",1571],["ANORITH_NORMAL",1574],["ARMALDO_NORMAL",1577],["FEEBAS_NORMAL",1580],["MILOTIC_NORMAL",1583],["KECLEON_NORMAL",1586],["TROPIUS_NORMAL",1589],["CHIMECHO_NORMAL",1592],["WYNAUT_NORMAL",1595],["SPHEAL_NORMAL",1598],["SEALEO_NORMAL",1601],["WALREIN_NORMAL",1604],["CLAMPERL_NORMAL",1607],["HUNTAIL_NORMAL",1610],["GOREBYSS_NORMAL",1613],["RELICANTH_NORMAL",1616],["LUVDISC_NORMAL",1619],["REGIROCK_NORMAL",1622],["REGICE_NORMAL",1625],["REGISTEEL_NORMAL",1628],["LATIAS_NORMAL",1631],["LATIOS_NORMAL",1634],["KYOGRE_NORMAL",1637],["GROUDON_NORMAL",1640],["RAYQUAZA_NORMAL",1643],["JIRACHI_NORMAL",1646],["PIPLUP_NORMAL",1649],["PRINPLUP_NORMAL",1652],["EMPOLEON_NORMAL",1655],["STARLY_NORMAL",1658],["STARAVIA_NORMAL",1661],["STARAPTOR_NORMAL",1664],["BIDOOF_NORMAL",1667],["BIBAREL_NORMAL",1670],["KRICKETOT_NORMAL",1673],["KRICKETUNE_NORMAL",1676],["SHINX_NORMAL",1679],["LUXIO_NORMAL",1682],["LUXRAY_NORMAL",1685],["BUDEW_NORMAL",1688],["ROSERADE_NORMAL",1691],["CRANIDOS_NORMAL",1694],["RAMPARDOS_NORMAL",1697],["SHIELDON_NORMAL",1700],["BASTIODON_NORMAL",1703],["BURMY_NORMAL",1706],["WORMADAM_NORMAL",1709],["MOTHIM_NORMAL",1712],["COMBEE_NORMAL",1715],["VESPIQUEN_NORMAL",1718],["PACHIRISU_NORMAL",1721],["BUIZEL_NORMAL",1724],["FLOATZEL_NORMAL",1727],["CHERUBI_NORMAL",1730],["CHERRIM_NORMAL",1733],["SHELLOS_NORMAL",1736],["GASTRODON_NORMAL",1739],["AMBIPOM_NORMAL",1742],["DRIFLOON_NORMAL",1745],["DRIFBLIM_NORMAL",1748],["BUNEARY_NORMAL",1751],["LOPUNNY_NORMAL",1754],["GLAMEOW_NORMAL",1757],["PURUGLY_NORMAL",1760],["CHINGLING_NORMAL",1763],["BRONZOR_NORMAL",1766],["BRONZONG_NORMAL",1769],["BONSLY_NORMAL",1772],["MIME_JR_NORMAL",1775],["HAPPINY_NORMAL",1778],["CHATOT_NORMAL",1781],["SPIRITOMB_NORMAL",1784],["MUNCHLAX_NORMAL",1787],["RIOLU_NORMAL",1790],["LUCARIO_NORMAL",1793],["SKORUPI_NORMAL",1796],["DRAPION_NORMAL",1799],["CROAGUNK_NORMAL",1802],["TOXICROAK_NORMAL",1805],["CARNIVINE_NORMAL",1808],["FINNEON_NORMAL",1811],["LUMINEON_NORMAL",1814],["MANTYKE_NORMAL",1817],["LICKILICKY_NORMAL",1820],["TANGROWTH_NORMAL",1823],["TOGEKISS_NORMAL",1826],["YANMEGA_NORMAL",1829],["LEAFEON_NORMAL",1832],["GLACEON_NORMAL",1835],["MAMOSWINE_NORMAL",1838],["PROBOPASS_NORMAL",1841],["FROSLASS_NORMAL",1844],["UXIE_NORMAL",1847],["MESPRIT_NORMAL",1850],["AZELF_NORMAL",1853],["DIALGA_NORMAL",1856],["PALKIA_NORMAL",1859],["HEATRAN_NORMAL",1862],["REGIGIGAS_NORMAL",1865],["GIRATINA_NORMAL",1868],["CRESSELIA_NORMAL",1871],["PHIONE_NORMAL",1874],["MANAPHY_NORMAL",1877],["DARKRAI_NORMAL",1880],["SHAYMIN_NORMAL",1883],["VICTINI_NORMAL",1886],["SNIVY_NORMAL",1889],["SERVINE_NORMAL",1892],["SERPERIOR_NORMAL",1895],["TEPIG_NORMAL",1898],["PIGNITE_NORMAL",1901],["EMBOAR_NORMAL",1904],["OSHAWOTT_NORMAL",1907],["DEWOTT_NORMAL",1910],["SAMUROTT_NORMAL",1913],["PATRAT_NORMAL",1916],["WATCHOG_NORMAL",1919],["LILLIPUP_NORMAL",1922],["HERDIER_NORMAL",1925],["STOUTLAND_NORMAL",1928],["PURRLOIN_NORMAL",1931],["LIEPARD_NORMAL",1934],["PANSAGE_NORMAL",1937],["SIMISAGE_NORMAL",1940],["PANSEAR_NORMAL",1943],["SIMISEAR_NORMAL",1946],["PANPOUR_NORMAL",1949],["SIMIPOUR_NORMAL",1952],["MUNNA_NORMAL",1955],["MUSHARNA_NORMAL",1958],["PIDOVE_NORMAL",1961],["TRANQUILL_NORMAL",1964],["UNFEZANT_NORMAL",1967],["BLITZLE_NORMAL",1970],["ZEBSTRIKA_NORMAL",1973],["ROGGENROLA_NORMAL",1976],["BOLDORE_NORMAL",1979],["GIGALITH_NORMAL",1982],["WOOBAT_NORMAL",1985],["SWOOBAT_NORMAL",1988],["DRILBUR_NORMAL",1991],["EXCADRILL_NORMAL",1994],["AUDINO_NORMAL",1997],["TIMBURR_NORMAL",2000],["GURDURR_NORMAL",2003],["CONKELDURR_NORMAL",2006],["TYMPOLE_NORMAL",2009],["PALPITOAD_NORMAL",2012],["SEISMITOAD_NORMAL",2015],["THROH_NORMAL",2018],["SAWK_NORMAL",2021],["SEWADDLE_NORMAL",2024],["SWADLOON_NORMAL",2027],["LEAVANNY_NORMAL",2030],["VENIPEDE_NORMAL",2033],["WHIRLIPEDE_NORMAL",2036],["SCOLIPEDE_NORMAL",2039],["COTTONEE_NORMAL",2042],["WHIMSICOTT_NORMAL",2045],["PETILIL_NORMAL",2048],["LILLIGANT_NORMAL",2051],["SANDILE_NORMAL",2054],["KROKOROK_NORMAL",2057],["KROOKODILE_NORMAL",2060],["DARUMAKA_NORMAL",2063],["MARACTUS_NORMAL",2066],["DWEBBLE_NORMAL",2069],["CRUSTLE_NORMAL",2072],["SCRAGGY_NORMAL",2075],["SCRAFTY_NORMAL",2078],["SIGILYPH_NORMAL",2081],["YAMASK_NORMAL",2084],["COFAGRIGUS_NORMAL",2087],["TIRTOUGA_NORMAL",2090],["CARRACOSTA_NORMAL",2093],["ARCHEN_NORMAL",2096],["ARCHEOPS_NORMAL",2099],["TRUBBISH_NORMAL",2102],["GARBODOR_NORMAL",2105],["ZORUA_NORMAL",2108],["ZOROARK_NORMAL",2111],["MINCCINO_NORMAL",2114],["CINCCINO_NORMAL",2117],["GOTHITA_NORMAL",2120],["GOTHORITA_NORMAL",2123],["GOTHITELLE_NORMAL",2126],["SOLOSIS_NORMAL",2129],["DUOSION_NORMAL",2132],["REUNICLUS_NORMAL",2135],["DUCKLETT_NORMAL",2138],["SWANNA_NORMAL",2141],["VANILLITE_NORMAL",2144],["VANILLISH_NORMAL",2147],["VANILLUXE_NORMAL",2150],["EMOLGA_NORMAL",2153],["KARRABLAST_NORMAL",2156],["ESCAVALIER_NORMAL",2159],["FOONGUS_NORMAL",2162],["AMOONGUSS_NORMAL",2165],["FRILLISH_NORMAL",2168],["JELLICENT_NORMAL",2171],["ALOMOMOLA_NORMAL",2174],["JOLTIK_NORMAL",2177],["GALVANTULA_NORMAL",2180],["FERROSEED_NORMAL",2183],["FERROTHORN_NORMAL",2186],["KLINK_NORMAL",2189],["KLANG_NORMAL",2192],["KLINKLANG_NORMAL",2195],["TYNAMO_NORMAL",2198],["EELEKTRIK_NORMAL",2201],["EELEKTROSS_NORMAL",2204],["ELGYEM_NORMAL",2207],["BEHEEYEM_NORMAL",2210],["LITWICK_NORMAL",2213],["LAMPENT_NORMAL",2216],["CHANDELURE_NORMAL",2219],["AXEW_NORMAL",2222],["FRAXURE_NORMAL",2225],["HAXORUS_NORMAL",2228],["CUBCHOO_NORMAL",2231],["BEARTIC_NORMAL",2234],["CRYOGONAL_NORMAL",2237],["SHELMET_NORMAL",2240],["ACCELGOR_NORMAL",2243],["STUNFISK_NORMAL",2246],["MIENFOO_NORMAL",2249],["MIENSHAO_NORMAL",2252],["DRUDDIGON_NORMAL",2255],["GOLETT_NORMAL",2258],["GOLURK_NORMAL",2261],["PAWNIARD_NORMAL",2264],["BISHARP_NORMAL",2267],["BOUFFALANT_NORMAL",2270],["RUFFLET_NORMAL",2273],["BRAVIARY_NORMAL",2276],["VULLABY_NORMAL",2279],["MANDIBUZZ_NORMAL",2282],["HEATMOR_NORMAL",2285],["DURANT_NORMAL",2288],["DEINO_NORMAL",2291],["ZWEILOUS_NORMAL",2294],["HYDREIGON_NORMAL",2297],["LARVESTA_NORMAL",2300],["VOLCARONA_NORMAL",2303],["COBALION_NORMAL",2306],["TERRAKION_NORMAL",2309],["VIRIZION_NORMAL",2312],["RESHIRAM_NORMAL",2315],["ZEKROM_NORMAL",2318],["MELTAN_NORMAL",2321],["MELMETAL_NORMAL",2324],["FALINKS_NORMAL",2325],["RILLABOOM_NORMAL",2326],["WURMPLE_SPRING_2020",2327],["WOBBUFFET_SPRING_2020",2328],["RATICATE_SPRING_2020",2329],["FRILLISH_FEMALE",2330],["JELLICENT_FEMALE",2331],["PIKACHU_COSTUME_2020",2332],["DRAGONITE_COSTUME_2020",2333],["ONIX_COSTUME_2020",2334],["MEOWTH_GALARIAN",2335],["PONYTA_GALARIAN",2336],["RAPIDASH_GALARIAN",2337],["FARFETCHD_GALARIAN",2338],["MR_MIME_GALARIAN",2339],["CORSOLA_GALARIAN",2340],["DARUMAKA_GALARIAN",2341],["DARMANITAN_GALARIAN_STANDARD",2342],["DARMANITAN_GALARIAN_ZEN",2343],["YAMASK_GALARIAN",2344],["STUNFISK_GALARIAN",2345],["TOXTRICITY_LOW_KEY",2463],["TOXTRICITY_AMPED",2464],["SINISTEA_PHONY",2477],["SINISTEA_ANTIQUE",2478],["POLTEAGEIST_PHONY",2480],["POLTEAGEIST_ANTIQUE",2481],["OBSTAGOON_NORMAL",2501],["PERRSERKER_NORMAL",2504],["CURSOLA_NORMAL",2507],["SIRFETCHD_NORMAL",2510],["MR_RIME_NORMAL",2513],["RUNERIGUS_NORMAL",2516],["EISCUE_ICE",2540],["EISCUE_NOICE",2541],["INDEEDEE_MALE",2542],["INDEEDEE_FEMALE",2543],["MORPEKO_FULL_BELLY",2544],["MORPEKO_HANGRY",2545],["ZACIAN_CROWNED_SWORD",2576],["ZACIAN_HERO",2577],["ZAMAZENTA_CROWNED_SHIELD",2578],["ZAMAZENTA_HERO",2579],["ETERNATUS_ETERNAMAX",2580],["ETERNATUS_NORMAL",2581],["SLOWPOKE_GALARIAN",2582],["SLOWBRO_GALARIAN",2583],["SLOWKING_GALARIAN",2584],["LAPRAS_COSTUME_2020",2585],["GENGAR_COSTUME_2020",2586],["PYROAR_NORMAL",2587],["PYROAR_FEMALE",2588],["MEOWSTIC_NORMAL",2589],["MEOWSTIC_FEMALE",2590],["ZYGARDE_TEN_PERCENT",2591],["ZYGARDE_FIFTY_PERCENT",2592],["ZYGARDE_COMPLETE",2593],["VIVILLON_ARCHIPELAGO",2594],["VIVILLON_CONTINENTAL",2595],["VIVILLON_ELEGANT",2596],["VIVILLON_FANCY",2597],["VIVILLON_GARDEN",2598],["VIVILLON_HIGH_PLAINS",2599],["VIVILLON_ICY_SNOW",2600],["VIVILLON_JUNGLE",2601],["VIVILLON_MARINE",2602],["VIVILLON_MEADOW",2603],["VIVILLON_MODERN",2604],["VIVILLON_MONSOON",2605],["VIVILLON_OCEAN",2606],["VIVILLON_POKEBALL",2607],["VIVILLON_POLAR",2608],["VIVILLON_RIVER",2609],["VIVILLON_SANDSTORM",2610],["VIVILLON_SAVANNA",2611],["VIVILLON_SUN",2612],["VIVILLON_TUNDRA",2613],["FLABEBE_RED",2614],["FLABEBE_YELLOW",2615],["FLABEBE_ORANGE",2616],["FLABEBE_BLUE",2617],["FLABEBE_WHITE",2618],["FLOETTE_RED",2619],["FLOETTE_YELLOW",2620],["FLOETTE_ORANGE",2621],["FLOETTE_BLUE",2622],["FLOETTE_WHITE",2623],["FLORGES_RED",2624],["FLORGES_YELLOW",2625],["FLORGES_ORANGE",2626],["FLORGES_BLUE",2627],["FLORGES_WHITE",2628],["FURFROU_NATURAL",2629],["FURFROU_HEART",2630],["FURFROU_STAR",2631],["FURFROU_DIAMOND",2632],["FURFROU_DEBUTANTE",2633],["FURFROU_MATRON",2634],["FURFROU_DANDY",2635],["FURFROU_LA_REINE",2636],["FURFROU_KABUKI",2637],["FURFROU_PHARAOH",2638],["AEGISLASH_SHIELD",2639],["AEGISLASH_BLADE",2640],["PUMPKABOO_SMALL",2641],["PUMPKABOO_AVERAGE",2642],["PUMPKABOO_LARGE",2643],["PUMPKABOO_SUPER",2644],["GOURGEIST_SMALL",2645],["GOURGEIST_AVERAGE",2646],["GOURGEIST_LARGE",2647],["GOURGEIST_SUPER",2648],["XERNEAS_NEUTRAL",2649],["XERNEAS_ACTIVE",2650],["HOOPA_CONFINED",2651],["HOOPA_UNBOUND",2652],["SABLEYE_COSTUME_2020_DEPRECATED",2666],["SABLEYE_COSTUME_2020",2668],["PIKACHU_ADVENTURE_HAT_2020",2669],["PIKACHU_WINTER_2020",2670],["DELIBIRD_WINTER_2020",2671],["CUBCHOO_WINTER_2020",2672],["SLOWPOKE_2020",2673],["SLOWBRO_2021",2674],["PIKACHU_KARIYUSHI",2675],["PIKACHU_POP_STAR",2676],["PIKACHU_ROCK_STAR",2677],["PIKACHU_FLYING_5TH_ANNIV",2678],["ORICORIO_BAILE",2679],["ORICORIO_POMPOM",2680],["ORICORIO_PAU",2681],["ORICORIO_SENSU",2683],["LYCANROC_MIDDAY",2684],["LYCANROC_MIDNIGHT",2685],["LYCANROC_DUSK",2686],["WISHIWASHI_SOLO",2687],["WISHIWASHI_SCHOOL",2688],["SILVALLY_NORMAL",2689],["SILVALLY_BUG",2690],["SILVALLY_DARK",2691],["SILVALLY_DRAGON",2692],["SILVALLY_ELECTRIC",2693],["SILVALLY_FAIRY",2694],["SILVALLY_FIGHTING",2695],["SILVALLY_FIRE",2696],["SILVALLY_FLYING",2697],["SILVALLY_GHOST",2698],["SILVALLY_GRASS",2699],["SILVALLY_GROUND",2700],["SILVALLY_ICE",2701],["SILVALLY_POISON",2702],["SILVALLY_PSYCHIC",2703],["SILVALLY_ROCK",2704],["SILVALLY_STEEL",2705],["SILVALLY_WATER",2706],["MINIOR_METEOR_BLUE",2707],["MINIOR_BLUE",2708],["MINIOR_GREEN",2709],["MINIOR_INDIGO",2710],["MINIOR_ORANGE",2711],["MINIOR_RED",2712],["MINIOR_VIOLET",2713],["MINIOR_YELLOW",2714],["MIMIKYU_BUSTED",2715],["MIMIKYU_DISGUISED",2716],["NECROZMA_NORMAL",2717],["NECROZMA_DUSK_MANE",2718],["NECROZMA_DAWN_WINGS",2719],["NECROZMA_ULTRA",2720],["MAGEARNA_NORMAL",2721],["MAGEARNA_ORIGINAL_COLOR",2722],["URSHIFU_SINGLE_STRIKE",2723],["URSHIFU_RAPID_STRIKE",2724],["CALYREX_NORMAL",2725],["CALYREX_ICE_RIDER",2726],["CALYREX_SHADOW_RIDER",2727],["VOLTORB_HISUIAN",2728],["LUGIA_S",2729],["HO_OH_S",2730],["RAIKOU_S",2731],["ENTEI_S",2732],["SUICUNE_S",2733],["SLOWKING_2022",2734],["ELECTRODE_HISUIAN",2735],["PIKACHU_FLYING_OKINAWA",2736],["ROCKRUFF_DUSK",2737],["MINIOR_METEOR_GREEN",2739],["MINIOR_METEOR_INDIGO",2740],["MINIOR_METEOR_ORANGE",2741],["MINIOR_METEOR_RED",2742],["MINIOR_METEOR_VIOLET",2743],["MINIOR_METEOR_YELLOW",2744],["SCATTERBUG_ARCHIPELAGO",2745],["SCATTERBUG_CONTINENTAL",2746],["SCATTERBUG_ELEGANT",2747],["SCATTERBUG_FANCY",2748],["SCATTERBUG_GARDEN",2749],["SCATTERBUG_HIGH_PLAINS",2750],["SCATTERBUG_ICY_SNOW",2751],["SCATTERBUG_JUNGLE",2752],["SCATTERBUG_MARINE",2753],["SCATTERBUG_MEADOW",2754],["SCATTERBUG_MODERN",2755],["SCATTERBUG_MONSOON",2756],["SCATTERBUG_OCEAN",2757],["SCATTERBUG_POKEBALL",2758],["SCATTERBUG_POLAR",2759],["SCATTERBUG_RIVER",2760],["SCATTERBUG_SANDSTORM",2761],["SCATTERBUG_SAVANNA",2762],["SCATTERBUG_SUN",2763],["SCATTERBUG_TUNDRA",2764],["SPEWPA_ARCHIPELAGO",2765],["SPEWPA_CONTINENTAL",2766],["SPEWPA_ELEGANT",2767],["SPEWPA_FANCY",2768],["SPEWPA_GARDEN",2769],["SPEWPA_HIGH_PLAINS",2770],["SPEWPA_ICY_SNOW",2771],["SPEWPA_JUNGLE",2772],["SPEWPA_MARINE",2773],["SPEWPA_MEADOW",2774],["SPEWPA_MODERN",2775],["SPEWPA_MONSOON",2776],["SPEWPA_OCEAN",2777],["SPEWPA_POKEBALL",2778],["SPEWPA_POLAR",2779],["SPEWPA_RIVER",2780],["SPEWPA_SANDSTORM",2781],["SPEWPA_SAVANNA",2782],["SPEWPA_SUN",2783],["SPEWPA_TUNDRA",2784],["DECIDUEYE_HISUIAN",2785],["TYPHLOSION_HISUIAN",2786],["SAMUROTT_HISUIAN",2787],["QWILFISH_HISUIAN",2788],["LILLIGANT_HISUIAN",2789],["SLIGGOO_HISUIAN",2790],["GOODRA_HISUIAN",2791],["GROWLITHE_HISUIAN",2792],["ARCANINE_HISUIAN",2793],["SNEASEL_HISUIAN",2794],["AVALUGG_HISUIAN",2795],["ZORUA_HISUIAN",2796],["ZOROARK_HISUIAN",2797],["BRAVIARY_HISUIAN",2798],["MOLTRES_GALARIAN",2799],["ZAPDOS_GALARIAN",2800],["ARTICUNO_GALARIAN",2801],["ENAMORUS_INCARNATE",2802],["ENAMORUS_THERIAN",2803],["BASCULIN_WHITE_STRIPED",2804],["PIKACHU_GOFEST_2022",2805],["PIKACHU_WCS_2022",2806],["BASCULEGION_NORMAL",2807],["BASCULEGION_FEMALE",2808],["DECIDUEYE_NORMAL",2809],["SLIGGOO_NORMAL",2810],["GOODRA_NORMAL",2811],["AVALUGG_NORMAL",2812],["PIKACHU_TSHIRT_01",2813],["PIKACHU_TSHIRT_02",2814],["PIKACHU_FLYING_01",2815],["PIKACHU_FLYING_02",2816],["URSALUNA_NORMAL",2817],["BEARTIC_WINTER_2020",2820],["LATIAS_S",2821],["LATIOS_S",2822],["ZYGARDE_COMPLETE_TEN_PERCENT",2823],["ZYGARDE_COMPLETE_FIFTY_PERCENT",2824],["PIKACHU_GOTOUR_2024_A",2825],["PIKACHU_GOTOUR_2024_B",2826],["PIKACHU_GOTOUR_2024_A_02",2827],["PIKACHU_GOTOUR_2024_B_02",2828],["DIALGA_ORIGIN",2829],["PALKIA_ORIGIN",2830],["ROCKRUFF_NORMAL",2831],["PIKACHU_TSHIRT_03",2832],["PIKACHU_FLYING_04",2833],["PIKACHU_TSHIRT_04",2834],["PIKACHU_TSHIRT_05",2835],["PIKACHU_TSHIRT_06",2836],["PIKACHU_TSHIRT_07",2837],["PIKACHU_FLYING_05",2838],["PIKACHU_FLYING_06",2839],["PIKACHU_FLYING_07",2840],["PIKACHU_FLYING_08",2841],["PIKACHU_HORIZONS",2842],["PIKACHU_GOFEST_2024_STIARA",2843],["PIKACHU_GOFEST_2024_MTIARA",2844],["EEVEE_GOFEST_2024_STIARA",2845],["EEVEE_GOFEST_2024_MTIARA",2846],["ESPEON_GOFEST_2024_SSCARF",2847],["UMBREON_GOFEST_2024_MSCARF",2848],["SNORLAX_WILDAREA_2024",2849],["PIKACHU_DIWALI_2024",2850],["PIKACHU_GOTOUR_2025_A",2856],["PIKACHU_GOTOUR_2025_B",2857],["PIKACHU_GOTOUR_2025_A_02",2858],["PIKACHU_GOTOUR_2025_B_02",2859],["DEDENNE_NORMAL",2860],["WOOLOO_NORMAL",2861],["DUBWOOL_NORMAL",2862],["PIKACHU_KURTA",2863],["PIKACHU_GOFEST_2025_GOGGLES_RED",2864],["PIKACHU_GOFEST_2025_GOGGLES_BLUE",2865],["PIKACHU_GOFEST_2025_GOGGLES_YELLOW",2866],["PIKACHU_GOFEST_2025_MONOCLE_RED",2867],["PIKACHU_GOFEST_2025_MONOCLE_BLUE",2868],["PIKACHU_GOFEST_2025_MONOCLE_YELLOW",2869],["FALINKS_GOFEST_2025_TRAIN_CONDUCTOR",2870],["POLTCHAGEIST_COUNTERFEIT",2871],["POLTCHAGEIST_ARTISAN",2872],["SINISTCHA_UNREMARKABLE",2873],["SINISTCHA_MASTERPIECE",2874],["OGERPON_TEAL",2875],["OGERPON_WELLSPRING",2876],["OGERPON_HEARTHFLAME",2877],["OGERPON_CORNERSTONE",2879],["TERAPAGOS_NORMAL",2880],["TERAPAGOS_TERASTAL",2881],["TERAPAGOS_STELLAR",2882],["OINKOLOGNE_NORMAL",2981],["OINKOLOGNE_FEMALE",2982],["MAUSHOLD_FAMILY_OF_THREE",2983],["MAUSHOLD_FAMILY_OF_FOUR",2984],["SQUAWKABILLY_GREEN",2985],["SQUAWKABILLY_BLUE",2986],["SQUAWKABILLY_YELLOW",2987],["SQUAWKABILLY_WHITE",2988],["PALAFIN_ZERO",2989],["PALAFIN_HERO",2990],["TATSUGIRI_CURLY",2991],["TATSUGIRI_DROOPY",2992],["TATSUGIRI_STRETCHY",2993],["DUDUNSPARCE_TWO",2994],["DUDUNSPARCE_THREE",2995],["KORAIDON_APEX",2996],["MIRAIDON_ULTIMATE",2997],["GIMMIGHOUL_NORMAL",2998],["GHOLDENGO_NORMAL",3000],["AERODACTYL_SUMMER_2023",3001],["PIKACHU_SUMMER_2023_A",3002],["PIKACHU_SUMMER_2023_B",3003],["PIKACHU_SUMMER_2023_C",3004],["PIKACHU_SUMMER_2023_D",3005],["TAUROS_PALDEA_COMBAT",3006],["TAUROS_PALDEA_BLAZE",3007],["TAUROS_PALDEA_AQUA",3008],["WOOPER_PALDEA",3009],["PIKACHU_SUMMER_2023_E",3010],["PIKACHU_FLYING_03",3011],["PIKACHU_JEJU",3012],["PIKACHU_DOCTOR",3013],["PIKACHU_WCS_2023",3014],["PIKACHU_WCS_2024",3015],["CINDERACE_NORMAL",3016],["PIKACHU_WCS_2025",3017],["GIMMIGHOUL_COIN_A1",3018],["PSYDUCK_SWIM_2025",3019],["BEWEAR_NORMAL",3020],["BEWEAR_WILDAREA_2025",3021],["CHESPIN_NORMAL",3022],["QUILLADIN_NORMAL",3023],["CHESNAUGHT_NORMAL",3024],["FENNEKIN_NORMAL",3025],["BRAIXEN_NORMAL",3026],["DELPHOX_NORMAL",3027],["FROAKIE_NORMAL",3028],["FROGADIER_NORMAL",3029],["GRENINJA_NORMAL",3030],["BUNNELBY_NORMAL",3031],["DIGGERSBY_NORMAL",3032],["FLETCHLING_NORMAL",3033],["FLETCHINDER_NORMAL",3034],["TALONFLAME_NORMAL",3035],["LITLEO_NORMAL",3036],["SKIDDO_NORMAL",3037],["GOGOAT_NORMAL",3038],["PANCHAM_NORMAL",3039],["PANGORO_NORMAL",3040],["ESPURR_NORMAL",3041],["HONEDGE_NORMAL",3042],["DOUBLADE_NORMAL",3043],["SPRITZEE_NORMAL",3044],["AROMATISSE_NORMAL",3045],["SWIRLIX_NORMAL",3046],["SLURPUFF_NORMAL",3047],["INKAY_NORMAL",3048],["MALAMAR_NORMAL",3049],["BINACLE_NORMAL",3050],["BARBARACLE_NORMAL",3051],["SKRELP_NORMAL",3052],["DRAGALGE_NORMAL",3053],["CLAUNCHER_NORMAL",3054],["CLAWITZER_NORMAL",3055],["HELIOPTILE_NORMAL",3056],["HELIOLISK_NORMAL",3057],["TYRUNT_NORMAL",3058],["TYRANTRUM_NORMAL",3059],["AMAURA_NORMAL",3060],["AURORUS_NORMAL",3061],["SYLVEON_NORMAL",3062],["HAWLUCHA_NORMAL",3063],["CARBINK_NORMAL",3064],["GOOMY_NORMAL",3065],["KLEFKI_NORMAL",3066],["PHANTUMP_NORMAL",3067],["TREVENANT_NORMAL",3068],["BERGMITE_NORMAL",3069],["NOIBAT_NORMAL",3070],["NOIVERN_NORMAL",3071],["XERNEAS_NORMAL",3072],["YVELTAL_NORMAL",3073],["DIANCIE_NORMAL",3074],["VOLCANION_NORMAL",3075],["ROWLET_NORMAL",3076],["DARTRIX_NORMAL",3077],["LITTEN_NORMAL",3078],["TORRACAT_NORMAL",3079],["INCINEROAR_NORMAL",3080],["POPPLIO_NORMAL",3081],["BRIONNE_NORMAL",3082],["PRIMARINA_NORMAL",3083],["PIKIPEK_NORMAL",3084],["TRUMBEAK_NORMAL",3085],["TOUCANNON_NORMAL",3086],["YUNGOOS_NORMAL",3087],["GUMSHOOS_NORMAL",3088],["GRUBBIN_NORMAL",3089],["CHARJABUG_NORMAL",3090],["VIKAVOLT_NORMAL",3091],["CRABRAWLER_NORMAL",3092],["CRABOMINABLE_NORMAL",3093],["CUTIEFLY_NORMAL",3094],["RIBOMBEE_NORMAL",3095],["MAREANIE_NORMAL",3096],["TOXAPEX_NORMAL",3097],["MUDBRAY_NORMAL",3098],["MUDSDALE_NORMAL",3099],["DEWPIDER_NORMAL",3100],["ARAQUANID_NORMAL",3101],["FOMANTIS_NORMAL",3102],["LURANTIS_NORMAL",3103],["MORELULL_NORMAL",3104],["SHIINOTIC_NORMAL",3105],["SALANDIT_NORMAL",3106],["SALAZZLE_NORMAL",3107],["STUFFUL_NORMAL",3108],["BOUNSWEET_NORMAL",3109],["STEENEE_NORMAL",3110],["TSAREENA_NORMAL",3111],["COMFEY_NORMAL",3112],["ORANGURU_NORMAL",3113],["PASSIMIAN_NORMAL",3114],["WIMPOD_NORMAL",3115],["GOLISOPOD_NORMAL",3116],["SANDYGAST_NORMAL",3117],["PALOSSAND_NORMAL",3118],["PYUKUMUKU_NORMAL",3119],["TYPE_NULL_NORMAL",3120],["KOMALA_NORMAL",3121],["TURTONATOR_NORMAL",3122],["TOGEDEMARU_NORMAL",3123],["BRUXISH_NORMAL",3124],["DRAMPA_NORMAL",3125],["DHELMISE_NORMAL",3126],["JANGMO_O_NORMAL",3127],["HAKAMO_O_NORMAL",3128],["KOMMO_O_NORMAL",3129],["TAPU_KOKO_NORMAL",3130],["TAPU_LELE_NORMAL",3131],["TAPU_BULU_NORMAL",3132],["TAPU_FINI_NORMAL",3133],["COSMOG_NORMAL",3134],["COSMOEM_NORMAL",3135],["SOLGALEO_NORMAL",3136],["LUNALA_NORMAL",3137],["NIHILEGO_NORMAL",3138],["BUZZWOLE_NORMAL",3139],["PHEROMOSA_NORMAL",3140],["XURKITREE_NORMAL",3141],["CELESTEELA_NORMAL",3142],["KARTANA_NORMAL",3143],["GUZZLORD_NORMAL",3144],["MARSHADOW_NORMAL",3145],["POIPOLE_NORMAL",3146],["NAGANADEL_NORMAL",3147],["STAKATAKA_NORMAL",3148],["BLACEPHALON_NORMAL",3149],["ZERAORA_NORMAL",3150],["GROOKEY_NORMAL",3151],["THWACKEY_NORMAL",3152],["SCORBUNNY_NORMAL",3153],["RABOOT_NORMAL",3154],["SOBBLE_NORMAL",3155],["DRIZZILE_NORMAL",3156],["INTELEON_NORMAL",3157],["SKWOVET_NORMAL",3158],["GREEDENT_NORMAL",3159],["ROOKIDEE_NORMAL",3160],["CORVISQUIRE_NORMAL",3161],["CORVIKNIGHT_NORMAL",3162],["BLIPBUG_NORMAL",3163],["DOTTLER_NORMAL",3164],["ORBEETLE_NORMAL",3165],["NICKIT_NORMAL",3166],["THIEVUL_NORMAL",3167],["GOSSIFLEUR_NORMAL",3168],["ELDEGOSS_NORMAL",3169],["CHEWTLE_NORMAL",3170],["DREDNAW_NORMAL",3171],["YAMPER_NORMAL",3172],["BOLTUND_NORMAL",3173],["ROLYCOLY_NORMAL",3174],["CARKOL_NORMAL",3175],["COALOSSAL_NORMAL",3176],["APPLIN_NORMAL",3177],["FLAPPLE_NORMAL",3178],["APPLETUN_NORMAL",3179],["SILICOBRA_NORMAL",3180],["SANDACONDA_NORMAL",3181],["CRAMORANT_NORMAL",3182],["ARROKUDA_NORMAL",3183],["BARRASKEWDA_NORMAL",3184],["TOXEL_NORMAL",3185],["SIZZLIPEDE_NORMAL",3186],["CENTISKORCH_NORMAL",3187],["CLOBBOPUS_NORMAL",3188],["GRAPPLOCT_NORMAL",3189],["HATENNA_NORMAL",3190],["HATTREM_NORMAL",3191],["HATTERENE_NORMAL",3192],["IMPIDIMP_NORMAL",3193],["MORGREM_NORMAL",3194],["GRIMMSNARL_NORMAL",3195],["MILCERY_NORMAL",3196],["ALCREMIE_NORMAL",3197],["PINCURCHIN_NORMAL",3198],["SNOM_NORMAL",3199],["FROSMOTH_NORMAL",3200],["STONJOURNER_NORMAL",3201],["CUFANT_NORMAL",3202],["COPPERAJAH_NORMAL",3203],["DRACOZOLT_NORMAL",3204],["ARCTOZOLT_NORMAL",3205],["DRACOVISH_NORMAL",3206],["ARCTOVISH_NORMAL",3207],["DURALUDON_NORMAL",3208],["DREEPY_NORMAL",3209],["DRAKLOAK_NORMAL",3210],["DRAGAPULT_NORMAL",3211],["KUBFU_NORMAL",3212],["ZARUDE_NORMAL",3213],["REGIELEKI_NORMAL",3214],["REGIDRAGO_NORMAL",3215],["GLASTRIER_NORMAL",3216],["SPECTRIER_NORMAL",3217],["WYRDEER_NORMAL",3218],["KLEAVOR_NORMAL",3219],["SNEASLER_NORMAL",3220],["OVERQWIL_NORMAL",3221],["SPRIGATITO_NORMAL",3222],["FLORAGATO_NORMAL",3223],["MEOWSCARADA_NORMAL",3224],["FUECOCO_NORMAL",3225],["CROCALOR_NORMAL",3226],["SKELEDIRGE_NORMAL",3227],["QUAXLY_NORMAL",3228],["QUAXWELL_NORMAL",3229],["QUAQUAVAL_NORMAL",3230],["LECHONK_NORMAL",3231],["TAROUNTULA_NORMAL",3232],["SPIDOPS_NORMAL",3233],["NYMBLE_NORMAL",3234],["LOKIX_NORMAL",3235],["PAWMI_NORMAL",3236],["PAWMO_NORMAL",3237],["PAWMOT_NORMAL",3238],["TANDEMAUS_NORMAL",3239],["FIDOUGH_NORMAL",3240],["DACHSBUN_NORMAL",3241],["SMOLIV_NORMAL",3242],["DOLLIV_NORMAL",3243],["ARBOLIVA_NORMAL",3244],["NACLI_NORMAL",3245],["NACLSTACK_NORMAL",3246],["GARGANACL_NORMAL",3247],["CHARCADET_NORMAL",3248],["ARMAROUGE_NORMAL",3249],["CERULEDGE_NORMAL",3250],["TADBULB_NORMAL",3251],["BELLIBOLT_NORMAL",3252],["WATTREL_NORMAL",3253],["KILOWATTREL_NORMAL",3254],["MASCHIFF_NORMAL",3255],["MABOSSTIFF_NORMAL",3256],["SHROODLE_NORMAL",3257],["GRAFAIAI_NORMAL",3258],["BRAMBLIN_NORMAL",3259],["BRAMBLEGHAST_NORMAL",3260],["TOEDSCOOL_NORMAL",3261],["TOEDSCRUEL_NORMAL",3262],["KLAWF_NORMAL",3263],["CAPSAKID_NORMAL",3264],["SCOVILLAIN_NORMAL",3265],["RELLOR_NORMAL",3266],["RABSCA_NORMAL",3267],["FLITTLE_NORMAL",3268],["ESPATHRA_NORMAL",3269],["TINKATINK_NORMAL",3270],["TINKATUFF_NORMAL",3271],["TINKATON_NORMAL",3272],["WIGLETT_NORMAL",3273],["WUGTRIO_NORMAL",3274],["BOMBIRDIER_NORMAL",3275],["FINIZEN_NORMAL",3276],["VAROOM_NORMAL",3277],["REVAVROOM_NORMAL",3278],["CYCLIZAR_NORMAL",3279],["ORTHWORM_NORMAL",3280],["GLIMMET_NORMAL",3281],["GLIMMORA_NORMAL",3282],["GREAVARD_NORMAL",3283],["HOUNDSTONE_NORMAL",3284],["FLAMIGO_NORMAL",3285],["CETODDLE_NORMAL",3286],["CETITAN_NORMAL",3287],["VELUZA_NORMAL",3288],["DONDOZO_NORMAL",3289],["ANNIHILAPE_NORMAL",3290],["CLODSIRE_NORMAL",3291],["FARIGIRAF_NORMAL",3292],["KINGAMBIT_NORMAL",3293],["GREATTUSK_NORMAL",3294],["SCREAMTAIL_NORMAL",3295],["BRUTEBONNET_NORMAL",3296],["FLUTTERMANE_NORMAL",3297],["SLITHERWING_NORMAL",3298],["SANDYSHOCKS_NORMAL",3299],["IRONTREADS_NORMAL",3300],["IRONBUNDLE_NORMAL",3301],["IRONHANDS_NORMAL",3302],["IRONJUGULIS_NORMAL",3303],["IRONMOTH_NORMAL",3304],["IRONTHORNS_NORMAL",3305],["FRIGIBAX_NORMAL",3306],["ARCTIBAX_NORMAL",3307],["BAXCALIBUR_NORMAL",3308],["WOCHIEN_NORMAL",3309],["CHIENPAO_NORMAL",3310],["TINGLU_NORMAL",3311],["CHIYU_NORMAL",3312],["ROARINGMOON_NORMAL",3313],["IRONVALIANT_NORMAL",3314],["SUDOWOODO_WINTER_2025",3315],["CHARJABUG_WINTER_2025",3316],["VIKAVOLT_WINTER_2025",3317],["PIKACHU_GOTOUR_2026_A",3318],["PIKACHU_GOTOUR_2026_A_02",3319],["PIKACHU_GOTOUR_2026_B",3320],["PIKACHU_GOTOUR_2026_B_02",3321],["PIKACHU_GOTOUR_2026_C",3322],["PIKACHU_GOTOUR_2026_C_02",3323],["WALKINGWAKE_NORMAL",3324],["IRONLEAVES_NORMAL",3325],["DIPPLIN_NORMAL",3326],["OKIDOGI_NORMAL",3327],["MUNKIDORI_NORMAL",3328],["FEZANDIPITI_NORMAL",3329],["ARCHALUDON_NORMAL",3330],["HYDRAPPLE_NORMAL",3331],["GOUGINGFIRE_NORMAL",3332],["RAGINGBOLT_NORMAL",3333],["IRONBOULDER_NORMAL",3334],["IRONCROWN_NORMAL",3335],["PECHARUNT_NORMAL",3336],["DITTO_SPRING_2026_A",3337],["DITTO_SPRING_2026_B",3338],["CORSOLA_SPRING_2026",3339],["PIKACHU_BB_2026",3340],["PIKACHU_VISOR_2026",3341],["PIKACHU_FOSSIL_2026",3342],["PIKACHU_GOFEST_2026_CAP_BLUE",3343],["PIKACHU_GOFEST_2026_CAP_RED",3344],["PIKACHU_GOFEST_2026_CAP_YELLOW",3345],["CATERPIE_GOFEST_2026",3346],["PIKACHU_ANNIVERSARY_2026",3348],["CRAMORANT_GULPING",3349],["CRAMORANT_GORGING",3350],["GIMMIGHOUL_COIN_A2_2026",3351],["PIKACHU_PXP_2026",3352],["PIKACHU_WCS_2026",3353],["CHARMANDER_GOGGLES_2026",3354],["CHARMELEON_GOGGLES_2026",3355],["CHARIZARD_GOGGLES_2026",3356],["PIKACHU_GLASS_HELMET_2026",3357]];
+const PROTO_COSTUME_ENTRIES = [["UNSET",0],["HOLIDAY_2016",1],["ANNIVERSARY",2],["ONE_YEAR_ANNIVERSARY",3],["HALLOWEEN_2017",4],["SUMMER_2018",5],["FALL_2018",6],["NOVEMBER_2018",7],["WINTER_2018",8],["FEB_2019",9],["MAY_2019_NOEVOLVE",10],["JAN_2020_NOEVOLVE",11],["APRIL_2020_NOEVOLVE",12],["SAFARI_2020_NOEVOLVE",13],["SPRING_2020_NOEVOLVE",14],["SUMMER_2020_NOEVOLVE",15],["FALL_2020_NOEVOLVE",16],["WINTER_2020_NOEVOLVE",17],["NOT_FOR_RELEASE_ALPHA",18],["NOT_FOR_RELEASE_BETA",19],["NOT_FOR_RELEASE_GAMMA",20],["NOT_FOR_RELEASE_NOEVOLVE",21],["KANTO_2020_NOEVOLVE",22],["JOHTO_2020_NOEVOLVE",23],["HOENN_2020_NOEVOLVE",24],["SINNOH_2020_NOEVOLVE",25],["HALLOWEEN_2020_NOEVOLVE",26],["COSTUME_1",27],["COSTUME_2",28],["COSTUME_3",29],["COSTUME_4",30],["COSTUME_5",31],["COSTUME_6",32],["COSTUME_7",33],["COSTUME_8",34],["COSTUME_9",35],["COSTUME_10",36],["COSTUME_1_NOEVOLVE",37],["COSTUME_2_NOEVOLVE",38],["COSTUME_3_NOEVOLVE",39],["COSTUME_4_NOEVOLVE",40],["COSTUME_5_NOEVOLVE",41],["COSTUME_6_NOEVOLVE",42],["COSTUME_7_NOEVOLVE",43],["COSTUME_8_NOEVOLVE",44],["COSTUME_9_NOEVOLVE",45],["COSTUME_10_NOEVOLVE",46],["GOFEST_2021_NOEVOLVE",47],["FASHION_2021_NOEVOLVE",48],["HALLOWEEN_2021_NOEVOLVE",49],["GEMS_1_2021_NOEVOLVE",50],["GEMS_2_2021_NOEVOLVE",51],["HOLIDAY_2021_NOEVOLVE",52],["TCG_2022_NOEVOLVE",53],["JAN_2022_NOEVOLVE",54],["GOFEST_2022_NOEVOLVE",55],["ANNIVERSARY_2022_NOEVOLVE",56],["FALL_2022",57],["FALL_2022_NOEVOLVE",58],["HOLIDAY_2022",59],["JAN_2023_NOEVOLVE",60],["GOTOUR_2023_BANDANA_NOEVOLVE",61],["GOTOUR_2023_HAT_NOEVOLVE",62],["SPRING_2023",63],["SPRING_2023_MYSTIC",64],["SPRING_2023_VALOR",65],["SPRING_2023_INSTINCT",66],["NIGHTCAP",67],["MAY_2023",68],["PI",69],["FALL_2023",70],["FALL_2023_NOEVOLVE",71],["PI_NOEVOLVE",72],["HOLIDAY_2023",73],["JAN_2024",74],["SPRING_2024",75],["SUMMER_2024",77],["ANNIVERSARY_2024",78],["FALL_2024",79],["WINTER_2024",80],["FASHION_2025",81],["HORIZONS_2025_NOEVOLVE",82],["ROYAL_NOEVOLVE",83],["INDONESIA_2025_NOEVOLVE",84],["HALLOWEEN_2025",85],["SPRING_2026_A",86],["SPRING_2026_B",87],["PIKACHU_K_2026_A",91],["PIKACHU_K_2026_B",107]];
+const PROTO_FORMS = Object.freeze(Object.fromEntries(PROTO_FORM_ENTRIES));
+const PROTO_COSTUMES = Object.freeze(Object.fromEntries(PROTO_COSTUME_ENTRIES));
+const PROTO_FORM_NAME = Object.freeze(Object.fromEntries(PROTO_FORM_ENTRIES.map(([n,id])=>[id,n])));
+const PROTO_COSTUME_NAME = Object.freeze(Object.fromEntries(PROTO_COSTUME_ENTRIES.map(([n,id])=>[id,n])));
+
+/* PolygonX imports remain an override/fallback for regional IDs.
+   Key = "<dex>:<region>" -> {form, costume}. */
 let LEARNED = { "19:alolan":{form:46, costume:0} };
 const REGION_SUFFIX = { alolan:"_alolan", galarian:"_galarian", hisuian:"_hisuian", paldean:"_paldea" };
 function regionOf(speciesId){
@@ -323,33 +706,117 @@ function lineOf(rootId){         // root + all descendants, in evolution order
   })(rootId);
   return out;
 }
+function protoSpeciesKey(speciesId){
+  return String(speciesId||"")
+    .toUpperCase()
+    .replace(/[^A-Z0-9]+/g,"_")
+    .replace(/^_+|_+$/g,"")
+    .replace(/_ALOLAN(?=_|$)/g,"_ALOLA")
+    .replace(/_PALDEAN(?=_|$)/g,"_PALDEA");
+}
+function protoFormForSpecies(root){
+  const key=protoSpeciesKey(root.speciesId);
+  if(!key) return null;
+
+  // Exact alternate-form names line up with normalized Pokémon GO species IDs.
+  if(Object.prototype.hasOwnProperty.call(PROTO_FORMS,key) && PROTO_FORMS[key]!==0)
+    return {name:key, id:PROTO_FORMS[key]};
+
+  // A few entries add STANDARD after the regional species key (e.g. Darmanitan).
+  const standard=key+"_STANDARD";
+  if((/_ALOLA$|_GALARIAN$|_HISUIAN$|_PALDEA$/.test(key)) &&
+     Object.prototype.hasOwnProperty.call(PROTO_FORMS,standard) && PROTO_FORMS[standard]!==0)
+    return {name:standard, id:PROTO_FORMS[standard]};
+
+  return null;
+}
+function enumFormName(id){ return PROTO_FORM_NAME[id] || (Number(id)===0 ? "FORM_UNSET" : "Unknown proto form"); }
+function enumCostumeName(id){ return PROTO_COSTUME_NAME[id] || (Number(id)===0 ? "UNSET" : "Unknown proto costume"); }
+function populateProtoLists(){
+  const fl=$("protoFormIds"), cl=$("protoCostumeIds");
+  if(fl) fl.innerHTML=PROTO_FORM_ENTRIES.map(([name,id])=>`<option value="${id}" label="${name}"></option>`).join("");
+  if(cl) cl.innerHTML=PROTO_COSTUME_ENTRIES.map(([name,id])=>`<option value="${id}" label="${name}"></option>`).join("");
+}
 function resolveForm(root){
   const region=regionOf(root.speciesId);
-  if(!region) return { form:0, region:"", known:true };          // standard form = 0 (verified)
-  const key=root.dex+":"+region;
-  if(LEARNED[key]) return { form:LEARNED[key].form, costume:LEARNED[key].costume||0, region, known:true };
-  return { form:0, region, known:false };                         // regional, form unknown -> flag, don't guess
+  const learnedKey=region ? root.dex+":"+region : "";
+  if(learnedKey && LEARNED[learnedKey]){
+    const x=LEARNED[learnedKey];
+    return { form:x.form||0, costume:x.costume||0, region, known:true, source:"polygon" };
+  }
+
+  const proto=protoFormForSpecies(root);
+  if(proto) return { form:proto.id, costume:0, region, known:true, source:"proto", protoName:proto.name };
+
+  // Polygon exports use 0 for ordinary/standard catches even though the proto
+  // also contains many *_NORMAL enum members. If the display name clearly
+  // denotes an alternate form but no exact proto match was found, keep it
+  // unresolved instead of silently exporting a guessed 0.
+  const looksAlternate = region || /\([^)]*\)/.test(String(root.speciesName||""));
+  if(!looksAlternate) return { form:0, costume:0, region:"", known:true, source:"standard", protoName:"FORM_UNSET" };
+
+  return { form:0, costume:0, region, known:false, source:"unknown" };
 }
 function fileBase(name){ return "PVP"+REGION(name).replace(/[^A-Za-z0-9]/g,""); }
 
 async function loadGM(){
-  let data=null, err=null;
-  for(const url of GM_URLS){
-    try{ const r=await fetch(url); if(r.ok){ data=await r.json(); break; } }
-    catch(e){ err=e; }
-  }
-  if(!data) throw err||new Error("no data");
-  const list=data.pokemon||data;
-  BYID={}; 
-  list.forEach(p=>{ if(p&&p.speciesId&&!isExcluded(p)) BYID[p.speciesId]=p; });
-  // roots = catchable bases (no parent inside our set)
-  const set=new Set();
-  Object.values(BYID).forEach(p=>{
-    const r=rootOf(p.speciesId);
-    if(BYID[r]) set.add(r);
+  const [sr,er]=await Promise.all([fetch(POGO_DATA_URLS.stats),fetch(POGO_DATA_URLS.evolutions)]);
+  if(!sr.ok||!er.ok) throw new Error("PoGoAPI data unavailable");
+  const stats=await sr.json(), evos=await er.json();
+  const normalStats=new Map();
+  stats.forEach(x=>{ if(String(x.form).toLowerCase()==="normal") normalStats.set(x.pokemon_id,[x.base_attack,x.base_defense,x.base_stamina]); });
+  const norm=s=>String(s||"").toLowerCase().replace(/[♀]/g,"f").replace(/[♂]/g,"m").replace(/[^a-z0-9]+/g,"_").replace(/^_+|_+$/g,"");
+  const speciesId=(name,form)=>{
+    const b=norm(name), f=String(form||"Normal").toLowerCase();
+    if(f==="normal") return b;
+    if(f==="alola") return b+"_alolan";
+    if(f==="galarian"||f==="galar") return b+"_galarian";
+    if(f==="hisuian"||f==="hisui") return b+"_hisuian";
+    if(f==="paldean"||f==="paldea") return b+"_paldean";
+    return b+"_"+norm(form);
+  };
+  const displayName=(name,form)=>{
+    const f=String(form||"Normal");
+    if(f==="Normal") return name;
+    const map={Alola:"Alola",Galarian:"Galar",Galar:"Galar",Hisuian:"Hisui",Hisui:"Hisui",Paldean:"Paldea",Paldea:"Paldea"};
+    return `${name} (${map[f]||f.replace(/_/g," ")})`;
+  };
+  const usefulForm=x=>{
+    const f=String(x.form||"Normal"), low=f.toLowerCase();
+    if(low==="normal"||["alola","galarian","galar","hisuian","hisui","paldean","paldea"].includes(low)) return true;
+    const n=normalStats.get(x.pokemon_id), diff=!n||n[0]!==x.base_attack||n[1]!==x.base_defense||n[2]!==x.base_stamina;
+    if(diff) return true;
+    return /altered|origin|attack|defense|speed|sunny|rainy|snowy|frost|fan|mow|wash|heat|plant|sandy|trash|sky|land|therian|incarnate|zen|standard|resolute|aria|pirouette|striped|curly|droopy|stretchy|gulping|gorging/i.test(f);
+  };
+  BYID={};
+  stats.filter(usefulForm).forEach(x=>{
+    const id=speciesId(x.pokemon_name,x.form);
+    BYID[id]={speciesId:id,speciesName:displayName(x.pokemon_name,x.form),dex:x.pokemon_id,formLabel:x.form,
+      baseStats:{atk:x.base_attack,def:x.base_defense,sta:x.base_stamina,hp:x.base_stamina},family:{evolutions:[]},tags:[],released:true};
   });
+  const findNode=(name,form)=>{
+    const exact=speciesId(name,form); if(BYID[exact]) return exact;
+    const normal=speciesId(name,"Normal"); return BYID[normal]?normal:null;
+  };
+  evos.forEach(src=>{
+    const sid=findNode(src.pokemon_name,src.form); if(!sid) return;
+    const sNode=BYID[sid];
+    (src.evolutions||[]).forEach(e=>{
+      const cid=findNode(e.pokemon_name,e.form); if(!cid||cid===sid) return;
+      if(!sNode.family.evolutions.includes(cid)) sNode.family.evolutions.push(cid);
+      if(!BYID[cid].family.parent) BYID[cid].family.parent=sid;
+    });
+  });
+  const set=new Set();
+  Object.values(BYID).forEach(p=>{ const r=rootOf(p.speciesId); if(BYID[r]) set.add(r); });
   ROOTS=[...set];
 }
+
+function stadiumSlug(speciesId,name){
+  let s=String(speciesId||name||"").toUpperCase().replace(/[^A-Z0-9]+/g,"_").replace(/^_+|_+$/g,"");
+  return s;
+}
+function stadiumUrl(speciesId,name){ return STADIUM_BASE+encodeURIComponent(stadiumSlug(speciesId,name)); }
 
 /* ---------- filter building ---------- */
 function buildFamily(rootId, leagues, opts={}){
@@ -360,7 +827,10 @@ function buildFamily(rootId, leagues, opts={}){
   const form = opts.form!=null ? opts.form : rf.form;
   const costume = opts.costume!=null ? opts.costume : (rf.costume||0);
   const formKnown = opts.form!=null ? true : rf.known;
-  const target={ costume, form, gender:0, pokedexId:root.dex };
+  const formName = enumFormName(form);
+  const costumeName = enumCostumeName(costume);
+  const formSource = opts.form!=null ? "manual" : (rf.source||"standard");
+  const target={ pokedexId:root.dex, form, costume, gender:0 };
 
   // 1) compute every entry
   let entries=[];
@@ -371,7 +841,7 @@ function buildFamily(rootId, leagues, opts={}){
       if(calcCP(base,{a:15,d:15,s:15},CPM[MAX_LEVEL]) < CAPS[lg]) continue;
       const r=rank1(base, CAPS[lg]);
       if(!r) continue;
-      entries.push({ league:lg, name:REGION(m.speciesName), iv:r });
+      entries.push({ league:lg, name:REGION(m.speciesName), speciesId:m.speciesId, dex:m.dex, iv:r });
     }
   }
   // 2) threshold = count of identical IV spreads across the whole family
@@ -384,7 +854,7 @@ function buildFamily(rootId, leagues, opts={}){
   return {
     rootId, dex:root.dex, name:REGION(root.speciesName),
     fileName:fileBase(root.speciesName)+".json",
-    target, form, costume, region:rf.region, formKnown,
+    target, form, costume, formName, costumeName, formSource, region:rf.region, formKnown,
     userForm:!!opts.userForm, userCostume:!!opts.userCostume,
     leagues:[...leagues], entries
   };
@@ -451,16 +921,17 @@ function renderQueue(){
           <span class="rn">${e.name}</span>
           <span class="iv">${e.iv.ivAtk}/${e.iv.ivDef}/${e.iv.ivSta}</span>
           <span class="lvl">Lv ≤ ${e.iv.levelMax}</span>
+          <a class="stadium-link" href="${stadiumUrl(e.speciesId,e.name)}" target="_blank" rel="noopener">Stadium ↗</a>
           <span class="badge ${dup?'dup':''}">${e.threshold}<span class="x"> ×</span></span>
         </div>`;
       }).join("");
       return `<div class="lgblock"><span class="lgtag">${lg} · ${CAPS[lg]}</span>${rows}</div>`;
     }).join("");
 
-    const adv = `<details class="adv"><summary>Form / costume ID</summary><div class="adv-body">
-        <div class="field"><label>Base form ID</label><input type="number" value="${f.form}" data-adv="form" data-i="${i}"></div>
-        <div class="field"><label>Costume ID</label><input type="number" value="${f.costume}" data-adv="costume" data-i="${i}"></div>
-        <p class="hint" style="margin:2px 0 0">Standard forms use 0. Set the PolygonX form number for regional variants, or a costume ID for costumed catches. IVs are unaffected.</p>
+    const adv = `<details class="adv"><summary>Polygon IDs · Dex:Form:Costume:Gender <span class="proto-pill">${f.formSource==="proto"?"PROTO":f.formSource==="polygon"?"POLYGON":f.userForm?"MANUAL":"AUTO"}</span></summary><div class="adv-body">
+        <div class="field"><label>Base form ID<small>${f.formName}</small></label><input type="number" list="protoFormIds" value="${f.form}" data-adv="form" data-i="${i}"></div>
+        <div class="field"><label>Costume ID<small>${f.costumeName}</small></label><input type="number" list="protoCostumeIds" value="${f.costume}" data-adv="costume" data-i="${i}"></div>
+        <p class="hint" style="margin:2px 0 0">Polygon identity is handled as DexID:FormID:CostumeID:Gender. IDs and names come from the supplied Pokémon GO proto enums. Standard PolygonX catches stay at form 0. The proto defines costume IDs, but it does not state which costume belongs to which species, so costume stays 0 unless you select/import one. IVs are unaffected.</p>
       </div></details>`;
 
     return `<div class="card">
@@ -558,8 +1029,12 @@ async function downloadAll(){
 /* ---------- generate all ---------- */
 function generateAll(){
   if(!LEAGUES.size){ toast("Enable at least one league"); return; }
-  // standard forms + regional forms (Alola/Galar/Hisui/Paldea)
-  const wanted=ROOTS.filter(id=>{ const r=regionOf(id); return !id.includes("_") || r!==""; });
+  // Standard forms + regional/alternate forms that have an unambiguous proto Form ID.
+  const wanted=ROOTS.filter(id=>{
+    if(!id.includes("_")) return true;
+    if(regionOf(id)) return true;
+    return !!protoFormForSpecies(BYID[id]);
+  });
   const btn=$("genAll"); btn.disabled=true; const old=btn.innerHTML; btn.innerHTML=`<span class="spin"></span> Building ${wanted.length}…`;
   setTimeout(()=>{
     QUEUE = wanted.map(id=>buildFamily(id,[...LEAGUES])).filter(Boolean)
@@ -567,7 +1042,7 @@ function generateAll(){
     persist(); renderQueue();
     btn.disabled=false; btn.innerHTML=old;
     const unknown=QUEUE.filter(f=>!f.formKnown).length;
-    toast(unknown ? `Built ${QUEUE.length} lines · ${unknown} need a form ID` : `Built ${QUEUE.length} lines`);
+    toast(unknown ? `Built ${QUEUE.length} lines · ${unknown} unresolved form ID${unknown>1?"s":""}` : `Built ${QUEUE.length} lines · proto IDs ready`);
     window.scrollTo({top:document.querySelector('#queue').offsetTop-70,behavior:'smooth'});
   },30);
 }
@@ -608,6 +1083,751 @@ function importFiles(fileList){
   });
 }
 
+
+/* ---------- main tabs ---------- */
+let ACTIVE_TAB="filters";
+function switchTab(tab){
+  ACTIVE_TAB=["filters","config","event","news","parser"].includes(tab)?tab:"filters";
+  document.querySelectorAll(".main-tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===ACTIVE_TAB));
+  ["filters","config","event","news","parser"].forEach(t=>{
+    const pane=$("pane-"+t), bar=$(t+"Bar");
+    if(pane) pane.classList.toggle("active",ACTIVE_TAB===t);
+    if(bar) bar.classList.toggle("active",ACTIVE_TAB===t);
+  });
+  try{ localStorage.setItem("ryu_pvp_tab",ACTIVE_TAB); }catch(e){}
+}
+document.querySelectorAll(".main-tab").forEach(b=>b.onclick=()=>{ switchTab(b.dataset.tab); if((b.dataset.tab==="event"||b.dataset.tab==="news")&&!OFFICIAL_NEWS_ITEMS.length) refreshOfficialNews(); });
+
+/* ---------- PvP Config Maker ---------- */
+let CONFIG_LEAGUES=new Set(["LC","GL","UL"]);
+let CONFIG_INCLUDE_FORMS=true;
+let CONFIG_REMOVE=true;
+let CONFIG_JSON="";
+let CONFIG_FAMILIES=[];
+
+function setToggle(el,on){
+  el.classList.toggle("on",!!on);
+  el.setAttribute("aria-checked",on?"true":"false");
+}
+function toggleControl(el, getter, setter){
+  const flip=()=>{ setter(!getter()); clearBuiltConfig(false); };
+  el.onclick=flip;
+  el.onkeydown=e=>{ if(e.key===" "||e.key==="Enter"){ e.preventDefault(); flip(); } };
+}
+function presetFromConfigLeagues(){
+  const a=[...CONFIG_LEAGUES].sort().join(",");
+  if(a==="GL") return "GL";
+  if(a==="LC") return "LC";
+  if(a==="UL") return "UL";
+  if(a==="GL,LC,UL") return "ALL";
+  return "";
+}
+function defaultCfgFilename(){
+  const p=presetFromConfigLeagues();
+  const suffix=p==="LC"?"LC":p==="GL"?"GL":p==="UL"?"UL":p==="ALL"?"All_Leagues":[...CONFIG_LEAGUES].sort().join("_")||"Custom";
+  return `PolygonX_PvP_${suffix}.json`;
+}
+function refreshCfgPresetUI(updateFilename=true){
+  const p=presetFromConfigLeagues();
+  $("cfgPresets").querySelectorAll(".preset").forEach(b=>b.classList.toggle("on",b.dataset.preset===p));
+  $("cfgLeagues").querySelectorAll(".lg").forEach(el=>el.classList.toggle("on",CONFIG_LEAGUES.has(el.dataset.lg)));
+  if(updateFilename) $("cfgFilename").value=defaultCfgFilename();
+}
+function applyCfgPreset(p){
+  CONFIG_LEAGUES = p==="ALL" ? new Set(["LC","GL","UL"]) : new Set([p]);
+  refreshCfgPresetUI(true);
+  clearBuiltConfig(false);
+}
+function clearBuiltConfig(showToast=false){
+  CONFIG_JSON=""; CONFIG_FAMILIES=[];
+  $("cfgEmpty").style.display="";
+  $("cfgResult").style.display="none";
+  $("cfgStatus").textContent="Not built";
+  $("cfgDownload").disabled=true; $("cfgClear").disabled=true;
+  $("cfgFamiliesCount").textContent="0";
+  $("cfgFiltersCount").textContent="0";
+  $("cfgDuplicateCount").textContent="0";
+  $("cfgSkippedCount").textContent="0";
+  $("cfgPreview").textContent="";
+  if(showToast) toast("Config cleared");
+}
+function configWantedRoots(){
+  let skipped=0;
+  const wanted=[];
+  ROOTS.forEach(id=>{
+    const root=BYID[id]; if(!root) return;
+    const rf=resolveForm(root);
+    const alternate = rf.source!=="standard";
+    if(alternate && !CONFIG_INCLUDE_FORMS) return;
+    if(alternate && !rf.known){ skipped++; return; }
+    wanted.push(id);
+  });
+  return {wanted,skipped};
+}
+function filterObjectForEntry(fam,e,id){
+  return {
+    catchOptionsBerries:[], catchOptionsPokeballs:[], cpMax:0, cpMin:0, enabled:true,
+    encounterFilterId:id,
+    encounterFilterName:`🥊 ${e.league} ${e.name}`,
+    filterCp:false, filterGreatLeagueTopRank:false, filterIvSum:false, filterLevel:true,
+    filterOnlyCatch:false, filterPokemonId:true, filterShowcaseScore:false, filterSize:false,
+    filterSpecificIv:true, filterTicketed:false, filterType:false, filterUltraLeagueTopRank:false,
+    ivSets:[{ivAtk:e.iv.ivAtk, ivDef:e.iv.ivDef, ivSta:e.iv.ivSta}],
+    ivSumMax:45, ivSumMin:0, levelMax:e.iv.levelMax, levelMin:1, minShowcaseScore:0,
+    onlyApplyPurificationBonus:false, onlyBackground:false, onlyShiny:false,
+    pokemonDetailsCatchOriginDmax:false,
+    pokemonId:[ {...fam.target}, {...MIRAIDON} ],
+    removePokemonIdFromListThreshold:CONFIG_REMOVE ? e.threshold : 0,
+    removePokemonIdFromListWhenCaught:CONFIG_REMOVE,
+    sizeXl:false, sizeXs:false, sizeXxl:false, sizeXxs:false,
+    targetTypes:[], ticketedValue:false
+  };
+}
+function buildConfigNow(){
+  if(!CONFIG_LEAGUES.size){ toast("Enable at least one league"); return; }
+  const btn=$("cfgBuild"), old=btn.innerHTML;
+  btn.disabled=true; btn.innerHTML=`<span class="spin"></span> Building…`;
+  setTimeout(()=>{
+    try{
+      const {wanted,skipped}=configWantedRoots();
+      const fams=wanted.map(id=>buildFamily(id,[...CONFIG_LEAGUES])).filter(Boolean)
+                        .sort((a,b)=>a.dex-b.dex||a.name.localeCompare(b.name));
+      const map={};
+      let duplicateRefs=0, filters=0;
+      fams.forEach(fam=>fam.entries.forEach(e=>{
+        const id=crypto.randomUUID();
+        map[id]=filterObjectForEntry(fam,e,id);
+        filters++;
+        if(e.threshold>1) duplicateRefs++;
+      }));
+      CONFIG_FAMILIES=fams;
+      CONFIG_JSON=JSON.stringify({encounterFilters:map},null,2);
+      $("cfgFamiliesCount").textContent=String(fams.length);
+      $("cfgFiltersCount").textContent=String(filters);
+      $("cfgDuplicateCount").textContent=String(duplicateRefs);
+      $("cfgSkippedCount").textContent=String(skipped);
+      $("cfgEmpty").style.display="none";
+      $("cfgResult").style.display="";
+      $("cfgStatus").textContent=`${filters} filters ready`;
+      $("cfgDownload").disabled=!filters; $("cfgClear").disabled=!filters;
+      const lines=[
+        `Leagues: ${[...CONFIG_LEAGUES].join(" + ")}`,
+        `Families: ${fams.length}`,
+        `Filters: ${filters}`,
+        `Duplicate-aware refs: ${duplicateRefs}`,
+        `Alternate forms: ${CONFIG_INCLUDE_FORMS?"supported only":"off"}`,
+        `Remove when caught: ${CONFIG_REMOVE?"on":"off"}`,
+        `Skipped unresolved forms: ${skipped}`,
+        "",
+        `Identity: DexID:FormID:CostumeID:Gender`
+      ];
+      $("cfgPreview").textContent=lines.join("\n");
+      toast(`Built ${filters} PvP filters`);
+    }catch(e){
+      console.error(e);
+      toast("Could not build config");
+    }finally{
+      btn.disabled=false; btn.innerHTML=old;
+    }
+  },30);
+}
+function safeCfgFilename(){
+  let n=String($("cfgFilename").value||defaultCfgFilename()).trim();
+  if(!n.toLowerCase().endsWith(".json")) n+=".json";
+  n=n.replace(/[\\/:*?"<>|]+/g,"_");
+  return n||"PolygonX_PvP_Config.json";
+}
+function downloadConfig(){
+  if(!CONFIG_JSON){ toast("Build the config first"); return; }
+  downloadText(safeCfgFilename(),CONFIG_JSON);
+}
+
+$("cfgPresets").querySelectorAll(".preset").forEach(b=>b.onclick=()=>applyCfgPreset(b.dataset.preset));
+$("cfgLeagues").querySelectorAll(".lg").forEach(el=>el.onclick=()=>{
+  const lg=el.dataset.lg;
+  if(CONFIG_LEAGUES.has(lg)) CONFIG_LEAGUES.delete(lg); else CONFIG_LEAGUES.add(lg);
+  refreshCfgPresetUI(true); clearBuiltConfig(false);
+});
+toggleControl($("cfgForms"),()=>CONFIG_INCLUDE_FORMS,v=>{ CONFIG_INCLUDE_FORMS=v; setToggle($("cfgForms"),v); });
+toggleControl($("cfgRemove"),()=>CONFIG_REMOVE,v=>{ CONFIG_REMOVE=v; setToggle($("cfgRemove"),v); });
+$("cfgBuild").onclick=buildConfigNow;
+$("cfgDownload").onclick=downloadConfig;
+$("cfgClear").onclick=()=>clearBuiltConfig(true);
+$("cfgReset").onclick=()=>{
+  CONFIG_LEAGUES=new Set(["LC","GL","UL"]);
+  CONFIG_INCLUDE_FORMS=true; CONFIG_REMOVE=true;
+  setToggle($("cfgForms"),true); setToggle($("cfgRemove"),true);
+  refreshCfgPresetUI(true); clearBuiltConfig(false); toast("Config Maker reset");
+};
+
+
+/* ---------- Official Pokémon GO News ---------- */
+let OFFICIAL_NEWS_ITEMS=[];
+let LAST_OFFICIAL_ARTICLE=null;
+let EVENT_WARNINGS=[];
+let POKEMON_ALIAS_CACHE=null;
+
+function setOfficialStatus(msg,kind=""){
+  const el=$("officialNewsStatus"); if(!el) return;
+  el.textContent=msg; el.className="official-news-status"+(kind?" "+kind:"");
+}
+function cleanOfficialLine(x){
+  return String(x||"").replace(/\u00a0/g," ").replace(/[ \t]+/g," ").trim();
+}
+function normalizeOfficialUrl(url){
+  let u=String(url||"").trim();
+  if(!u) return "";
+  try{
+    const x=new URL(u, "https://pokemongo.com");
+    if(!/(^|\.)pokemongo\.com$/i.test(x.hostname)) return "";
+    x.hash="";
+    return x.href.replace(/\/$/,"");
+  }catch(e){ return ""; }
+}
+function htmlToOfficialText(html){
+  const doc=new DOMParser().parseFromString(String(html||""),"text/html");
+  doc.querySelectorAll("script,style,svg,noscript,nav,footer,form,iframe").forEach(n=>n.remove());
+  const root=doc.querySelector("main")||doc.querySelector("article")||doc.body;
+  const out=[];
+  root.querySelectorAll("h1,h2,h3,h4,p,li").forEach(el=>{
+    const t=cleanOfficialLine(el.textContent); if(!t) return;
+    if(/^H[1-4]$/.test(el.tagName)) out.push("#".repeat(+el.tagName[1])+" "+t);
+    else if(el.tagName==="LI") out.push("- "+t);
+    else out.push(t);
+  });
+  return out.join("\n");
+}
+function stripReaderMeta(text){
+  let t=String(text||"").replace(/\r/g,"");
+  const m=t.match(/(?:^|\n)Markdown Content:\s*\n/i);
+  if(m) t=t.slice((m.index||0)+m[0].length);
+  return t.trim();
+}
+async function fetchOfficialResource(url){
+  const official=normalizeOfficialUrl(url); if(!official) throw new Error("Use a pokemongo.com URL");
+  let directErr=null;
+  try{
+    const r=await fetch(official,{headers:{"Accept":"text/html,application/xhtml+xml,text/plain;q=0.9,*/*;q=0.8"},cache:"no-store"});
+    if(r.ok){
+      const raw=await r.text();
+      const ct=r.headers.get("content-type")||"";
+      const text=/html/i.test(ct)||/^\s*</.test(raw)?htmlToOfficialText(raw):stripReaderMeta(raw);
+      if(text.length>120) return {url:official,text,transport:"direct",raw};
+    } else directErr=new Error(`Pokémon GO returned ${r.status}`);
+  }catch(e){ directErr=e; }
+  try{
+    const r=await fetch(JINA_READER+official,{headers:{"Accept":"text/plain"},cache:"no-store"});
+    if(!r.ok) throw new Error(`reader returned ${r.status}`);
+    const raw=await r.text(), text=stripReaderMeta(raw);
+    if(text.length<80) throw new Error("empty article");
+    return {url:official,text,transport:"read-only fallback",raw};
+  }catch(e){
+    throw new Error(`Could not read Pokémon GO News${directErr?`: ${directErr.message}`:""}. Fallback also failed: ${e.message}`);
+  }
+}
+function parseOfficialNewsLinks(resource){
+  const out=[], seen=new Set();
+  const add=(title,url)=>{
+    title=cleanOfficialLine(title).replace(/^[-–—\s]+/,"");
+    url=normalizeOfficialUrl(url);
+    if(!title||title.length<4||!url||!/\/news\//i.test(new URL(url).pathname)) return;
+    const k=url.toLowerCase(); if(seen.has(k)) return; seen.add(k);
+    out.push({title,url});
+  };
+  const md=/\[([^\]]{4,180})\]\((https?:\/\/pokemongo\.com(?:\/en)?\/news\/[^)\s?#]+[^)\s]*)\)/gi;
+  let m; while((m=md.exec(resource.raw||resource.text))) add(m[1],m[2]);
+  if(!out.length && /^\s*</.test(resource.raw||"")){
+    const doc=new DOMParser().parseFromString(resource.raw,"text/html");
+    doc.querySelectorAll('a[href*="/news/"]').forEach(a=>add(a.textContent,new URL(a.getAttribute("href"),resource.url).href));
+  }
+  if(!out.length){
+    const lines=resource.text.split(/\n/).map(cleanOfficialLine).filter(Boolean);
+    for(let i=0;i<lines.length;i++){
+      const u=lines[i].match(/https?:\/\/pokemongo\.com(?:\/en)?\/news\/[^\s)]+/i);
+      if(u) add(lines[i-1]||lines[i],u[0]);
+    }
+  }
+  return out.slice(0,80);
+}
+async function refreshOfficialNews(){
+  const b=$("officialNewsRefresh"), old=b.textContent; b.disabled=true;b.textContent="Loading…";setOfficialStatus("Reading recent posts from Pokémon GO News…");
+  try{
+    const res=await fetchOfficialResource(POGO_NEWS_INDEX);
+    OFFICIAL_NEWS_ITEMS=parseOfficialNewsLinks(res);
+    const sel=$("officialNewsSelect");
+    sel.innerHTML='<option value="">Choose a Pokémon GO News post…</option>'+OFFICIAL_NEWS_ITEMS.map((x,i)=>`<option value="${i}">${escapeHtml(x.title)}</option>`).join("");
+    $("officialNewsLoad").disabled=!OFFICIAL_NEWS_ITEMS.length;
+    setOfficialStatus(`Loaded ${OFFICIAL_NEWS_ITEMS.length} recent Pokémon GO News posts · ${res.transport}.`,OFFICIAL_NEWS_ITEMS.length?"ok":"err");
+    if(!OFFICIAL_NEWS_ITEMS.length) toast("News page loaded, but no article links were found");
+  }catch(e){ setOfficialStatus(e.message,"err"); toast("Could not refresh Pokémon GO News"); }
+  finally{b.disabled=false;b.textContent=old;}
+}
+function articleTitle(text){
+  const lines=String(text||"").split(/\n/).map(cleanOfficialLine).filter(Boolean);
+  for(const l of lines){
+    const m=l.match(/^#{1,3}\s+(.+)/); if(m && !/^news$/i.test(m[1])) return m[1].trim();
+  }
+  return lines.find(l=>!/^(Title:|URL Source:|Published Time:|Markdown Content:)/i.test(l))||"Pokémon GO Event";
+}
+function articleDateLines(text){
+  const months="January|February|March|April|May|June|July|August|September|October|November|December";
+  const re=new RegExp(`(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)?[,]?\\s*(?:${months})\\s+\\d{1,2},\\s+20\\d{2}`,"i");
+  const lines=String(text||"").split(/\n/).map(cleanOfficialLine).filter(Boolean);
+  const picked=[];
+  for(let i=0;i<Math.min(lines.length,55);i++){
+    if(re.test(lines[i])||(/local time/i.test(lines[i])&&/(?:a\.?m\.?|p\.?m\.?|\d{1,2}:\d{2})/i.test(lines[i]))){
+      picked.push(lines[i].replace(/^[-*]\s*/,""));
+      if(picked.length>=2) break;
+    }
+  }
+  return [...new Set(picked)].join("\n");
+}
+function parseOfficialSections(text){
+  const sections=[]; let cur={heading:"Intro",lines:[]}; sections.push(cur);
+  for(const raw of String(text||"").replace(/\r/g,"").split("\n")){
+    const line=cleanOfficialLine(raw); if(!line) continue;
+    const h=line.match(/^#{1,5}\s+(.+)/);
+    if(h){cur={heading:h[1].trim(),lines:[]};sections.push(cur);continue;}
+    if(/^(Title:|URL Source:|Published Time:|Markdown Content:)/i.test(line)) continue;
+    cur.lines.push(line.replace(/^[-*]\s+/,""));
+  }
+  return sections;
+}
+function officialCategory(heading){
+  const h=String(heading||"").toLowerCase();
+  if(/one[- ]star|tier\s*1/.test(h)) return "tier1";
+  if(/three[- ]star|tier\s*3/.test(h)) return "tier3";
+  if(/go battle league|battle league/.test(h)) return "gbl";
+  if(/go pass/.test(h)) return "pass";
+  if(/lure/.test(h)) return "lure";
+  if(/egg|hatch/.test(h)) return "eggs";
+  if(/field research/.test(h)) return "research";
+  if(/wild|featured pok[eé]mon|featured pokemon|wild encounters/.test(h)) return "wild";
+  if(/raid/.test(h)) return "raids";
+  if(/event bonuses|bonuses/.test(h)) return "bonuses";
+  if(/featured attack|featured move/.test(h)) return "attack";
+  if(/special research|timed research|ticket/.test(h)) return "extra";
+  return "other";
+}
+function normWords(x){
+  return (" "+String(x||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[♀]/g," female ").replace(/[♂]/g," male ").replace(/[^a-z0-9]+/g," ").replace(/\s+/g," ").trim()+" ");
+}
+function pokemonAliases(){
+  if(POKEMON_ALIAS_CACHE) return POKEMON_ALIAS_CACHE;
+  const arr=[];
+  Object.values(BYID).forEach(p=>{
+    const base=String(p.speciesName||"").replace(/\s+\([^)]*\)\s*$/,""), form=String(p.formLabel||"Normal"), low=form.toLowerCase();
+    const aliases=[];
+    if(low==="normal") aliases.push(base);
+    else if(low==="alola") aliases.push(`Alolan ${base}`,`${base} Alola`);
+    else if(low==="galarian"||low==="galar") aliases.push(`Galarian ${base}`,`${base} Galar`);
+    else if(low==="hisuian"||low==="hisui") aliases.push(`Hisuian ${base}`,`${base} Hisui`);
+    else if(low==="paldean"||low==="paldea") aliases.push(`Paldean ${base}`,`${base} Paldea`);
+    else aliases.push(`${form} ${base}`,`${base} ${form}`,`${form} Form ${base}`,`${form} Forme ${base}`);
+    aliases.forEach(a=>arr.push({alias:normWords(a).trim(),p,base:normWords(base).trim(),alternate:low!=="normal"}));
+  });
+  arr.sort((a,b)=>Number(b.alternate)-Number(a.alternate)||b.alias.length-a.alias.length);
+  return POKEMON_ALIAS_CACHE=arr;
+}
+function eventIdentityFromNode(p,source="official"){
+  const rf=resolveForm(p); if(!rf.known) return null;
+  const t={pokedexId:p.dex,form:rf.form||0,costume:rf.costume||0,gender:0,name:REGION(p.speciesName),source};
+  t.key=[t.pokedexId,t.form,t.costume,t.gender].join(":"); return t;
+}
+function protoVariantFromLine(baseNode,line){
+  const baseKey=protoSpeciesKey(baseNode.speciesId).replace(/_(ALOLAN|GALARIAN|HISUIAN|PALDEAN)$/,'');
+  const n=normWords(line), candidates=[];
+  for(const [name,id] of PROTO_FORM_ENTRIES){
+    if(!id||!name.startsWith(baseKey+"_")) continue;
+    if(/_(NORMAL|STANDARD)$/.test(name)) continue;
+    const toks=name.slice(baseKey.length+1).toLowerCase().split("_").filter(t=>t.length>=4&&!/^20\d\d$/.test(t)&&!/^costume$/.test(t));
+    const hits=toks.filter(t=>n.includes(" "+t+" "));
+    if(hits.length) candidates.push({name,id,hits:hits.length,toks:toks.length});
+  }
+  candidates.sort((a,b)=>b.hits-a.hits||a.toks-b.toks);
+  if(!candidates.length) return null;
+  const best=candidates[0], ties=candidates.filter(x=>x.hits===best.hits&&x.toks===best.toks);
+  if(ties.length!==1) return null;
+  if(best.hits<2 && !best.name.split("_").some(t=>t.length>=6&&n.includes(" "+t.toLowerCase()+" "))) return null;
+  return best;
+}
+function matchPokemonInLine(line){
+  const n=normWords(line), found=[], baseSeen=new Set();
+  for(const a of pokemonAliases()){
+    if(!a.alias||!n.includes(" "+a.alias+" ")) continue;
+    if(baseSeen.has(a.base)) continue;
+    const t=eventIdentityFromNode(a.p); if(t){found.push(t);baseSeen.add(a.base);}
+  }
+  for(let i=0;i<found.length;i++){
+    const t=found[i]; if(t.form!==0) continue;
+    const node=Object.values(BYID).find(p=>p.dex===t.pokedexId&&String(p.formLabel).toLowerCase()==="normal");
+    if(!node) continue;
+    const pv=protoVariantFromLine(node,line);
+    if(pv){
+      t.form=pv.id;
+      t.name=`${String(node.speciesName).replace(/\s+\([^)]*\)$/,'')} (${pv.name.replace(protoSpeciesKey(node.speciesId)+"_","").replace(/_/g," ")})`;
+      t.key=[t.pokedexId,t.form,t.costume,t.gender].join(":"); t.source="proto-text";
+    }
+  }
+  return found;
+}
+function dedupeTargets(list){
+  const m=new Map(); list.forEach(t=>{ if(t&&t.key&&!m.has(t.key))m.set(t.key,t); }); return [...m.values()];
+}
+function extractOfficialTargets(text){
+  const sections=parseOfficialSections(text), out=[];
+  const encounterCats=new Set(["wild","research","eggs","tier1","tier3","gbl","lure","raids","extra"]);
+  for(const sec of sections){
+    const cat=officialCategory(sec.heading); if(!encounterCats.has(cat)) continue;
+    sec.lines.forEach(line=>out.push(...matchPokemonInLine(line)));
+  }
+  return dedupeTargets(out);
+}
+function compactIdentity(t){
+  if(t.gender) return `(${t.pokedexId}:${t.form}:${t.costume}:${t.gender})`;
+  if(t.costume) return `(${t.pokedexId}:${t.form}:${t.costume})`;
+  if(t.form) return `(${t.pokedexId}:${t.form})`;
+  return `(${t.pokedexId})`;
+}
+function targetsForSection(sec){
+  const out=[]; sec.lines.forEach(l=>out.push(...matchPokemonInLine(l))); return dedupeTargets(out);
+}
+function formatTargetList(list){ return dedupeTargets(list).map(t=>`${compactIdentity(t)} ${t.name}`).join("\n"); }
+function cleanSectionText(lines){
+  return lines.map(x=>cleanOfficialLine(x).replace(/^[-*]\s*/,"")).filter(x=>x&&!/^please be aware|^upcoming events are subject/i.test(x)).join("\n");
+}
+function bonusEmoji(line){
+  const l=line.toLowerCase();
+  if(/candy xl/.test(l)) return "<:candyxl:1026830099028385864>";
+  if(/catch candy| candy /.test(l)) return "<:candya:1026856292616257627>";
+  if(/stardust/.test(l)) return "<:Stardust3:1228604835193163777>";
+  if(/\bxp\b/.test(l)) return "<:XPYellow:1027837853528502334>";
+  if(/incense/.test(l)) return "<:Incense:785735994212876309>";
+  if(/lure/.test(l)) return "<:LureModule:785736011053269032>";
+  if(/trade/.test(l)) return "<:TradeIcon:1205798760710541322>";
+  if(/snapshot/.test(l)) return "<:Snapshot:1029969177374625853>";
+  if(/hatch distance|incubator/.test(l)) return "<:Incubators:1021343559019941939>";
+  if(/shiny/.test(l)) return "<:ShinySymbol:1115064005854240839>";
+  if(/timed research/.test(l)) return "<:TimedResearch:1172179667944472640>";
+  return "•";
+}
+function formatBonuses(lines){ return lines.map(cleanOfficialLine).filter(Boolean).map(x=>`${bonusEmoji(x)} ${x.replace(/^[-*]\s*/,"")}`).join("\n"); }
+function populateNewsFromOfficial(article){
+  const text=article.text, sections=parseOfficialSections(text), grouped={wild:[],research:[],eggs:[],tier1:[],tier3:[],gbl:[],lure:[],bonuses:[],attack:[],pass:[],extra:[]};
+  sections.forEach(sec=>{const cat=officialCategory(sec.heading); if(grouped[cat])grouped[cat].push(sec);});
+  const targetText=cat=>formatTargetList(grouped[cat].flatMap(targetsForSection));
+  const rawText=cat=>grouped[cat].map(s=>cleanSectionText(s.lines)).filter(Boolean).join("\n");
+  const title=article.title||articleTitle(text);
+  if(/community day/i.test(title)) $("newsTemplate").value="community"; else if(/hatch day/i.test(title)) $("newsTemplate").value="hatch"; else $("newsTemplate").value="event";
+  $("newsTitle").value=`📰 **__${title}__** 📰`;
+  $("newsDate").value=articleDateLines(text);
+  $("newsUrl").value=article.url;
+  $("newsWild").value=targetText("wild");
+  $("newsResearch").value=targetText("research")||rawText("research");
+  $("newsEggs").value=targetText("eggs")||rawText("eggs");
+  $("newsT1").value=targetText("tier1")||rawText("tier1");
+  $("newsT3").value=targetText("tier3")||rawText("tier3");
+  $("newsGBL").value=targetText("gbl")||rawText("gbl");
+  $("newsLure").value=targetText("lure")||rawText("lure");
+  const bonusLines=grouped.bonuses.flatMap(s=>s.lines);
+  const attackLines=grouped.attack.flatMap(s=>s.lines).map(x=>`⚔️ ${x}`);
+  $("newsBonuses").value=[formatBonuses(bonusLines),...attackLines].filter(Boolean).join("\n");
+  $("newsPass").value=rawText("pass");
+  $("newsExtra").value=grouped.extra.map(s=>`**${s.heading}**\n${cleanSectionText(s.lines)}`).filter(x=>x.trim()).join("\n\n");
+  buildNewsPost();
+}
+async function loadOfficialArticle(url,titleHint=""){
+  const official=normalizeOfficialUrl(url); if(!official){toast("Use an official pokemongo.com/news URL");return false;}
+  setOfficialStatus("Loading official Pokémon GO article…");
+  try{
+    const res=await fetchOfficialResource(official);
+    const title=titleHint||articleTitle(res.text);
+    LAST_OFFICIAL_ARTICLE={...res,title};
+    $("eventTitle").value=title; $("eventUrl").value=res.url; $("eventRaw").value=res.text;
+    EVENT_TARGETS=extractOfficialTargets(res.text); EVENT_JSON=""; EVENT_WARNINGS=[]; renderEventTargets();
+    populateNewsFromOfficial(LAST_OFFICIAL_ARTICLE);
+    $("eventPreview").style.display="none";
+    setOfficialStatus(`Loaded “${title}” · ${EVENT_TARGETS.length} encounter targets · ${res.transport}.`,"ok");
+    toast(`Loaded ${EVENT_TARGETS.length} event Pokémon`); return true;
+  }catch(e){setOfficialStatus(e.message,"err");toast("Could not load official article");return false;}
+}
+
+
+/* ---------- Event Config Maker ---------- */
+let EVENT_TARGETS=[];
+let EVENT_JSON="";
+function parseEventTargets(text){
+  const out=[], seen=new Set();
+  const lines=String(text||"").split(/\r?\n/);
+  for(const raw of lines){
+    const m=raw.match(/\((\d+)(?::(\d+))?(?::(\d+))?(?::(\d+))?\)\s*([^\n]*)/);
+    if(!m) continue;
+    const pokedexId=+m[1], form=m[2]?+m[2]:0, costume=m[3]?+m[3]:0, gender=m[4]?+m[4]:0;
+    let name=(m[5]||"").replace(/<:[^>]+>/g,"").replace(/`[^`]*`/g,"").replace(/\s+-#.*$/g,"").trim();
+    if(!name) name=`#${pokedexId}`;
+    const key=[pokedexId,form,costume,gender].join(":");
+    if(seen.has(key)) continue; seen.add(key);
+    out.push({pokedexId,form,costume,gender,name,key,source:"manual-id"});
+  }
+  for(const t of extractOfficialTargets(text)) if(!seen.has(t.key)){seen.add(t.key);out.push(t);}
+  return out;
+}
+function renderEventTargets(){
+  $("eventCount").textContent=`${EVENT_TARGETS.length} Pokémon${EVENT_WARNINGS.length?` · ${EVENT_WARNINGS.length} warnings`:""}`;
+  $("eventNoTargets").style.display=EVENT_TARGETS.length?"none":"";
+  $("eventTargets").innerHTML=EVENT_TARGETS.map(t=>`<span class="target-chip">${t.key} · ${escapeHtml(t.name)}${t.source&&t.source!=="manual-id"?` <span class="source-pill">${escapeHtml(t.source)}</span>`:""}</span>`).join("") + EVENT_WARNINGS.map(w=>`<span class="target-chip warn">${escapeHtml(w)}</span>`).join("");
+  $("eventDownload").disabled=!EVENT_JSON;
+}
+function escapeHtml(x){ return String(x).replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function genericEventFilter(target,id,title){
+  return {catchOptionsBerries:[],catchOptionsPokeballs:[],cpMax:0,cpMin:0,enabled:true,encounterFilterId:id,
+    encounterFilterName:`${title} · ${target.name}`,filterCp:false,filterGreatLeagueTopRank:false,filterIvSum:false,
+    filterLevel:false,filterOnlyCatch:false,filterPokemonId:true,filterShowcaseScore:false,filterSize:false,
+    filterSpecificIv:false,filterTicketed:false,filterType:false,filterUltraLeagueTopRank:false,ivSets:[],ivSumMax:45,ivSumMin:0,
+    levelMax:50,levelMin:1,minShowcaseScore:0,onlyApplyPurificationBonus:false,onlyBackground:false,onlyShiny:false,
+    pokemonDetailsCatchOriginDmax:false,pokemonId:[{pokedexId:target.pokedexId,form:target.form,costume:target.costume,gender:target.gender}],
+    removePokemonIdFromListThreshold:0,removePokemonIdFromListWhenCaught:false,sizeXl:false,sizeXs:false,sizeXxl:false,sizeXxs:false,targetTypes:[],ticketedValue:false};
+}
+function buildEventConfig(){
+  if(!EVENT_TARGETS.length){ EVENT_TARGETS=parseEventTargets($("eventRaw").value); renderEventTargets(); }
+  if(!EVENT_TARGETS.length){ toast("No event Pokémon found"); return; }
+  const prefix=$("eventPrefix").value.trim()||"🎪 Event", map={};
+  EVENT_TARGETS.forEach(t=>{ const id=crypto.randomUUID(); map[id]=genericEventFilter(t,id,prefix); });
+  EVENT_JSON=JSON.stringify({encounterFilters:map},null,2);
+  $("eventPreview").style.display="";
+  $("eventPreview").textContent=`${EVENT_TARGETS.length} event filters ready\n\n`+EVENT_TARGETS.map(t=>`${t.key}  ${t.name}`).join("\n");
+  $("eventDownload").disabled=false; toast(`Built ${EVENT_TARGETS.length} event filters`);
+}
+function safeEventFilename(){ let n=$("eventFilename").value.trim()||"PolygonX_Event_Config.json"; if(!/\.json$/i.test(n))n+=".json"; return n.replace(/[\\/:*?\"<>|]+/g,"_"); }
+$("officialNewsRefresh").onclick=refreshOfficialNews;
+$("officialNewsSelect").onchange=()=>{ $("officialNewsLoad").disabled=!$("officialNewsSelect").value; };
+$("officialNewsLoad").onclick=()=>{ const i=+$("officialNewsSelect").value, x=OFFICIAL_NEWS_ITEMS[i]; if(x) loadOfficialArticle(x.url,x.title); };
+$("officialUrlLoad").onclick=()=>loadOfficialArticle($("eventUrl").value);
+$("eventParse").onclick=()=>{ EVENT_TARGETS=parseEventTargets($("eventRaw").value); EVENT_JSON=""; renderEventTargets(); $("eventPreview").style.display="none"; toast(`Found ${EVENT_TARGETS.length} Pokémon`); };
+$("eventClear").onclick=()=>{ $("eventTitle").value="";$("eventUrl").value="";$("eventRaw").value="";EVENT_TARGETS=[];EVENT_JSON="";EVENT_WARNINGS=[];LAST_OFFICIAL_ARTICLE=null;renderEventTargets();$("eventPreview").style.display="none";setOfficialStatus("Not loaded yet."); };
+$("eventBuild").onclick=buildEventConfig;
+$("eventDownload").onclick=()=>{ if(EVENT_JSON) downloadText(safeEventFilename(),EVENT_JSON); };
+$("eventCopyIds").onclick=async()=>{ const txt=EVENT_TARGETS.map(t=>t.key).join("\n"); if(!txt){toast("No IDs to copy");return;} try{await navigator.clipboard.writeText(txt);toast("IDs copied");}catch(e){toast("Copy failed");} };
+
+/* ---------- News Post Maker ---------- */
+const NEWS_HEADINGS={
+  wild:"<:WildGrass:1045925921749749791> **__Wild__** <:WildGrass:1045925921749749791>",
+  research:"<:FieldResearch:1021348843205431296> **__Research__** <:FieldResearch:1021348843205431296>",
+  fieldResearch:"<:FieldResearch:1021348843205431296> **__Field Research__** <:FieldResearch:1021348843205431296>",
+  eggs:"<:eggs:1074041914736775269> **__Eggs__** <:eggs:1074041914736775269>",
+  eggs2:"<:2km:1076484702107619449> **__2km Eggs__** <:2km:1076484702107619449>",
+  lure:"<:RainyLure:1113096189450133574> **__Rainy Lure__** <:RainyLure:1113096189450133574>",
+  tier1:"<:Tier1RaidEgg:1169641911125037090> **__Tier 1__** <:Tier1RaidEgg:1169641911125037090>",
+  tier3:"<:Tier3RaidEgg:1169641992913948813> **__Tier 3__** <:Tier3RaidEgg:1169641992913948813>",
+  gbl:"<:GBL:976509845836537966> **__GO Battle League__** <:GBL:976509845836537966>",
+  bonuses:"🎁 **__Bonuses__** 🎁",
+  pass:"<:GOPass:1404387651863445546> **__GO Pass__** <:GOPassDeluxe:1404387761665998848>"
+};
+function newsHeading(key){
+  const t=$("newsTemplate").value;
+  if(key==="eggs"&&t==="hatch") return NEWS_HEADINGS.eggs2;
+  if(key==="research"&&t!=="community") return NEWS_HEADINGS.fieldResearch;
+  return NEWS_HEADINGS[key];
+}
+function sectionBlock(heading,text){ text=String(text||"").trim(); return text?`${heading}\n${text}`:""; }
+
+/* ---------- reusable custom Discord news templates ---------- */
+const NEWS_TEMPLATE_STORE_KEY="ryu_news_custom_templates_v1";
+let NEWS_USE_CUSTOM=false;
+function newsTemplateStore(){ try{return JSON.parse(localStorage.getItem(NEWS_TEMPLATE_STORE_KEY)||"{}");}catch(e){return {};} }
+function saveNewsTemplateStore(v){ try{localStorage.setItem(NEWS_TEMPLATE_STORE_KEY,JSON.stringify(v));}catch(e){} }
+function refreshNewsTemplateSelect(selectName=""){
+  const sel=$("newsCustomSelect"), data=newsTemplateStore(), names=Object.keys(data).sort((a,b)=>a.localeCompare(b));
+  sel.innerHTML='<option value="">No saved template selected</option>'+names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join("");
+  if(selectName&&data[selectName]) sel.value=selectName;
+}
+function customTemplateSkeleton(){
+  return `{{TITLE}}\n{{DATE}}\n{{OFFICIAL_LINK}}\n\n{{#WILD}}<:WildGrass:1045925921749749791> **__Wild__** <:WildGrass:1045925921749749791>\n{{WILD}}\n{{/WILD}}{{#PVP}}\n{{PVP}}\n{{/PVP}}{{#LURE}}\n<:RainyLure:1113096189450133574> **__Rainy Lure__** <:RainyLure:1113096189450133574>\n{{LURE}}\n{{/LURE}}{{#RESEARCH}}\n<:FieldResearch:1021348843205431296> **__Field Research__** <:FieldResearch:1021348843205431296>\n{{RESEARCH}}\n{{/RESEARCH}}{{#EGGS}}\n<:eggs:1074041914736775269> **__Eggs__** <:eggs:1074041914736775269>\n{{EGGS}}\n{{/EGGS}}{{#TIER1}}\n<:Tier1RaidEgg:1169641911125037090> **__Tier 1__** <:Tier1RaidEgg:1169641911125037090>\n{{TIER1}}\n{{/TIER1}}{{#TIER3}}\n<:Tier3RaidEgg:1169641992913948813> **__Tier 3__** <:Tier3RaidEgg:1169641992913948813>\n{{TIER3}}\n{{/TIER3}}{{#GBL}}\n<:GBL:976509845836537966> **__GO Battle League__** <:GBL:976509845836537966>\n{{GBL}}\n{{/GBL}}{{#BONUSES}}\n🎁 **__Bonuses__** 🎁\n{{BONUSES}}\n{{/BONUSES}}{{#PASS}}\n<:GOPass:1404387651863445546> **__GO Pass__** <:GOPassDeluxe:1404387761665998848>\n{{PASS}}\n{{/PASS}}{{#EXTRA}}\n{{EXTRA}}\n{{/EXTRA}}{{#FOOTER}}\n{{FOOTER}}{{/FOOTER}}`;
+}
+function newsTokenValues(){
+  const url=$("newsUrl").value.trim();
+  return {
+    TITLE:$("newsTitle").value.trim(),
+    TITLE_TEXT:$("eventTitle").value.trim()||$("newsTitle").value.replace(/<:[^>]+>|[*_~`]/g,"").trim(),
+    DATE:$("newsDate").value.trim(), URL:url, OFFICIAL_LINK:url?`<${url}>`:"",
+    WILD:$("newsWild").value.trim(), PVP:$("newsPvp").value.trim(), LURE:$("newsLure").value.trim(),
+    RESEARCH:$("newsResearch").value.trim(), EGGS:$("newsEggs").value.trim(), TIER1:$("newsT1").value.trim(),
+    TIER3:$("newsT3").value.trim(), GBL:$("newsGBL").value.trim(), BONUSES:$("newsBonuses").value.trim(),
+    PASS:$("newsPass").value.trim(), EXTRA:$("newsExtra").value.trim(), FOOTER:$("newsFooter").value.trim()
+  };
+}
+function renderCustomNewsTemplate(template,vals){
+  let out=String(template||"");
+  // Conditional blocks are processed repeatedly so multiple instances of the same token work.
+  out=out.replace(/{{#([A-Z0-9_]+)}}([\s\S]*?){{\/\1}}/g,(m,key,body)=>String(vals[key]||"").trim()?body:"");
+  Object.entries(vals).forEach(([key,val])=>{ out=out.replace(new RegExp("{{"+key+"}}","g"),String(val||"")); });
+  // Unknown placeholders remain visible on purpose, which makes template mistakes easy to spot.
+  return out.replace(/\n{3,}/g,"\n\n").trim();
+}
+function setCustomTemplateMode(on){
+  NEWS_USE_CUSTOM=!!on;
+  $("newsCustomState").textContent=NEWS_USE_CUSTOM?"Custom template active":"Built-in layout";
+  $("newsCustomEnable").textContent=NEWS_USE_CUSTOM?"Use built-in layout":"Use custom template";
+  $("newsCustomEnable").classList.toggle("btn-primary",NEWS_USE_CUSTOM);
+  $("newsCustomEnable").classList.toggle("btn-crimson",!NEWS_USE_CUSTOM);
+  buildNewsPost();
+}
+function buildNewsPost(){
+  let post="";
+  if(NEWS_USE_CUSTOM && $("newsCustomTemplate").value.trim()){
+    post=renderCustomNewsTemplate($("newsCustomTemplate").value,newsTokenValues());
+  }else{
+    const parts=[];
+    const title=$("newsTitle").value.trim(); if(title) parts.push(title);
+    const date=$("newsDate").value.trim(); if(date) parts.push(date);
+    const url=$("newsUrl").value.trim(); if(url) parts.push(`<${url}>`);
+    const wild=sectionBlock(newsHeading("wild"),$("newsWild").value); if(wild) parts.push(wild);
+    const pvp=$("newsPvp").value.trim(); if(pvp) parts.push(pvp);
+    const lure=sectionBlock(newsHeading("lure"),$("newsLure").value); if(lure) parts.push(lure);
+    const research=sectionBlock(newsHeading("research"),$("newsResearch").value); if(research) parts.push(research);
+    const eggs=sectionBlock(newsHeading("eggs"),$("newsEggs").value); if(eggs) parts.push(eggs);
+    const t1=sectionBlock(newsHeading("tier1"),$("newsT1").value); if(t1) parts.push(t1);
+    const t3=sectionBlock(newsHeading("tier3"),$("newsT3").value); if(t3) parts.push(t3);
+    const gbl=sectionBlock(newsHeading("gbl"),$("newsGBL").value); if(gbl) parts.push(gbl);
+    const bonuses=sectionBlock(newsHeading("bonuses"),$("newsBonuses").value); if(bonuses) parts.push(bonuses);
+    const pass=sectionBlock(newsHeading("pass"),$("newsPass").value); if(pass) parts.push(pass);
+    const extra=$("newsExtra").value.trim(); if(extra) parts.push(extra);
+    const footer=$("newsFooter").value.trim(); if(footer) parts.push(footer);
+    post=parts.filter(Boolean).join("\n\n");
+  }
+  $("newsPreview").textContent=post||"Nothing to generate yet."; $("newsStatus").textContent=post?`${post.length} characters`:"Empty"; return post;
+}
+function findNodeForTarget(t){
+  const candidates=Object.values(BYID).filter(p=>p.dex===t.pokedexId);
+  if(t.form===0) return candidates.find(p=>resolveForm(p).form===0)||candidates[0]||null;
+  return candidates.find(p=>resolveForm(p).form===t.form)||candidates[0]||null;
+}
+function buildNewsPvp(){
+  if(!EVENT_TARGETS.length) EVENT_TARGETS=parseEventTargets($("eventRaw").value);
+  const roots=new Set(), lines=[];
+  EVENT_TARGETS.forEach(t=>{ const p=findNodeForTarget(t); if(p) roots.add(rootOf(p.speciesId)); });
+  roots.forEach(rid=>{
+    const fam=buildFamily(rid,["LC","GL","UL"]); if(!fam) return;
+    fam.entries.forEach(e=>{
+      const icon=e.league==="LC"?"<:LittleCup:1174852377543712848>":e.league==="GL"?"<:Great:680315520410714112>":"UL";
+      lines.push(`${icon} ${e.name}・${e.iv.ivAtk}/${e.iv.ivDef}/${e.iv.ivSta}  L${e.iv.levelMax}`);
+    });
+  });
+  $("newsPvp").value=lines.join("\n"); toast(`Added ${lines.length} Stadium-style PvP lines`); buildNewsPost();
+}
+$("newsLoadEvent").onclick=()=>{
+  $("newsUrl").value=$("eventUrl").value; if(!$("newsTitle").value && $("eventTitle").value) $("newsTitle").value=`**__${$("eventTitle").value}__**`;
+  if(!EVENT_TARGETS.length) EVENT_TARGETS=parseEventTargets($("eventRaw").value);
+  if(!$("newsWild").value && EVENT_TARGETS.length) $("newsWild").value=EVENT_TARGETS.map(t=>`(${t.pokedexId}${t.form?":"+t.form:""}) ${t.name}`).join("\n");
+  buildNewsPost(); toast("Loaded Event tab data");
+};
+$("newsTemplate").onchange=()=>{
+  const t=$("newsTemplate").value;
+  $("newsTitle").placeholder=t==="community"?"<:SNickit:...> **__Nickit Community Day__** <:SNickit:...>":t==="hatch"?"<:Fire_type:...> **__Fire and Ice Hatch Day__** <:Ice_type:...>":"<:Water_type:...> **__Event Name__** <:Water_type:...>";
+  buildNewsPost();
+};
+
+refreshNewsTemplateSelect();
+$("newsCustomEnable").onclick=()=>{
+  if(!NEWS_USE_CUSTOM && !$("newsCustomTemplate").value.trim()) $("newsCustomTemplate").value=customTemplateSkeleton();
+  setCustomTemplateMode(!NEWS_USE_CUSTOM);
+};
+$("newsCustomSkeleton").onclick=()=>{ $("newsCustomTemplate").value=customTemplateSkeleton(); setCustomTemplateMode(true); toast("Starter template inserted"); };
+$("newsCustomSave").onclick=()=>{
+  const name=$("newsCustomName").value.trim(), text=$("newsCustomTemplate").value;
+  if(!name){toast("Give the template a name");return;} if(!text.trim()){toast("Paste a template first");return;}
+  const data=newsTemplateStore(); data[name]=text; saveNewsTemplateStore(data); refreshNewsTemplateSelect(name); setCustomTemplateMode(true); toast(`Saved template: ${name}`);
+};
+$("newsCustomLoad").onclick=()=>{
+  const name=$("newsCustomSelect").value, data=newsTemplateStore(); if(!name||!data[name]){toast("Choose a saved template");return;}
+  $("newsCustomName").value=name; $("newsCustomTemplate").value=data[name]; setCustomTemplateMode(true); toast(`Loaded template: ${name}`);
+};
+$("newsCustomDelete").onclick=()=>{
+  const name=$("newsCustomSelect").value, data=newsTemplateStore(); if(!name||!data[name]){toast("Choose a saved template");return;}
+  delete data[name]; saveNewsTemplateStore(data); refreshNewsTemplateSelect(); toast(`Deleted template: ${name}`);
+};
+$("newsCustomTemplate").addEventListener("input",()=>{ if(NEWS_USE_CUSTOM) buildNewsPost(); });
+
+$("newsLoadOfficial").onclick=()=>loadOfficialArticle($("newsUrl").value);
+$("newsPvpBuild").onclick=buildNewsPvp; $("newsBuild").onclick=buildNewsPost;
+async function copyNews(){ const post=buildNewsPost(); if(!post){toast("Nothing to copy");return;} try{await navigator.clipboard.writeText(post);toast("News post copied");}catch(e){toast("Copy failed");} }
+$("newsCopy").onclick=copyNews; $("newsCopyBottom").onclick=copyNews;
+$("newsClear").onclick=()=>{["newsTitle","newsDate","newsUrl","newsWild","newsPvp","newsLure","newsResearch","newsEggs","newsT1","newsT3","newsGBL","newsBonuses","newsPass","newsExtra","newsFooter"].forEach(id=>$(id).value="");$("newsPreview").textContent="Your generated post will appear here.";$("newsStatus").textContent="Not generated";};
+
+
+/* ---------- Standalone 11-field IV paste parser ---------- */
+let PARSED_IV_LINES=[];
+const PARSER_GENDER={"-1":"Any","1":"Male","2":"Female","3":"Genderless"};
+const PARSER_SIZE={"-1":"Any","1":"XXS","2":"XS","3":"M","4":"XL","5":"XXL"};
+function parserSpeciesName(dex){
+  const all=Object.values(BYID).filter(p=>Number(p.dex)===Number(dex));
+  const normal=all.find(p=>resolveForm(p).form===0); return (normal||all[0]||{}).speciesName||`Dex ${dex}`;
+}
+function extractParserCsv(line){
+  const text=String(line||"");
+  const match=text.match(/-?\d+(?:\s*,\s*-?\d+){10}/);
+  return match?match[0]:"";
+}
+function validateParserValues(v){
+  const e=[];
+  if(v.length!==11) return ["Expected exactly 11 values"];
+  const [dex,a,d,sta,lmin,lmax,form,costume,gender,size,maxCatch]=v;
+  if(!Number.isInteger(dex)||dex<1) e.push("Dex must be a positive integer");
+  [[a,"Attack"],[d,"Defense"],[sta,"Stamina"]].forEach(([x,n])=>{if(!(x===-1||(x>=0&&x<=15))) e.push(`${n} must be -1 or 0–15`);});
+  if(!(lmin>=1&&lmin<=35)) e.push("Level Min must be 1–35");
+  if(!(lmax>=1&&lmax<=35)) e.push("Level Max must be 1–35");
+  if(lmin>lmax) e.push("Level Min cannot be higher than Level Max");
+  if(!(form===-1||form>=0)) e.push("Form must be -1 or a non-negative ID");
+  if(!(costume===-1||costume>=0)) e.push("Costume must be -1 or a non-negative ID");
+  if(![-1,1,2,3].includes(gender)) e.push("Gender must be -1, 1, 2 or 3");
+  if(![-1,1,2,3,4,5].includes(size)) e.push("Size must be -1 or 1–5");
+  if(!Number.isInteger(maxCatch)||maxCatch<1) e.push("Max Catch must be 1 or higher");
+  return e;
+}
+function parseOneIvLine(raw,index){
+  const csv=extractParserCsv(raw);
+  if(!csv) return {raw,index,valid:false,values:[],errors:["No 11-value IV line found"]};
+  const vals=csv.split(",").map(x=>Number(x.trim()));
+  const errors=vals.some(x=>!Number.isInteger(x))?["All 11 values must be integers"]:validateParserValues(vals);
+  return {raw,index,valid:errors.length===0,values:vals,errors,csv:vals.join(",")};
+}
+function parserMeta(item){
+  if(!item.valid) return "";
+  const [dex,a,d,s,lmin,lmax,form,costume,gender,size,maxCatch]=item.values;
+  const f=form===-1?"Any":`${form} · ${enumFormName(form)}`;
+  const c=costume===-1?"Any":`${costume} · ${enumCostumeName(costume)}`;
+  return `${parserSpeciesName(dex)} · IV ${a}/${d}/${s} · L${lmin}–${lmax}<br>Form ${f} · Costume ${c}<br>${PARSER_GENDER[gender]} · ${PARSER_SIZE[size]} · Max Catch ${maxCatch}`;
+}
+function renderParser(){
+  const box=$("parserResults"), valid=PARSED_IV_LINES.filter(x=>x.valid), bad=PARSED_IV_LINES.filter(x=>!x.valid);
+  $("parserStatus").textContent=`${PARSED_IV_LINES.length} line${PARSED_IV_LINES.length===1?"":"s"} · ${valid.length} valid${bad.length?` · ${bad.length} invalid`:""}`;
+  $("parserEmpty").style.display=PARSED_IV_LINES.length?"none":"block";
+  box.innerHTML=PARSED_IV_LINES.map((x,i)=>`<div class="parser-row ${x.valid?"":"bad"}"><div class="parser-row-head"><strong>${x.valid?`✓ Line ${i+1}`:`⚠ Line ${i+1}`}</strong>${x.valid?`<span class="proto-pill">${esc(parserSpeciesName(x.values[0]))}</span>`:""}</div>${x.csv?`<div class="parser-line">${esc(x.csv)}</div>`:""}${x.valid?`<div class="parser-meta">${parserMeta(x)}</div>`:`<div class="parser-error">${esc(x.errors.join(" · "))}</div>`}</div>`).join("");
+  $("parserOutput").value=valid.map(x=>x.csv).join("\n");
+}
+function parseIvInput(){
+  const lines=$("parserInput").value.split(/\r?\n/).filter(x=>x.trim()&&!/^```/.test(x.trim()));
+  PARSED_IV_LINES=lines.map((l,i)=>parseOneIvLine(l,i)); renderParser();
+  const good=PARSED_IV_LINES.filter(x=>x.valid).length; toast(`${good}/${PARSED_IV_LINES.length} IV lines valid`);
+}
+function normalizeIvInput(){ parseIvInput(); $("parserInput").value=PARSED_IV_LINES.filter(x=>x.valid).map(x=>x.csv).join("\n"); }
+function clearIvParser(){ PARSED_IV_LINES=[]; $("parserInput").value=""; $("parserOutput").value=""; renderParser(); }
+function manualIvValues(){
+  return ["pDex","pAtk","pDef","pSta","pLevelMin","pLevelMax","pForm","pCostume","pGender","pSize","pMaxCatch"].map(id=>Number($(id).value));
+}
+function addManualIvLine(){
+  const vals=manualIvValues(), errors=validateParserValues(vals); if(errors.length){toast(errors[0]);return;}
+  const csv=vals.join(","), cur=$("parserInput").value.trim(); $("parserInput").value=cur?cur+"\n"+csv:csv; parseIvInput();
+}
+async function copyParser(discord=false){
+  const lines=PARSED_IV_LINES.filter(x=>x.valid).map(x=>(discord?"-# ":"")+x.csv).join("\n");
+  if(!lines){toast("No valid IV lines to copy");return;} try{await navigator.clipboard.writeText(lines);toast(discord?"Discord IV lines copied":"IV lines copied");}catch(e){toast("Copy failed");}
+}
+$("parserParse").onclick=parseIvInput; $("parserNormalize").onclick=normalizeIvInput; $("parserAdd").onclick=addManualIvLine;
+$("parserClearTop").onclick=clearIvParser; $("parserClearBottom").onclick=clearIvParser;
+$("parserCopy").onclick=()=>copyParser(false); $("parserCopyBottom").onclick=()=>copyParser(false); $("parserDiscordCopy").onclick=()=>copyParser(true);
+renderParser();
+
 /* ---------- wire up ---------- */
 $("leagues").querySelectorAll(".lg").forEach(el=>el.onclick=()=>{
   const lg=el.dataset.lg;
@@ -635,10 +1855,12 @@ $("clearBtn").onclick=()=>{ QUEUE=[]; persist(); renderQueue(); };
 /* ---------- boot ---------- */
 (async function(){
   try{
+    populateProtoLists();
     await loadGM();
+    POKEMON_ALIAS_CACHE=null;
     $("dot").className="dot ok";
-    $("statusText").textContent=`${Object.keys(BYID).length} Pokémon ready`;
-    $("search").disabled=false; $("genAll").disabled=false; $("importBtn").disabled=false;
+    $("statusText").textContent=`${Object.keys(BYID).length} Pokémon · Stadium linked · ${PROTO_FORM_ENTRIES.length} forms`;
+    $("search").disabled=false; $("genAll").disabled=false; $("importBtn").disabled=false; $("cfgBuild").disabled=false;
     // restore learned form IDs
     try{ const L=JSON.parse(localStorage.getItem("ryu_learned")||"null"); if(L) LEARNED={...LEARNED,...L}; }catch(e){}
     // restore
@@ -651,6 +1873,11 @@ $("clearBtn").onclick=()=>{ QUEUE=[]; persist(); renderQueue(); };
         userForm:r.userForm, userCostume:r.userCostume
       })).filter(Boolean);
     }
+
+    // restore active tool tab
+    try{ switchTab(localStorage.getItem("ryu_pvp_tab")||"filters"); }catch(e){ switchTab("filters"); }
+    refreshCfgPresetUI(false);
+    renderEventTargets();
     renderQueue();
   }catch(e){
     $("dot").className="dot err";
